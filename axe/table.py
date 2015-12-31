@@ -4,11 +4,37 @@ sys.dont_write_bytecode = True
 from lib import *
 from counts import *
 
+# sort of thing we want to handle
+exampleData="""
+                    # bogus blank line
+  outlook,
+  $temperature,     # row1 broken by newlines, twice
+  $humidity,
+  ?windy,           # one columns marked with "ignore"
+  >:play
+  sunny    , 85, 85, FALSE, 0  # an interesting case
+  sunny    , 80, 90, TRUE , 0
+  overcast , 83, 86, FALSE, 2
+  rainy    , 70, 96, FALSE, 3
+  rainy    , 68, 80, FALSE, 4
+  rainy    , 65, 70, TRUE , 0
+  overcast , 64, 65, TRUE ,      # bogus format
+  4
+  sunny    , 72, 95, FALSE, 0    # bogus blank line, next
+  
+  sunny    , 69, 70, FALSE, 4
+  rainy    , 75, 80, FALSE, 5
+  sunny    , 75, 70, TRUE , 6
+  overcast , 72, 90, TRUE , 5
+  overcast , 81, 75, FALSE, 4
+  rainy    , 71, 91, TRUE , 0"""
+  
+##################################################
 @setting
 def CSV(): return o(
-    whitespace = r"[\n\r\t ]*",
-    comment    = r"#.*",
-    delimiter  = ",",
+    whitespace = r"[\n\r\t ]*", # kill all whitespace
+    comment    = r"#.*",        # kill all comments
+    delimiter  = ",",           # seperate fields by 'delimiter'
     ignore     = "?",
     missing    = '?',
     klass      = "=",
@@ -86,38 +112,14 @@ def cols(src):
 ##########################################
 # some test data in a string
 
-datastring="""
-                    # bogus blank line
-  outlook,
-  $temperature,     # row1 broken by newlines, twice
-  $humidity,?windy,>play
-  sunny    , 85, 85, FALSE, 0  # an interesting case
-  sunny    , 80, 90, TRUE , 0
-  overcast , 83, 86, FALSE, 2
-  rainy    , 70, 96, FALSE, 3
-  rainy    , 68, 80, FALSE, 4
-  rainy    , 65, 70, TRUE , 0
-  overcast , 64, 65, TRUE ,      # bogus format
-  4
-  sunny    , 72, 95, FALSE, 0    # bogus blank line, next
-  
-  sunny    , 69, 70, FALSE, 4
-  rainy    , 75, 80, FALSE, 5
-  sunny    , 75, 70, TRUE , 6
-  overcast , 72, 90, TRUE , 5
-  overcast , 81, 75, FALSE, 4
-  rainy    , 71, 91, TRUE , 0"""
-
 def _csv():
   def worker(src):
     for n,one in enumerate(src):
       print(n,"{",one,"}",sep='')
-  def csva():
-    worker(STRING(datastring))
-  def csvrows():
-    worker(rows(STRING(datastring)))
-  def csvcols():
-    worker(cols(STRING(datastring)))
+  lines = lambda: STRING(exampleData)
+  def csva()   :  worker(      lines() )
+  def csvrows():  worker( rows(lines()))
+  def csvcols():  worker( cols(lines()))
   ok(csva,csvrows,csvcols)
   
 ###########################################
@@ -130,7 +132,7 @@ class table:
     i.dep, i.indep, i.sym, i.num = {},{},{},{}
     for j,cells in enumerate(src):
       if j:
-        i.rows += [row(t,cells)]
+        i.rows += [row(i,cells)]
       else:
         i.header = cells[:]
         for k,h in enumerate(i.header):
@@ -171,11 +173,11 @@ def rnn(rows):
         break
 
 def _table():
-  t= table(cols(STRING(datastring)))
-  assert t.dep=={3:'>play'}
+  t= table(cols(STRING(exampleData)))
+  assert t.dep=={3:'>:play'}
   assert t.indep=={0:'outlook', 1:'$temperature', 
                      2:'$humidity'}
-  assert t.num=={1:'$temperature',2:'$humidity',3:'>play'}
+  assert t.num=={1:'$temperature',2:'$humidity',3:'>:play'}
   assert t.sym=={0:'outlook'}
   assert len(t.rows)==14 
 
