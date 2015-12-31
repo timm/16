@@ -4,7 +4,8 @@ sys.dont_write_bytecode = True
 
 from table import *
 
-class count:
+
+class Count:
   def __init__(i,inits=[]):
     i.init()
     i.n = 0 
@@ -16,7 +17,7 @@ class count:
       i.add(x)
     return i
 
-class num(count):
+class Num(Count):
   def init(i): i.mu = i.m2 = 0  
   def sd(i):
     return 0 if i.n < 2 else (i.m2/(i.n - 1))**0.5
@@ -32,7 +33,7 @@ class num(count):
     i.mu -= delta/(1.0*i.n)
     i.m2 -= delta*(x - i.mu)
 
-class sym(count):
+class Sym(Count):
   def init(i):  i.all = {}
   def add(i,z):
     i.all[z] = i.all.get(z,0) + 1 
@@ -46,18 +47,20 @@ class sym(count):
     return abs(p)
 
 def _count():
-  n = num()
+  num = Num()
   lst = xrange(256)
   ups=[]
   for i,x in enumerate(lst):
-    n += x
-    ups += [n.sd()]
-    if i==4:
-      assert abs(n.sd() - 1.5811) < 0.001
+    num += x
+    ups += [num.sd()]
+    if num.n == 5:
+      assert abs(num.sd() - 1.5811) < 0.001
   downs=[]
   for x in reversed(lst):
-     downs += [n.sd()]
-     n -= x
+     downs += [num.sd()]
+     num -= x
+     if num.n==5:
+      assert abs(num.sd() - 1.5811) < 0.001
   assert ups ==  downs[::-1]
   
 main(__name__) and ok(_count)
