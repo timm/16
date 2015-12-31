@@ -2,7 +2,7 @@ from __future__ import print_function, division
 import  math,sys 
 sys.dont_write_bytecode = True 
 
-from base import *
+from boot import *
 
 def identity(x): return x
 
@@ -18,8 +18,4 @@ class DefaultDict(dict):
     def __getitem__(i, key):
         if key in i: return i.get(key)
         return i.setdefault(key, i.default())
-        
-def main(x):
-  print(__name__)
-  return x == '__main__'
-    
+     

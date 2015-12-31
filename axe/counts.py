@@ -63,4 +63,4 @@ def _count():
       assert abs(num.sd() - 1.5811) < 0.001
   assert ups ==  downs[::-1]
   
-main(__name__) and ok(_count)
+__name__ == '__main__' and ok(_count)
