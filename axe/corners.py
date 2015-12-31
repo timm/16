@@ -4,10 +4,8 @@ sys.dont_write_bytecode = True
 from table import *
 
 from counts import *
-from range  import *
+from range  import * 
 
-def gt(x,y) : return x > y
-def lt(x,y) : return x < y
 
 def sdiv(lst, attr=0, better = gt
          tiny=4, cohen=0.3, small=0.01,

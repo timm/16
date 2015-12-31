@@ -9,6 +9,7 @@ def CSV(): return o(
     comment    = r"#.*",
     delimiter  = ",",
     ignore     = "?",
+    missing    = '?',
     klass      = "=",
     less       = "<",
     more       = ">",
@@ -147,9 +148,11 @@ class row:
     i.cooked = []
     i.table = t
     i.rnn, i.neighbors = 0, {}
+  def all(i,what):
+    return [z.cooked[k] for k in what]
   def overlap(i,j):
-    retun len( set(i.cooked[k] for k in i.indeps) & 
-               set(j.cooked[k] for k in i.indeps))
+    return len( set( i.all(i.indep) ) and
+                set( j.all(j.indep) ) )
 
 def rnn(rows): 
   for j,row1 in enumerate(rows): 
@@ -157,7 +160,7 @@ def rnn(rows):
       tmp = row1.overlap(row2)
       row1.neighbors +=  [(tmp,row2)]
       row2.neighbors +=  [(tmp,row1)] 
-  for row1 in rows 
+  for row1 in rows:
     row1.neighbors = reverse(sorted(row1.neighbors))
     first = row1.neighbors[0][0]
     for dist1,row2 in row1.neighbors:
