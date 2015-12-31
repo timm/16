@@ -143,17 +143,17 @@ class row:
   n=0
   def __init__(i,t,cells):
     i.n = row.n = row.n+1
-    i._raw = cells
-    i._cooked = []
+    i.raw = cells
+    i.cooked = []
     i.table = t
     i.rnn, i.neighbors = 0, {}
   def overlap(i,j):
-    retun len( set(i._cooked[k] for k in i.indeps) & 
-               set(j._cooked[k] for k in i.indeps))
+    retun len( set(i.cooked[k] for k in i.indeps) & 
+               set(j.cooked[k] for k in i.indeps))
 
 def rnn(rows): 
-  for j,row1 in rows: 
-    for k,row2 in rows[j:]:
+  for j,row1 in enumerate(rows): 
+    for row2 in rows[j:]:
       tmp = row1.overlap(row2)
       row1.neighbors +=  [(tmp,row2)]
       row2.neighbors +=  [(tmp,row1)] 
