@@ -30,3 +30,4 @@ timm:
 setup:
 	sudo pip install markdown pygments
 	wget -O hi https://raw.githubusercontent.com/timm/timmnix/master/dotprofile
+	got add hi

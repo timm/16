@@ -121,23 +121,14 @@ def _csv():
 ###########################################
 # a table is a header plus a list of rows
 
-class row:
-  n=0
-  def __init__(i,cells):
-    i.n = row.n = row.n+1
-    i._raw=cells
-    i._cooked=[]
-  def raw(i,n)   : return i._raw[n]
-  def cooked(i,n): return i._cooked[n]
-  
 class table:
   def __init__(i,src):
     i.rows=[]
     i.header=None
     i.dep, i.indep, i.sym, i.num = {},{},{},{}
-    for j,cells in enumerate(cols(src)):
+    for j,cells in enumerate(src):
       if j:
-        i.rows += [row(cells)]
+        i.rows += [row(t,cells)]
       else:
         i.header = cells[:]
         for k,h in enumerate(i.header):
@@ -147,9 +138,36 @@ class table:
   def klass(i):
     for k in i.dep:
       return k,i.dep[v]
-          
+
+class row:
+  n=0
+  def __init__(i,t,cells):
+    i.n = row.n = row.n+1
+    i._raw = cells
+    i._cooked = []
+    i.table = t
+    i.rnn, i.neighbors = 0, {}
+  def overlap(i,j):
+    retun len( set(i._cooked[k] for k in i.indeps) & 
+               set(j._cooked[k] for k in i.indeps))
+
+def rnn(rows): 
+  for j,row1 in rows: 
+    for k,row2 in rows[j:]:
+      tmp = row1.overlap(row2)
+      row1.neighbors +=  [(tmp,row2)]
+      row2.neighbors +=  [(tmp,row1)] 
+  for row1 in rows 
+    row1.neighbors = reverse(sorted(row1.neighbors))
+    first = row1.neighbors[0][0]
+    for dist1,row2 in row1.neighbors:
+      if dist1 == first:
+        row2.rnn += 1
+      else:
+        break
+
 def _table():
-  t= table(STRING(datastring))
+  t= table(cols(STRING(datastring)))
   assert t.dep=={3:'>play'}
   assert t.indep=={0:'outlook', 1:'$temperature', 
                      2:'$humidity'}
