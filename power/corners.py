@@ -4,6 +4,19 @@ sys.dont_write_bytecode = True
 from table import *
 from counts import *
 
+@setting
+def CUT(): return o(
+  crowded=4,
+  cohen=0.1,
+  fayyad=False
+)
+
+def crowded(x):
+  return n >= the.CUT.crowded
+
+def smallEffectSize(lst,num):
+  return Num(num(z) for z in lst).sd()*the.CUT.cohen
+  
 def recurse(this, divisor, id, x,cuts):
     cut,about = divisor(this)
     if cut:
@@ -11,63 +24,68 @@ def recurse(this, divisor, id, x,cuts):
       recurse(this[cut:], divisor, id,x, cuts)
     else:
       cuts += [o( id = id,
-                   n = len(cuts),
+                  n = len(cuts),
                   x  = o(lo=x(this[0]), hi=x(this[-1])),
                   y  = about,
                   has= this)]
     return cuts
-    
+
+def spliters(this,lhs,rhs,x,y,small):
+  def silly():
+    if x(this[j]) - x(this[0]) < small:  return True
+    if j + 1  < len(this):
+      if x(this[j+1]) - x(this[j]) < small: return True
+    return False
+  for j,one in enumerate(this):
+    if lhs.n > the.CUT.crowded and rhs.n > the.CUT.crowded:
+        if not silly():   
+          yield j,one
+    rhs -= y(one)
+    lhs += y(one)
+
 def sdiv1(lst,x=None,**d): return sdiv(lst,x=x,y=x,**d)
   
-def sdiv(lst, id = 0,  
-         tiny=4, cohen=0.3, small=0.01,
-         x      = lambda z:z[0],
-         y      = lambda z:z[-1]):
+def sdiv(lst, id=0, small=None,
+         x= lambda z:z[0],
+         y= lambda z:z[-1]):
   def sdivide(this): #Find best divide of 'this'
     lhs,rhs = Num(), Num(y(z) for z in this)
     n0, sd0, cut, mu = rhs.n, rhs.sd(), None, rhs.mu
     score = sd0
-    for j,one  in enumerate(this):
-      if lhs.n > tiny and rhs.n > tiny:
-        maybe= lhs.n/n0*lhs.sd()+ rhs.n/n0*rhs.sd()
-        if maybe < score:
-          if abs(lhs.mu - rhs.mu) >= small:
-            cut,score = j,maybe
-      rhs -= y(one)
-      lhs += y(one)
+    for j,one  in spliters(this,lhs,rhs,x,y,small):
+      maybe= lhs.n/n0*lhs.sd()+ rhs.n/n0*rhs.sd()
+      if maybe < score:
+        if abs(lhs.mu - rhs.mu) >= small:
+          cut,score = j,maybe
     return cut, o(mu=mu,n=n0,sd=sd0)
-  small = small or Num(y(z) for z in lst).sd()*cohen
-  if lst:
-    return recurse(sorted(lst,key=x),
-                   sdivide, id, x, [] )
+  if not lst: return []
+  small = small or smallEffectSize(lst,x)
+  return recurse(sorted(lst,key=x),  
+                 sdivide, id, x, [] ) 
 
-def ediv(lst, id=0, tiny=2,cohen=0.3,small=None,
-         num=lambda x:x[0], sym=lambda x:x[1]):
+def ediv(lst, id=0, small=None,
+         num= lambda x:x[0], 
+         sym= lambda x:x[1]):
   def edivide(this):  
     def ke(z): return z.k()*z.ent()
     lhs,rhs   = Sym(),Sym(sym(x) for x in this) 
-    n0,k0,e0,ke0= 1.0*rhs.n,rhs.k(),rhs.ent(),ke(rhs)
+    n0,k0,e0,ke0= rhs.n,rhs.k(),rhs.ent(),ke(rhs)
     cut, least  = None, e0
-    for j,x  in enumerate(this): 
-      if (lhs.n > tiny) and (rhs.n > tiny):
-        if j<len(this)-1:
-          lo,hi = num(this[j]), num(this[j+1])
-          if abs(hi - lo) <= small:
-            continue
-        maybe= lhs.n/n0*lhs.ent()+ rhs.n/n0*rhs.ent()
-        if maybe < least :
-          #gain  = e0 - maybe
-          #delta = log2(3**k0 -2)- (ke0 - ke(rhs) - ke(lhs))
-          #print(maybe,least, gain,delta)
-          #if gain >= (log2(n0 - 1) + delta)/n0:
-            cut,least = j,maybe
-      rhs -= sym(x)
-      lhs += sym(x)
+    for j,one  in spliters(this,lhs,rhs,num,sym,small):
+      maybe= lhs.n/n0*lhs.ent()+ rhs.n/n0*rhs.ent()
+      if maybe < least :
+        if the.CUT.fayyad:
+          gain  = e0 - maybe
+          delta = log2(3**k0 -2)- (ke0 - ke(rhs) - ke(lhs))
+          if gain >= (log2(n0 - 1) + delta)/n0:
+              cut,least = j,maybe
+        else:
+          cut,least = j,maybe
     return cut,o(n=n0,e=e0)
-  if lst:
-    small = small or Num(num(z) for z in lst).sd()*cohen
-    return recurse(sorted(lst,key=num),
-                  edivide, id, num, [])
+  if not lst: return []
+  small = small or smallEffectSize(lst,num)
+  return recurse(sorted(lst,key=num), 
+                 edivide, id, num, [])
 
 t = table(cols(FILE('data/albrecht.csv')))
 
@@ -84,7 +102,7 @@ for n in t.inNums:
   for r in ediv(t.rows, 
                   num =lambda z:z.raw[n],
                   sym =lambda z:z.cooked[-1]):
-    print("\n",n,r.x,r.n)
+    print("\n",n,r.x,len(r.has),r.y)
 
 #print(len(t.rows))
 ## print("\n",x)
