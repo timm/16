@@ -59,8 +59,7 @@ def sdiv(lst, id=0, small=None,
     for j,one  in spliters(this,lhs,rhs,num1,num2,small):
       maybe= lhs.n/n0*lhs.sd()+ rhs.n/n0*rhs.sd()
       if maybe < score:
-        if abs(lhs.mu - rhs.mu) >= small:
-          cut,score = j,maybe
+        cut,score = j,maybe
     return cut, o(mu=mu,n=n0,sd=sd0)
   if not lst: return []
   small = small or smallEffectSize(lst,num1)
