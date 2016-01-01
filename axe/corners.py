@@ -2,99 +2,92 @@ from __future__ import print_function, division
 import  sys 
 sys.dont_write_bytecode = True
 from table import *
-
 from counts import *
-from range  import * 
 
-
-def sdiv(lst, attr=0, better = gt
+def recurse(this, divisor, id, x,cuts):
+    cut,about = divisor(this)
+    if cut:
+      recurse(this[:cut], divisor, id,x, cuts);
+      recurse(this[cut:], divisor, id,x, cuts)
+    else:
+      cuts += [o( id = id,
+                   n = len(cuts),
+                  x  = o(lo=x(this[0]), hi=x(this[-1])),
+                  y  = about,
+                  has= this)]
+    return cuts
+    
+def sdiv1(lst,x=None,**d): return sdiv(lst,x=x,y=x,**d)
+  
+def sdiv(lst, id = 0,  
          tiny=4, cohen=0.3, small=0.01,
          x      = lambda z:z[0],
          y      = lambda z:z[-1]):
-  "Divide lst of (x,y) using variance of y."
-  #----------------------------------------------
-  def divide(this,small): #Find best divide of 'this'
-    lhs,rhs = Count(), Count(y(z) for z in this)
-    n0, score, cut,mu = 1.0*rhs.n, rhs.sd(), None,rhs.mu
+  def sdivide(this): #Find best divide of 'this'
+    lhs,rhs = Num(), Num(y(z) for z in this)
+    n0, sd0, cut, mu = rhs.n, rhs.sd(), None, rhs.mu
+    score = sd0
     for j,one  in enumerate(this):
       if lhs.n > tiny and rhs.n > tiny:
         maybe= lhs.n/n0*lhs.sd()+ rhs.n/n0*rhs.sd()
-        if better(maybe,score) :
+        if maybe < score:
           if abs(lhs.mu - rhs.mu) >= small:
             cut,score = j,maybe
-      rhs - y(one)
-      lhs + y(one)
-    return cut,mu,score,this
-  #----------------------------------------------
-  def recurse(this, small,cuts):
-    cut,mu,sd,part0 = divide(this,small)
-    if cut:
-      recurse(this[:cut], small, cuts)
-      recurse(this[cut:], small, cuts)
-    else:
-      cuts += [Range(attr = attr,
-                     x    = o(lo=x(this[0]), hi=x(this[-1])),
-                     y    = o(mu=mu, sd=sd),
-                     rows = this)]
-    return cuts
-  #---| main |-----------------------------------
-  small = small or Counts(y(z) for z in lst).sd()*cohen
+      rhs -= y(one)
+      lhs += y(one)
+    return cut, o(mu=mu,n=n0,sd=sd0)
+  small = small or Num(y(z) for z in lst).sd()*cohen
   if lst:
-    return recurse(sorted(lst,key=x),small, [] )
-     
+    return recurse(sorted(lst,key=x),
+                   sdivide, id, x, [] )
 
-def ediv(lst, tiny=2,
+def ediv(lst, id=0, tiny=2,cohen=0.3,small=None,
          num=lambda x:x[0], sym=lambda x:x[1]):
-  "Divide lst of (numbers,symbols) using entropy."
-  import math
-  def log2(x) : return math.log(x,2)
-  #----------------------------------------------
-  class Counts(): # Add/delete counts of symbols.
-    def __init__(i,inits=[]):
-      i.n, i._e, i.cache  = 0, None, {}
-      for symbol in inits: i + symbol
-    def __add__(i,symbol): i.inc(symbol,  1)
-    def __sub__(i,symbol): i.inc(symbol, -1)
-    def inc(i,symbol,n=1):
-      i._e = None
-      i.n += n
-      i.cache[symbol] = i.cache.get(symbol,0) + n
-    def k(i): return len(i.cache.keys())
-    def ent(i):
-      if i._e == None:
-        i._e = 0
-        for symbol in i.cache:
-          p  = i.cache[symbol]*1.0/i.n
-          if p: i._e -= p*log2(p)*1.0
-      return i._e
-  #----------------------------------------------
-  def divide(this): # Find best divide of 'this' lst.
+  def edivide(this):  
     def ke(z): return z.k()*z.ent()
-    lhs,rhs   = Counts(),Counts(sym(x) for x in this)
+    lhs,rhs   = Sym(),Sym(sym(x) for x in this) 
     n0,k0,e0,ke0= 1.0*rhs.n,rhs.k(),rhs.ent(),ke(rhs)
     cut, least  = None, e0
-    for j,x  in enumerate(this):
-      #print lhs.n,rhs.n,tiny,"as"
-      if lhs.n > tiny and rhs.n > tiny:
+    for j,x  in enumerate(this): 
+      if (lhs.n > tiny) and (rhs.n > tiny):
+        if j<len(this)-1:
+          lo,hi = num(this[j]), num(this[j+1])
+          if abs(hi - lo) <= small:
+            continue
         maybe= lhs.n/n0*lhs.ent()+ rhs.n/n0*rhs.ent()
         if maybe < least :
-          cut,least = j,maybe
-      rhs - sym(x)
-      lhs + sym(x)
-    return cut,least
-  #----------------------------------------------
-  def recurse(this, cuts):
-    cut,e = divide(this)
-    #print cut,e,"asd",len(cuts)
-    if cut:
-      recurse(this[:cut], cuts);
-      recurse(this[cut:], cuts)
-    else:
-      cuts += [(e,this)]
-    return cuts
-  #---| main |-----------------------------------
+          #gain  = e0 - maybe
+          #delta = log2(3**k0 -2)- (ke0 - ke(rhs) - ke(lhs))
+          #print(maybe,least, gain,delta)
+          #if gain >= (log2(n0 - 1) + delta)/n0:
+            cut,least = j,maybe
+      rhs -= sym(x)
+      lhs += sym(x)
+    return cut,o(n=n0,e=e0)
   if lst:
-    return recurse(sorted(lst,key=num),[])
+    small = small or Num(num(z) for z in lst).sd()*cohen
+    return recurse(sorted(lst,key=num),
+                  edivide, id, num, [])
+
+t = table(cols(FILE('data/albrecht.csv')))
+
+klasses= sdiv1(t.rows,  x= lambda z:z.raw[-1]) 
+
+for row in t.rows: 
+  row.cooked = row.raw[:] 
+for klass in klasses:
+  k = klass.n
+  for row in klass.has:
+    row.cooked[-1] =  k
+
+for n in t.inNums:
+  for r in ediv(t.rows, 
+                  num =lambda z:z.raw[n],
+                  sym =lambda z:z.cooked[-1]):
+    print("\n",n,r.x,r.n)
+
+#print(len(t.rows))
+## print("\n",x)
 
 def _ediv():
   "Demo code to test the above."
@@ -102,18 +95,18 @@ def _ediv():
   bell= random.gauss
   random.seed(1)
   def go(lst):
-    print ""; print sorted(lst)[:],"..."
+    print(""); print(sorted(lst)[:],"...")
     d = ediv(lst)
-    print d[0][1][0][0]
+    print(d[0][1][0][0])
 
-    print d[0] ,"d[0]"
-    print d[1] ,"d[1]"
-    print d[0][1], "d[0][1]"
-    print d[0][1][0], "d[0][1][0]"
-    print d[0][1][0][0], "d[0][1][0][0]"
+    print(d[0] ,"d[0]")
+    print(d[1] ,"d[1]")
+    print(d[0][1], "d[0][1]")
+    print(d[0][1][0], "d[0][1][0]")
+    print(d[0][1][0][0], "d[0][1][0][0]")
 
     for d in  ediv(lst):
-      print d[1][0]
+      print(d[1][0])
   X,Y="X","Y"
   l=[(1,X),(2,X),(3,X),(4,X),(11,Y),(12,Y),(13,Y),(14,Y)]
   #l=[(3.02,'x'),(3.05,'x'),(3.03,'x'),(4.00,'y'),(4.01,'x'),(4.02,'y')]
@@ -134,7 +127,7 @@ def _ediv():
   go(l)
   go([(1,X)])
   """
-if __name__ == '__main__': _ediv()
+#__name__ == '__main__' and _ediv()
 
 """
 Output:

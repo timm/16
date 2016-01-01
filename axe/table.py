@@ -129,7 +129,8 @@ class table:
   def __init__(i,src):
     i.rows=[]
     i.header=None
-    i.dep, i.indep, i.sym, i.num = {},{},{},{}
+    i.dep,i.indep =  {},{}
+    i.sym,i.num,i.inNums = {},{},{}
     for j,cells in enumerate(src):
       if j:
         i.rows += [row(i,cells)]
@@ -139,6 +140,8 @@ class table:
           what1= i.dep if goalp(h) else i.indep 
           what2= i.num if nump(h)  else i.sym
           what1[k] = what2[k] = h
+          if nump(h) and not goalp(h):
+            i.inNums[k] = h
   def klass(i):
     for k in i.dep:
       return k,i.dep[v]
@@ -156,6 +159,8 @@ class row:
   def overlap(i,j):
     return len( set( i.all(i.indep) ) and
                 set( j.all(j.indep) ) )
+  def __repr__(i):
+    return str("row(%s)" % i.n)
 
 def rnn(rows): 
   for j,row1 in enumerate(rows): 

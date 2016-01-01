@@ -8,6 +8,8 @@ def identity(x): return x
 
 log = math.log
 
+def log2(x): return math.log(x,2)
+
 def gt(x,y) : return x > y
 def lt(x,y) : return x < y
 

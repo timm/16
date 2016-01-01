@@ -4,7 +4,6 @@ sys.dont_write_bytecode = True
 
 from table import *
 
-
 class Count:
   def __init__(i,inits=[]):
     i.init()
@@ -38,14 +37,17 @@ class Sym(Count):
   def add(i,z):
     i.all[z] = i.all.get(z,0) + 1 
   def sub(i,z):
-    i.all[z] -= 1
-  def entropy(i,p=0):
+    tmp = i.all[z] = i.all[z] - 1
+    if tmp < 1: del i.all[z]
+  def k(i): 
+    return len(i.all.keys())
+  def ent(i,p=0):
     for k,v in i.all.items():
       p1 = v/i.n
       if p1 > 0:
         p += p1*log(p1,2)
     return abs(p)
-
+      
 def _count():
   num = Num()
   lst = xrange(256)
