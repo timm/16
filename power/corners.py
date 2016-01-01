@@ -12,7 +12,7 @@ def CUT(): return o(
 )
 
 def crowded(n):
-  return n > the.CUT.crowded
+  return n >= the.CUT.crowded
 
 def smallEffectSize(lst,num):
   return Num(num(z) for z in lst).sd()*the.CUT.cohen
@@ -39,12 +39,12 @@ def spliters(this,lhs,rhs,x,y,small):
      # if x(this[j+1]) -  x(this[j]) < small :
       #  return True
   for j,one in enumerate(this):
+    rhs -= y(one)
+    lhs += y(one)
     if crowded(lhs.n):
       if crowded(rhs.n):  
         if not silly():     
-          yield j,one
-    rhs -= y(one)
-    lhs += y(one)
+          yield j+1,one
 
 def sdiv1(lst,x=None,**d): 
   return sdiv(lst,num1=x,num2=x,**d)
@@ -91,7 +91,9 @@ def ediv(lst, id=0, small=None,
   return recurse(sorted(lst,key=num), 
                  edivide, id, num, [])
 
-t = table(cols(FILE('data/albrecht.csv')))
+#t = table(cols(FILE('data/albrecht.csv')))
+t = table(cols(FILE('data/nasa93.csv')))
+
 
 klasses= sdiv1(t.rows,  x= lambda z:z.raw[-1]) 
 
