@@ -5,14 +5,14 @@ from table import *
 from counts import *
 
 @setting
-def CUT(): return o(
-  crowded=4,
+def CUT(): return o( 
+  crowded=4, 
   cohen=0.1,
   fayyad=False
 )
 
-def crowded(x):
-  return n > the.CUT.crowded
+def crowded(n):
+  return n >= the.CUT.crowded
 
 def smallEffectSize(lst,num):
   return Num(num(z) for z in lst).sd()*the.CUT.cohen
@@ -45,25 +45,25 @@ def spliters(this,lhs,rhs,x,y,small):
     lhs += y(one)
 
 def sdiv1(lst,x=None,**d): 
-  return sdiv(lst,x=x,y=x,**d)
+  return sdiv(lst,num1=x,num2=x,**d)
   
 def sdiv(lst, id=0, small=None,
-         x= lambda z:z[0],
-         y= lambda z:z[-1]):
-  def sdivide(this): #Find best divide of 'this'
-    lhs,rhs = Num(), Num(y(z) for z in this)
+         num1= lambda z:z[0],
+         num2= lambda z:z[-1]):
+  def sdivide(this):  
+    lhs,rhs = Num(), Num(num2(z) for z in this)
     n0, sd0, cut, mu = rhs.n, rhs.sd(), None, rhs.mu
     score = sd0
-    for j,one  in spliters(this,lhs,rhs,x,y,small):
+    for j,one  in spliters(this,lhs,rhs,num1,num2,small):
       maybe= lhs.n/n0*lhs.sd()+ rhs.n/n0*rhs.sd()
       if maybe < score:
         if abs(lhs.mu - rhs.mu) >= small:
           cut,score = j,maybe
     return cut, o(mu=mu,n=n0,sd=sd0)
   if not lst: return []
-  small = small or smallEffectSize(lst,x)
-  return recurse(sorted(lst,key=x),  
-                 sdivide, id, x, [] ) 
+  small = small or smallEffectSize(lst,num1)
+  return recurse(sorted(lst,key=num1),  
+                 sdivide, id, num1, [] ) 
 
 def ediv(lst, id=0, small=None,
          num= lambda x:x[0], 
@@ -104,7 +104,7 @@ for n in t.inNums:
   for r in ediv(t.rows, 
                   num =lambda z:z.raw[n],
                   sym =lambda z:z.cooked[-1]):
-    print("\n",n,r.x,len(r.has),r.y)
+    print(n,r.x,len(r.has),r.y)
 
 #print(len(t.rows))
 ## print("\n",x)
