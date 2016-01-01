@@ -12,7 +12,7 @@ def CUT(): return o(
 )
 
 def crowded(n):
-  return n >= the.CUT.crowded
+  return n > the.CUT.crowded
 
 def smallEffectSize(lst,num):
   return Num(num(z) for z in lst).sd()*the.CUT.cohen
@@ -91,8 +91,8 @@ def ediv(lst, id=0, small=None,
   return recurse(sorted(lst,key=num), 
                  edivide, id, num, [])
 
-#t = table(cols(FILE('data/albrecht.csv')))
-t = table(cols(FILE('data/nasa93.csv')))
+t = table(cols(FILE('data/albrecht.csv')))
+#t = table(cols(FILE('data/nasa93.csv')))
 
 
 klasses= sdiv1(t.rows,  x= lambda z:z.raw[-1]) 
