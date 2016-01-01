@@ -34,17 +34,17 @@ def spliters(this,lhs,rhs,x,y,small):
   def silly():
     #if j > the.CUT.crowded:
      # return True
-    return x(this[j]) - x(this[0]) < small
+    return x(this[j]) - x(this[0]) <= small
     #if j + 1  < len(this):
      # if x(this[j+1]) -  x(this[j]) < small :
       #  return True
   for j,one in enumerate(this):
+    rhs -= y(one)
+    lhs += y(one)
     if crowded(lhs.n):
       if crowded(rhs.n):  
         if not silly():     
-          yield j,one
-    rhs -= y(one)
-    lhs += y(one)
+          yield j+1,one
 
 def sdiv1(lst,x=None,**d): 
   return sdiv(lst,num1=x,num2=x,**d)
@@ -91,6 +91,8 @@ def ediv(lst, id=0, small=None,
                  edivide, id, num, [])
 
 t = table(cols(FILE('data/albrecht.csv')))
+#t = table(cols(FILE('data/nasa93.csv')))
+
 
 klasses= sdiv1(t.rows,  x= lambda z:z.raw[-1]) 
 
