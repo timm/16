@@ -12,7 +12,7 @@ def CUT(): return o(
 )
 
 def crowded(n):
-  return n >= the.CUT.crowded
+  return n > the.CUT.crowded
 
 def smallEffectSize(lst,num):
   return Num(num(z) for z in lst).sd()*the.CUT.cohen
@@ -32,10 +32,12 @@ def recurse(this, divisor, id, x,cuts):
 
 def spliters(this,lhs,rhs,x,y,small):
   def silly():
-    if x(this[j]) - x(this[0]) < small:  return True
-    if j + 1  < len(this):
-      if x(this[j+1]) - x(this[j]) < small: return True
-    return False
+    #if j > the.CUT.crowded:
+     # return True
+    return x(this[j]) - x(this[0]) < small
+    #if j + 1  < len(this):
+     # if x(this[j+1]) -  x(this[j]) < small :
+      #  return True
   for j,one in enumerate(this):
     if crowded(lhs.n):
       if crowded(rhs.n):  
