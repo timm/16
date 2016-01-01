@@ -34,7 +34,7 @@ def spliters(this,lhs,rhs,x,y,small):
   def silly():
     #if j > the.CUT.crowded:
      # return True
-    return x(this[j]) - x(this[0]) < small
+    return x(this[j]) - x(this[0]) <= small
     #if j + 1  < len(this):
      # if x(this[j+1]) -  x(this[j]) < small :
       #  return True
