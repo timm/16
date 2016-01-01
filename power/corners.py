@@ -12,7 +12,7 @@ def CUT(): return o(
 )
 
 def crowded(x):
-  return n >= the.CUT.crowded
+  return n > the.CUT.crowded
 
 def smallEffectSize(lst,num):
   return Num(num(z) for z in lst).sd()*the.CUT.cohen
@@ -24,7 +24,7 @@ def recurse(this, divisor, id, x,cuts):
       recurse(this[cut:], divisor, id,x, cuts)
     else:
       cuts += [o( id = id,
-                  n = len(cuts),
+                  n  = len(cuts),
                   x  = o(lo=x(this[0]), hi=x(this[-1])),
                   y  = about,
                   has= this)]
@@ -37,13 +37,15 @@ def spliters(this,lhs,rhs,x,y,small):
       if x(this[j+1]) - x(this[j]) < small: return True
     return False
   for j,one in enumerate(this):
-    if lhs.n > the.CUT.crowded and rhs.n > the.CUT.crowded:
-        if not silly():   
+    if crowded(lhs.n):
+      if crowded(rhs.n):  
+        if not silly():     
           yield j,one
     rhs -= y(one)
     lhs += y(one)
 
-def sdiv1(lst,x=None,**d): return sdiv(lst,x=x,y=x,**d)
+def sdiv1(lst,x=None,**d): 
+  return sdiv(lst,x=x,y=x,**d)
   
 def sdiv(lst, id=0, small=None,
          x= lambda z:z[0],
