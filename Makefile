@@ -1,5 +1,6 @@
 Make = $(MAKE) --no-print-directory #
 
+
 typo:  ready 
 	@- git status
 	@- git commit -am "saving"
