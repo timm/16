@@ -31,7 +31,6 @@ def recurse(this, divisor, id, x,cuts):
                   has= this)]
     return cuts
 
-
 def spliters(this,lhs,rhs,x,y,small):
   def silly(): 
     return x(this[j]) - x(this[0]) <= small
@@ -62,10 +61,7 @@ def sdiv(lst, id=0, small=None,
       if maybe < score:
         cut,score = j,maybe
     return cut, o(mu=mu,n=n0,score=sd0)
-  if not lst: return []
-  small = small or smallEffectSize(lst,num1)
-  return recurse(sorted(lst,key=num1),  
-                 sdivide, id, num1, [] ) 
+  return div(lst,small,sdivide,id, num1)
 
 def ediv(lst, id=0, small=None, 
          num= lambda x:x[0], 
@@ -86,13 +82,39 @@ def ediv(lst, id=0, small=None,
         else:
           cut,least = j,maybe
     return cut,o(n=n0,score=e0)
+  return div(lst,small,edivide,id,num)
+
+def div(lst,small,worker,id,num):
+  def weighted(divs):
+    all = len(lst)
+    w = 0
+    for div in divs:
+      div.w = div.y.n/all * div.y.score
+      w += div.w 
+    return w
   if not lst: return []
   small = small or smallEffectSize(lst,num)
-  return recurse(sorted(lst,key=num), 
-                 edivide, id, num, [])
-
-#print(len(t.rows))
-## print("\n",x)
+  all = recurse(sorted(lst,key=num),  
+                worker, id, num, [])
+  return weighted(all), all
+             
+def _sdiv():
+  t  = table(cols(FILE('data/albrecht.csv')))
+  # cook the klasses
+  w,klasses = sdiv1(t.rows,  x= lambda z:z.raw[-1]) 
+  print("w",w)
+  for klass in klasses:
+    print(klass.x.lo,klass.x.hi,klass.has)
+ # for k in ks:
+  #  for row in k.has:
+   #   row.cooked[-1] =  k.n
+  # cook the numberic ranges
+#  for n in t.inNums:
+ #   lst = ediv(t.rows, id = n,
+  #                num =lambda z:z.raw[n],
+   #               sym =lambda z:z.cooked[-1])
+   
+__name__ == '__main__' and _sdiv()
 
 def _ediv():
   "Demo code to test the above."

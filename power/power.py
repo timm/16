@@ -6,11 +6,12 @@ from corners import *
 
 def power(src):
   t  = table(cols(src))
+  # cook the klasses
   ks = sdiv1(t.rows,  x= lambda z:z.raw[-1]) 
   for k in ks:
     for row in k.has:
       row.cooked[-1] =  k.n
-  best = {}
+  # cook the numberic ranges
   for n in t.inNums:
     lst = ediv(t.rows, id = n,
                   num =lambda z:z.raw[n],
