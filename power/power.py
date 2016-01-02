@@ -2,7 +2,7 @@ from __future__ import print_function, division
 import  sys 
 sys.dont_write_bytecode = True
 
-from corners import *
+from divs import *
 
 def power(src):
   t  = table(cols(src))

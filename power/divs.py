@@ -17,6 +17,62 @@ def crowded(n):
 
 def smallEffectSize(lst,num):
   return Num(num(z) for z in lst).sd()*the.CUT.cohen
+
+def sdiv1(lst,x=None,**d): 
+  return sdiv(lst,num1=x,num2=x,**d)
+  
+def sdiv(lst, id=0, small=None,
+         num1= lambda z:z[0],
+         num2= lambda z:z[-1]):
+  def sdivide(this):  
+    lhs,rhs = Num(), Num(num2(z) for z in this)
+    n0, sd0, cut, mu = rhs.n, rhs.sd(), None, rhs.mu
+    score = sd0
+    for j,one  in spliters(this,lhs,rhs,num1,num2,small):
+      maybe= lhs.n/n0*lhs.sd()+ rhs.n/n0*rhs.sd()
+      if maybe < score:
+        cut,score = j,maybe
+    return cut, o(mu=mu,n=n0,score=sd0)
+  return div(lst,small,sdivide,id, num1)
+
+def ediv(lst, id=0, small=None, 
+         num= lambda x:x[0], 
+         sym= lambda x:x[1]):
+  def edivide(this):  
+    def ke(z): return z.k()*z.ent()
+    lhs,rhs   = Sym(),Sym(sym(x) for x in this) 
+    mode = rhs.mode()
+    n0,k0,e0,ke0= rhs.n,rhs.k(),rhs.ent(),ke(rhs)
+    cut, least  = None, e0
+    for j,one  in spliters(this,lhs,rhs,num,sym,small):
+      maybe= lhs.n/n0*lhs.ent()+ rhs.n/n0*rhs.ent()
+      if maybe < least :
+        if the.CUT.fayyad:
+          gain  = e0 - maybe
+          delta = log2(3**k0 -2)- (ke0 - ke(rhs) - ke(lhs))
+          if gain >= (log2(n0 - 1) + delta)/n0:
+              cut,least = j,maybe
+        else:
+          cut,least = j,maybe
+    return cut,o(n=n0,score=e0,mode=mode)
+  return div(lst,small,edivide,id,num)
+  
+#################################################
+
+def div(lst,small,worker,id,num):
+  def weighted():
+    n0 = len(lst)
+    w = 0
+    for one in divs:
+      one.w = one.y.n/n0 * one.y.score
+      w += one.w 
+    return w
+  if not lst: return []
+  small = small or smallEffectSize(lst,num)
+  divs  = recurse(sorted(lst,key=num),  
+                  worker, id, num, [])
+  wall = weighted()
+  return wall, sorted(divs,key=lambda z:(z.w,z.n))
   
 def recurse(this, divisor, id, x,cuts):
     cut,about = divisor(this)
@@ -46,73 +102,30 @@ def spliters(this,lhs,rhs,x,y,small):
             yield j+1,one
     old = new
 
-def sdiv1(lst,x=None,**d): 
-  return sdiv(lst,num1=x,num2=x,**d)
-  
-def sdiv(lst, id=0, small=None,
-         num1= lambda z:z[0],
-         num2= lambda z:z[-1]):
-  def sdivide(this):  
-    lhs,rhs = Num(), Num(num2(z) for z in this)
-    n0, sd0, cut, mu = rhs.n, rhs.sd(), None, rhs.mu
-    score = sd0
-    for j,one  in spliters(this,lhs,rhs,num1,num2,small):
-      maybe= lhs.n/n0*lhs.sd()+ rhs.n/n0*rhs.sd()
-      if maybe < score:
-        cut,score = j,maybe
-    return cut, o(mu=mu,n=n0,score=sd0)
-  return div(lst,small,sdivide,id, num1)
+######################################################
 
-def ediv(lst, id=0, small=None, 
-         num= lambda x:x[0], 
-         sym= lambda x:x[1]):
-  def edivide(this):  
-    def ke(z): return z.k()*z.ent()
-    lhs,rhs   = Sym(),Sym(sym(x) for x in this) 
-    n0,k0,e0,ke0= rhs.n,rhs.k(),rhs.ent(),ke(rhs)
-    cut, least  = None, e0
-    for j,one  in spliters(this,lhs,rhs,num,sym,small):
-      maybe= lhs.n/n0*lhs.ent()+ rhs.n/n0*rhs.ent()
-      if maybe < least :
-        if the.CUT.fayyad:
-          gain  = e0 - maybe
-          delta = log2(3**k0 -2)- (ke0 - ke(rhs) - ke(lhs))
-          if gain >= (log2(n0 - 1) + delta)/n0:
-              cut,least = j,maybe
-        else:
-          cut,least = j,maybe
-    return cut,o(n=n0,score=e0)
-  return div(lst,small,edivide,id,num)
-
-def div(lst,small,worker,id,num):
-  def weighted(divs):
-    all = len(lst)
-    w = 0
-    for div in divs:
-      div.w = div.y.n/all * div.y.score
-      w += div.w 
-    return w
-  if not lst: return []
-  small = small or smallEffectSize(lst,num)
-  all = recurse(sorted(lst,key=num),  
-                worker, id, num, [])
-  return weighted(all), all
-             
 def _sdiv():
   t  = table(cols(FILE('data/albrecht.csv')))
   # cook the klasses
-  w,klasses = sdiv1(t.rows,  x= lambda z:z.raw[-1]) 
-  print("w",w)
-  for klass in klasses:
-    print(klass.x.lo,klass.x.hi,klass.has)
- # for k in ks:
-  #  for row in k.has:
-   #   row.cooked[-1] =  k.n
-  # cook the numberic ranges
-#  for n in t.inNums:
- #   lst = ediv(t.rows, id = n,
-  #                num =lambda z:z.raw[n],
-   #               sym =lambda z:z.cooked[-1])
+  w1,klasses = sdiv1(t.rows,  x= lambda z:z.raw[-1])  
+  todos = {}
+  for klass in klasses: 
+     for row in klass.has:
+       row.cooked[-1] =  klass.n
+  nums = [ ediv(t.rows, id = n,
+                        num =lambda z:z.raw[n],
+                        sym =lambda z:z.cooked[-1]) 
+                   for n in t.inNums ]
+  for w2,ranges in sorted(nums): 
+     print("")
+     use = True if len(ranges) > 1 else False
+     for range in ranges:
+        sayl([use,"col",range.id,"colW", w2,"range",range.n, "rangeW",range.w,
+                "lo",range.x.lo, "hi",range.x.hi,"n",range.y.n, "mode",range.y.mode])
+       
+        if use: todos[range.y.mode] = todos.get(range.y.mode,[]) + [range]
+        use=False
+  print(todos)
    
 __name__ == '__main__' and _sdiv()
 

@@ -41,6 +41,9 @@ class Sym(Count):
     if tmp < 1: del i.all[z]
   def k(i): 
     return len(i.all.keys())
+  def mode(i):
+    return sorted([(v,k) for
+                    k,v in i.all.items()])[-1][1]
   def ent(i,p=0):
     for k,v in i.all.items():
       p1 = v/i.n
