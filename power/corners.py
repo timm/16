@@ -31,20 +31,19 @@ def recurse(this, divisor, id, x,cuts):
     return cuts
 
 def spliters(this,lhs,rhs,x,y,small):
-  def silly():
-    #if j > the.CUT.crowded:
-     # return True
+  def silly(): 
     return x(this[j]) - x(this[0]) <= small
-    #if j + 1  < len(this):
-     # if x(this[j+1]) -  x(this[j]) < small :
-      #  return True
+  old = None
   for j,one in enumerate(this):
     rhs -= y(one)
     lhs += y(one)
-    if crowded(lhs.n):
-      if crowded(rhs.n):  
-        if not silly():     
-          yield j+1,one
+    new  = x(one)
+    if new != old:
+      if crowded(lhs.n):
+        if crowded(rhs.n):  
+          if not silly():     
+            yield j+1,one
+    old = new
 
 def sdiv1(lst,x=None,**d): 
   return sdiv(lst,num1=x,num2=x,**d)
@@ -60,7 +59,7 @@ def sdiv(lst, id=0, small=None,
       maybe= lhs.n/n0*lhs.sd()+ rhs.n/n0*rhs.sd()
       if maybe < score:
         cut,score = j,maybe
-    return cut, o(mu=mu,n=n0,sd=sd0)
+    return cut, o(mu=mu,n=n0,score=sd0)
   if not lst: return []
   small = small or smallEffectSize(lst,num1)
   return recurse(sorted(lst,key=num1),  
@@ -84,7 +83,7 @@ def ediv(lst, id=0, small=None,
               cut,least = j,maybe
         else:
           cut,least = j,maybe
-    return cut,o(n=n0,e=e0)
+    return cut,o(n=n0,score=e0)
   if not lst: return []
   small = small or smallEffectSize(lst,num)
   return recurse(sorted(lst,key=num), 
@@ -95,6 +94,8 @@ t = table(cols(FILE('data/albrecht.csv')))
 
 
 klasses= sdiv1(t.rows,  x= lambda z:z.raw[-1]) 
+for klass in klasses:
+  print(klass)
 
 for row in t.rows: 
   row.cooked = row.raw[:] 
@@ -104,10 +105,15 @@ for klass in klasses:
     row.cooked[-1] =  k
 
 for n in t.inNums:
-  for r in ediv(t.rows, 
+  lst = ediv(t.rows, id = ("col%s" % n),
                   num =lambda z:z.raw[n],
-                  sym =lambda z:z.cooked[-1]):
-    print(n,r.x,len(r.has),r.y)
+                  sym =lambda z:z.cooked[-1])
+  for z in lst:
+    z.w = z.y.score*z.y.n/len(t.rows)
+  lst =  sorted(lst, key=lambda z: z.w)                
+  print("")
+  for r in lst:
+    print(r.id, r.n, r.x.lo, r.x.hi, r.w)
 
 #print(len(t.rows))
 ## print("\n",x)
