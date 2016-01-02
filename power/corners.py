@@ -1,6 +1,7 @@
 from __future__ import print_function, division
 import  sys 
 sys.dont_write_bytecode = True
+
 from table import *
 from counts import *
 
@@ -29,6 +30,7 @@ def recurse(this, divisor, id, x,cuts):
                   y  = about,
                   has= this)]
     return cuts
+
 
 def spliters(this,lhs,rhs,x,y,small):
   def silly(): 
@@ -65,7 +67,7 @@ def sdiv(lst, id=0, small=None,
   return recurse(sorted(lst,key=num1),  
                  sdivide, id, num1, [] ) 
 
-def ediv(lst, id=0, small=None,
+def ediv(lst, id=0, small=None, 
          num= lambda x:x[0], 
          sym= lambda x:x[1]):
   def edivide(this):  
@@ -88,32 +90,6 @@ def ediv(lst, id=0, small=None,
   small = small or smallEffectSize(lst,num)
   return recurse(sorted(lst,key=num), 
                  edivide, id, num, [])
-
-t = table(cols(FILE('data/albrecht.csv')))
-#t = table(cols(FILE('data/nasa93.csv')))
-
-
-klasses= sdiv1(t.rows,  x= lambda z:z.raw[-1]) 
-for klass in klasses:
-  print(klass)
-
-for row in t.rows: 
-  row.cooked = row.raw[:] 
-for klass in klasses:
-  k = klass.n
-  for row in klass.has:
-    row.cooked[-1] =  k
-
-for n in t.inNums:
-  lst = ediv(t.rows, id = ("col%s" % n),
-                  num =lambda z:z.raw[n],
-                  sym =lambda z:z.cooked[-1])
-  for z in lst:
-    z.w = z.y.score*z.y.n/len(t.rows)
-  lst =  sorted(lst, key=lambda z: z.w)                
-  print("")
-  for r in lst:
-    print(r.id, r.n, r.x.lo, r.x.hi, r.w)
 
 #print(len(t.rows))
 ## print("\n",x)

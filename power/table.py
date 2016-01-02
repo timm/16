@@ -151,7 +151,7 @@ class row:
   def __init__(i,t,cells):
     i.n = row.n = row.n+1
     i.raw = cells
-    i.cooked = []
+    i.cooked = cells[:]
     i.table = t
     i.rnn, i.neighbors = 0, {}
   def all(i,what):
