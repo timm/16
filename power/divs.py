@@ -8,7 +8,7 @@ from counts import *
 @setting
 def CUT(): return o( 
   crowded=4, 
-  cohen=0.1,
+  cohen=0.5,
   fayyad=False
 )
 
@@ -57,6 +57,27 @@ def ediv(lst, id=0, small=None,
     return cut,o(n=n0,score=e0,mode=mode)
   return div(lst,small,edivide,id,num)
   
+def ereport(lst, id=0,
+            sym1= lambda x:x[0], 
+            sym2= lambda x:x[1]):
+    def report(k,sym2s,rows):
+      return o( id = id,
+                  n  = len(rows),
+                  x  = x,
+                  y  = o(n    = len(rows),
+                         score= sym2s.ent(),
+                         mode = sym2s.mode()),
+                  has= rows)
+    sym2s, rows, = {},{}
+    for row in lst:
+      x=sym1(row)
+      y=sym2(row)
+      if not x in sym2s: sym2s[x] = Sym()
+      if not x in rows:  rows[x] = []
+      sym2s[x] += y
+      rows[ x ] += [row]
+    return [report(k,sym2s[k],rows[k]) for k in sym2s]
+    
 #################################################
 
 def div(lst,small,worker,id,num):
@@ -105,17 +126,21 @@ def spliters(this,lhs,rhs,x,y,small):
 ######################################################
 
 def _sdiv():
-  t  = table(cols(FILE('data/albrecht.csv')))
+  t  = table(cols(FILE('data/nasa93.csv')))
   # cook the klasses
   w1,klasses = sdiv1(t.rows,  x= lambda z:z.raw[-1])  
-  todos = {}
+  print("#klasses",len(klasses))
   for klass in klasses: 
      for row in klass.has:
        row.cooked[-1] =  klass.n
+  for n in t.inSyms:
+    ereport(t.rows,id=n, sym1 =lambda z:z.raw[n],
+                        sym2 =lambda z:z.cooked[-1])
   nums = [ ediv(t.rows, id = n,
                         num =lambda z:z.raw[n],
                         sym =lambda z:z.cooked[-1]) 
                    for n in t.inNums ]
+  todos = {}
   for w2,ranges in sorted(nums): 
      print("")
      use = True if len(ranges) > 1 else False
@@ -123,9 +148,14 @@ def _sdiv():
         sayl([use,"col",range.id,"colW", w2,"range",range.n, "rangeW",range.w,
                 "lo",range.x.lo, "hi",range.x.hi,"n",range.y.n, "mode",range.y.mode])
        
-        if use: todos[range.y.mode] = todos.get(range.y.mode,[]) + [range]
+        if use: 
+            todos[range.y.mode] = todos.get(range.y.mode,[]) + [range]
         use=False
-  print(todos)
+  for k in todos:
+    todos[k] = sorted(todos[k],key=lambda z:(z.w,z.y.n))
+    print(""); print(k)
+    for one in todos[k]:
+      print(one)
    
 __name__ == '__main__' and _sdiv()
 

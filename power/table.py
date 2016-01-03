@@ -130,7 +130,7 @@ class table:
     i.rows=[]
     i.header=None
     i.dep,i.indep =  {},{}
-    i.sym,i.num,i.inNums = {},{},{}
+    i.sym,i.num,i.inNums, i.inSyms = {},{},{},{}
     for j,cells in enumerate(src):
       if j:
         i.rows += [row(i,cells)]
@@ -140,8 +140,9 @@ class table:
           what1= i.dep if goalp(h) else i.indep 
           what2= i.num if nump(h)  else i.sym
           what1[k] = what2[k] = h
-          if nump(h) and not goalp(h):
-            i.inNums[k] = h
+          if not goalp(h):
+            what3 = i.inNums if nump(h) else i.inSyms
+            what3[k] = h 
   def klass(i):
     for k in i.dep:
       return k,i.dep[v]
