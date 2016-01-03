@@ -8,18 +8,18 @@ from counts import *
 @setting
 def CUT(): return o( 
   crowded=4, 
-  cohen=0.5,
+  cohen=0.1,
   fayyad=False
 )
 
 def crowded(n):
   return n > the.CUT.crowded
 
-def smallEffectSize(lst,num):
+def smallEffectSize(lst,num): 
   return Num(num(z) for z in lst).sd()*the.CUT.cohen
 
-def sdiv1(lst,x=None,**d): 
-  return sdiv(lst,num1=x,num2=x,**d)
+def sdiv1(lst,x=None,small=None,**d): 
+  return sdiv(lst,num1=x,num2=x,small=small,**d)
   
 def sdiv(lst, id=0, small=None,
          num1= lambda z:z[0],
@@ -33,7 +33,8 @@ def sdiv(lst, id=0, small=None,
       if maybe < score:
         cut,score = j,maybe
     return cut, o(mu=mu,n=n0,score=sd0)
-  return div(lst,small,sdivide,id, num1)
+  small = small or smallEffectSize(lst,num1) 
+  return div(lst,sdivide,id, num1)
 
 def ediv(lst, id=0, small=None, 
          num= lambda x:x[0], 
@@ -55,7 +56,8 @@ def ediv(lst, id=0, small=None,
         else:
           cut,least = j,maybe
     return cut,o(n=n0,score=e0,mode=mode)
-  return div(lst,small,edivide,id,num)
+  small = small or smallEffectSize(lst,num) 
+  return div(lst,edivide,id,num)
   
 def ereport(lst, id=0,
             sym1= lambda x:x[0], 
@@ -76,23 +78,23 @@ def ereport(lst, id=0,
       if not x in rows:  rows[x] = []
       sym2s[x] += y
       rows[ x ] += [row]
-    return [report(k,sym2s[k],rows[k]) for k in sym2s]
+    divs = [report(k,sym2s[k],rows[k]) for k in sym2s]
+    return weighted(len(lst),divs), divs
     
 #################################################
 
-def div(lst,small,worker,id,num):
-  def weighted():
-    n0 = len(lst)
-    w = 0
-    for one in divs:
-      one.w = one.y.n/n0 * one.y.score
-      w += one.w 
-    return w
+def weighted(n,divs): 
+  w = 0
+  for one in divs:
+    one.w = one.y.n/n * one.y.score
+    w += one.w 
+  return w
+    
+def div(lst,worker,id,num):
   if not lst: return []
-  small = small or smallEffectSize(lst,num)
   divs  = recurse(sorted(lst,key=num),  
                   worker, id, num, [])
-  wall = weighted()
+  wall = weighted(len(lst),divs)
   return wall, sorted(divs,key=lambda z:(z.w,z.n))
   
 def recurse(this, divisor, id, x,cuts):
@@ -109,7 +111,7 @@ def recurse(this, divisor, id, x,cuts):
     return cuts
 
 def spliters(this,lhs,rhs,x,y,small):
-  def silly(): 
+  def silly():  
     return x(this[j]) - x(this[0]) <= small
   old = None
   for j,one in enumerate(this):
@@ -125,38 +127,43 @@ def spliters(this,lhs,rhs,x,y,small):
 
 ######################################################
 
+def bestRange(lst,todos):
+  for _,ranges in sorted(lst):
+    if len(ranges) > 1:
+      range = ranges[0]
+      todos[range.y.mode] = todos.get(range.y.mode,[]) + [range]
+      
 def _sdiv():
   t  = table(cols(FILE('data/nasa93.csv')))
   # cook the klasses
-  w1,klasses = sdiv1(t.rows,  x= lambda z:z.raw[-1])  
-  print("#klasses",len(klasses))
+  w1,klasses = sdiv1(t.rows,  x= lambda z:z.raw[-1]) 
   for klass in klasses: 
      for row in klass.has:
-       row.cooked[-1] =  klass.n
-  for n in t.inSyms:
-    ereport(t.rows,id=n, sym1 =lambda z:z.raw[n],
+       row.cooked[-1] =  klass.n 
+     sayl([":klass",klass.n,":lo",klass.x.lo,":hi",klass.x.hi])
+  print(" ----")    
+  todos = {}
+  bestRange( [ereport(t.rows,id=n, 
+                        sym1 =lambda z:z.raw[n],
                         sym2 =lambda z:z.cooked[-1])
-  nums = [ ediv(t.rows, id = n,
+                  for n in t.inSyms], todos)
+  bestRange( [ediv(t.rows, id = t.header[n],
                         num =lambda z:z.raw[n],
                         sym =lambda z:z.cooked[-1]) 
-                   for n in t.inNums ]
-  todos = {}
-  for w2,ranges in sorted(nums): 
-     print("")
-     use = True if len(ranges) > 1 else False
-     for range in ranges:
-        sayl([use,"col",range.id,"colW", w2,"range",range.n, "rangeW",range.w,
-                "lo",range.x.lo, "hi",range.x.hi,"n",range.y.n, "mode",range.y.mode])
-       
-        if use: 
-            todos[range.y.mode] = todos.get(range.y.mode,[]) + [range]
-        use=False
+                   for n in t.inNums ], todos) 
   for k in todos:
-    todos[k] = sorted(todos[k],key=lambda z:(z.w,z.y.n))
-    print(""); print(k)
+    todos[k] = sorted(todos[k],key=lambda z:(z.w,-1*z.y.n))
     for one in todos[k]:
-      print(one)
-   
+      sayl([":klass",one.y.mode,
+            ":id",one.id,
+          # ":lo",one.x.lo,
+          # ":hi",one.x.hi,
+           ":n",one.y.n,
+           ":errors", one.w
+           ])
+print("get discrete class vals to print")
+print("why an i not printing attibute ranges?")
+
 __name__ == '__main__' and _sdiv()
 
 def _ediv():

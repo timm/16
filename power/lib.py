@@ -19,7 +19,7 @@ def sayl(lst):
     def prep(x):
       if isinstance(x,float): x = "%5.3f" % x
       return(str(x))
-    print(', '.join(map(prep,lst)))
+    print(' '.join(map(prep,lst)))
 
 class DefaultDict(dict):
     """Dictionary with a default value for unknown keys."""
