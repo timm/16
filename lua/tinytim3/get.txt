@@ -1,0 +1,14 @@
+#get files from directory that end in .pdf, but only if no local newer files.
+wget -nd -r  -l 1 -N -A pdf http://unbox.org/wisp/var/11/general  2> /dev/null
+
+
+
+!/bin/bash
+
+[ -n "$1" ] && export QUERY_STRING="$1"
+
+echo "Content-Type: text/html\n\n\n";
+
+wget -q -O - http://unbox.org/things/var/timm/13/472/doc/header.html
+wget -q -O - http://unbox.org/things/var/timm/13/472/doc/$1.html
+wget -q -O - http://unbox.org/things/var/timm/13/472/doc/footer1.html

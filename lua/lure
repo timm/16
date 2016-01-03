@@ -1,0 +1,10 @@
+Com="test(\"$2\")"
+[ -z "$2" ] && Com="tests()"
+
+Com="lua -e dofile(\"$1.lua\");make();$Com"
+
+echo "LURE = timm's LUa Runtime Envionment" >&2
+echo $Com >&2
+echo "" >&2
+
+time $Com
