@@ -14,7 +14,7 @@ do
        n = n + 1
        print("Fails:",err) end end
   local function tests(t)
-    for _,x in pairs(t) do test(x) end end 
+    for s,x in pairs(t) do print("#",s) test(x) end end 
   function ok(t) 
     if empty(t) then report() else tests(t) end end
 end
