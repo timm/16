@@ -63,7 +63,7 @@ class Nums:
       num + x 
 
 def _counts():
-  settings.reset(seed=1) 
+  
   most = 1000
   want = [0.05, 0.25, 0.5, 0.75,0.95]
   COUNTS(max=most,qs=want)

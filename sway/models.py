@@ -3,6 +3,7 @@ import  sys
 sys.dont_write_bytecode = True 
 
 from model import *
+from space import *
 
 class ZDT1(Model):
   n=30
@@ -94,4 +95,38 @@ class Viennet4(Model):
     i.decs = [dec(x) for x in range(Viennet4.n)]
     i.objs = [Less("f1",maker=f1),
               Less("f2",maker=f2),
-              Less("f3",maker=f3)]   
+              Less("f3",maker=f3)] 
+ 
+########### test cases
+
+def _models():
+  def worker(m):
+    x = m.eval(m.decide())
+    logDecs + x
+    logObjs + x
+    return x
+  settings.reset(seed=1) 
+  for f in [Fonseca,Viennet4,ZDT1, DTLZ7_2_3,DTLZ7_4_5]:
+    m = f()
+    logDecs = Space(value=decs)
+    logObjs = Space(value=objs)
+    all = [worker(m) for _ in xrange(1000)]
+    one = all[0]
+    far,d1 = logDecs.furthest(one,all)
+    near,d2= logDecs.closest(one,all)
+    assert d2 < d1
+    
+def _Viennet4():
+  settings.reset(seed=1) 
+  m = Viennet4()
+  x = m.eval(m.decide()) 
+  assert {'objs' :  [5.101, -12.897, 17.829], 
+          'decs' :  [-0.037, -0.404]} \
+            == {'decs' : r3s(x.decs), 'objs': r3s(x.objs)}
+            
+#def _bdoms():
+ ##pop = [m.eval(m.decide()) for _ in xrange(1000)]
+  #tournament(m,pop
+            
+  
+__name__ == '__main__' and ok( _models, _Viennet4)

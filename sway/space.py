@@ -4,26 +4,33 @@ sys.dont_write_bytecode = True
 
 from lib import *
 
+@setting
+def SPACE(): return o(
+  norm=True
+)
+
+# need a way to init from a list
+
 class Space:
   def __init__(i,one=None,value=same,inits=[]):
     i.value = value
     i.cache = {}
-    one = one or inits[0]
-    lst     = value(one)
-    assert lst,"need one"
-    i.lo    = [0 for _ in lst]
-    i.hi    = [0 for _ in lst]
+    i.lo, i.hi = None, None
     i.updates(inits)
+  def ready(i,one):
+    if not i.lo:
+      i.lo    = [ 10**32 for _ in i.value(one)]
+      i.hi    = [-10**32 for _ in i.value(one)]
   def updates(i,lst=[]):
-    map(i.update,lst)
-  def update(i,one):
+    map(i.__add__,lst)
+  def __add__(i,one):
+    i.ready(one)
     for n,(lo,hi,new) in enumerate(zip(i.lo, i.hi,
                                        i.value(one))):
       if new > hi:
         i.hi[n] = new
       if new < lo:
         i.lo[n] = new
-      
   def dist(i,xs,ys):
     a, b = id(xs), id(ys)
     if a > b:
@@ -46,9 +53,12 @@ class Space:
   def norm(i,x,n):
     if x < i.lo[n]: i.lo[n] = x
     if x > i.hi[n]: i.hi[n] = x
-    lo = i.lo[n]
-    hi = i.hi[n]
-    return (x- lo)/ (hi - lo + 0.0001)
+    if the.SPACE.norm:
+      lo = i.lo[n]
+      hi = i.hi[n]
+      return div( (x- lo) , (hi - lo) )
+    else:
+      return x
   def furthest(i,one,all,better=gt,most=0):
     d, out = most, one
     for two in all:

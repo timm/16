@@ -28,6 +28,9 @@ class Decision:
 
 An = A = Decision
 
+def decs(x): return x.decs
+def objs(x): return x.objs
+
 class Model:
     def __init__(i):
         i.about() 
@@ -40,7 +43,7 @@ class Model:
         retries = the.MODEL.retries
       while True:
         x = i.eden() 
-        if ok(x): return x 
+        if i.ok(x): return x 
         retries -= 1
         assert retries>0,'cannot satisfy constraints while creating'
     def eval(i,x):
@@ -48,8 +51,8 @@ class Model:
         x.objs = [f(x) for f in i.objs] 
       return x
     def select(i,x,y,how="bdom",space=None):
-      return i.bdom(x,y) if how == "bdom" else i.cdom(x,y,space)
-    def bdom(i,x,y):
+      return i.bdom(x,y,space) if how == "bdom" else i.cdom(x,y,space)
+    def bdom(i,x,y,_=None):
         betters = False
         for u,v,meta in zip(x.objs,y.objs,i.objs):
             if meta.better(u,v):
@@ -72,21 +75,15 @@ class Model:
                    in zip(x,y,i.objs) ]
         return sum(losses) / n
       return loss(x,y) * bigEnough < loss(y,x) 
- 
-def bdoms(model,frontier,*_,**d):
+
+def tournament(model,frontier,space,how='bdom'):
   for x in frontier:
     x.alive = True
   for x in frontier:
     for y in frontier:
-      if y.alive and model.bdom(x,y):
-        y.alive = False
+      if y.alive:
+        if model.select(x,y,how=how,space=space):
+          y.alive = False
   return [f for f in frontier if f.alive]
 
-def cdoms(model,frontier,space):
-  for x in frontier:
-    x.alive = True
-  for x in frontier:
-    for y in frontier:
-      if y.alive and model.cdom(x,y,space):
-         y.alive = False
-  return [f for f in frontier if f.alive]
+ 

@@ -60,7 +60,6 @@ class Log:
     return Log(inits, value=i.value,
                       big=i.big,bins=i.bins, space=i.space)
   def best(i,want,most=0.33,cmp=lt):
-    print(i.east is want)
     if east is want:
       return i.clone([x for x in i.values if
                       i.pos(x).a/i.pos(x).b < most])
