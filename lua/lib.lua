@@ -3,6 +3,11 @@ floor= math.floor
 p    = function (x) return floor(0.5+ 100*x) end
 empty= function (t) return next(t) == nil end
 
+function items(lst)
+  return function()
+    for _,x in pairs(lst) do return x end
+end end  
+
 function member(x,lst) 
   for _,v in pairs(lst) do
     if v == x then return true end end
