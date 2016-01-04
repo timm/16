@@ -81,6 +81,5 @@ def _counts():
       reSampling  = 0 if abs(reSampling)  < 5 else reSampling
       print(max,w,subSampling, reSampling, 
             abs(reSampling) < abs(subSampling))
-   
-  
+
 __name__ == '__main__' and _counts()
