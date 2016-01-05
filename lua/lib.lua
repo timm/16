@@ -3,14 +3,45 @@ floor= math.floor
 p    = function (x) return floor(0.5+ 100*x) end
 empty= function (t) return next(t) == nil end
 
-function items(lst)
-  return function()
-    for _,x in pairs(lst) do return x end
-end end  
+function items (lst)
+   local i,max = 0, #lst 
+   return function ()
+    i = i + 1 
+    if i <= max then  return lst[i] end end end 
+
+for x in items({1,30,33})
+  do print("z",x) end
+
+function rep(n,c) 
+   c = c or " "
+   local out = ""
+   for i=1,n do out = out .. c end
+   return out
+end
+ 
+function o(data)print(oo(data)) end
+
+function oo(data, indent)  -- convert anything to a string
+   if(indent == nil) then indent = 0 end 
+   local str,pad = "",rep(indent)
+   if type(data) ~= "table" then 
+      return pad .. tostring(data)
+   end
+   for i, v in pairs(data) do 
+      str = str .. pad .. i .. ": "
+      if(type(v) == "table") then 
+	 str = str .." \n"  .. oo(v,indent+2)
+      else 
+	 str = str .. oo(v,0) .. "\n"
+   end end
+   return str
+end
+
+o({1,2,b={l=12,m=100}, a=3})
 
 function member(x,lst) 
-  for _,v in pairs(lst) do
-    if v == x then return true end end
+  for y in items(lst) do
+    if x== y then return true end end
   return false
 end
 
@@ -39,6 +70,8 @@ do
   function ok(t) 
     if empty(t) then report() else tests(t) end end
 end 
+
+rogue()
 
 Object={}
 
