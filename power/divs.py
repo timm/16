@@ -65,7 +65,7 @@ def ereport(lst, id=0,
     def report(k,sym2s,rows):
       return o( id = id,
                   n  = len(rows),
-                  x  = x,
+                  x  = o(k=k),
                   y  = o(n    = len(rows),
                          score= sym2s.ent(),
                          mode = sym2s.mode()),
@@ -137,13 +137,12 @@ def _sdiv():
   t  = table(cols(FILE('data/nasa93.csv')))
   # cook the klasses
   w1,klasses = sdiv1(t.rows,  x= lambda z:z.raw[-1]) 
-  for klass in klasses: 
+  for klass in sorted(klasses,key=lambda x:x.n): 
      for row in klass.has:
        row.cooked[-1] =  klass.n 
-     sayl([":klass",klass.n,":lo",klass.x.lo,":hi",klass.x.hi])
-  print(" ----")    
+     sayl([":klass",klass.n,":lo",klass.x.lo,":hi",klass.x.hi]) 
   todos = {}
-  bestRange( [ereport(t.rows,id=n, 
+  bestRange( [ereport(t.rows,id=t.header[n], 
                         sym1 =lambda z:z.raw[n],
                         sym2 =lambda z:z.cooked[-1])
                   for n in t.inSyms], todos)
@@ -153,14 +152,28 @@ def _sdiv():
                    for n in t.inNums ], todos) 
   for k in todos:
     todos[k] = sorted(todos[k],key=lambda z:(z.w,-1*z.y.n))
+    print("\n------")
     for one in todos[k]:
-      sayl([":klass",one.y.mode,
+      sayl(showOne(one))
+      
+def showOne(one):
+  if 'lo' in one.x.__dict__.keys():
+     return [":klass",one.y.mode,
             ":id",one.id,
-          # ":lo",one.x.lo,
-          # ":hi",one.x.hi,
+           ":lo",one.x.lo,
+           ":hi",one.x.hi,
            ":n",one.y.n,
            ":errors", one.w
-           ])
+            ]
+  else: 
+    return [":klass",one.y.mode,
+            ":id",one.id,
+           ":=",one.x.k, 
+           ":type discrete",
+           ":n",one.y.n,
+           ":errors", one.w
+            ]
+    
 print("get discrete class vals to print")
 print("why an i not printing attibute ranges?")
 
