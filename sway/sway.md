@@ -7,3 +7,22 @@
     \/_____/\/__//__/   \/__/\/_/ `/___/> \ 
                                      /\___/ 
                                      \/__/  
+                                     
+                                     
+=========
+
+every file tests itself; e.g. 
+
+    python
+                           
+boot.py  
+control.py  
+counts.py  
+lib.py  
+log.py  
+model.py 
+models.py  
+mutate.py  
+old/  
+space.py  
+sway.txt     
