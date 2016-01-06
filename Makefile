@@ -28,7 +28,4 @@ timm:
 	@git config --global user.name "Tim Menzies"
 	@git config --global user.email tim.menzies@gmail.com
 
-setup:
-	sudo pip install markdown pygments
-	wget -O hi https://raw.githubusercontent.com/timm/timmnix/master/dotprofile
-	got add hi
+ 

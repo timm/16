@@ -1,3 +1,4 @@
+# Sway
 from __future__ import print_function, division
 import  sys
 sys.dont_write_bytecode = True 
@@ -86,4 +87,5 @@ def tournament(model,frontier,space,how='bdom'):
           y.alive = False
   return [f for f in frontier if f.alive]
 
- 
+if __name__ == '__main__':
+   print('# Note:\n# To test model.py, load models.py')

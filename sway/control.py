@@ -1,3 +1,4 @@
+# sway
 def optimize(model,how,seed=1,init=10,verbose=False,retries=100,**d):
   rseed(seed)
   init=10*len(model.objs)

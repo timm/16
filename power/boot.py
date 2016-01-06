@@ -1,5 +1,5 @@
 from __future__ import print_function, division
-import zipfile,re,sys,traceback,sys
+import zipfile,re,sys,traceback,random,sys
 sys.dont_write_bytecode = True 
 
 ##################################################
@@ -73,14 +73,15 @@ class settings:
     settings.funs[what] = g
     settings.all[what]  = g()
   @staticmethod
-  def reset():
+  def reset(seed=1):
     for k,v in settings.funs.items():
       settings.all[k] = v() 
+    random.seed(seed)
 
 def setting(f):
   settings(f)
   return settings.funs[f.__name__]
 
 the=settings.all
-
+reset=settings.reset
 __name__ == '__main__' and ok(_ok,_o)

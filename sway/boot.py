@@ -1,3 +1,4 @@
+# sway
 from __future__ import print_function, division
 import zipfile,re,traceback,random,sys
 sys.dont_write_bytecode = True 
@@ -83,5 +84,6 @@ def setting(f):
   return settings.funs[f.__name__]
 
 the=settings.all
+reset=settings.reset
 
 __name__ == '__main__' and ok(_ok,_o)

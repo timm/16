@@ -1,3 +1,4 @@
+# sway
 from __future__ import print_function, division
 import  sys
 sys.dont_write_bytecode = True 
@@ -62,24 +63,24 @@ class Nums:
     for x,num in zip(i.parts(x),i.nums):
       num + x 
 
-def _counts():
-  
+def _counts():   
+  reset()
   most = 1000
   want = [0.05, 0.25, 0.5, 0.75,0.95]
   COUNTS(max=most,qs=want)
   got1 = Num([r() for _ in xrange(most)]).also().range
   got2 = Num([r() for _ in xrange(most)]).also().range
   print("M P SubSampling ReSampling SubWorseThanReSampling")
-  for max in [32,64,128,256,512]:
-    print("\n----")
-    COUNTS(max=max,qs=want)
+  for few in [32,64,128,256,512]: 
+    print("")
+    COUNTS(max=few,qs=want)
     got0 = Num([r() for _ in xrange(most)]).also().range
     for g0,w,g1,g2 in zip(got0,want,got1,got2):
       subSampling = r3(100*div(g0-w,w))
       reSampling  = r3(100*div(g1-g2,g1))
       subSampling = 0 if abs(subSampling) < 5 else subSampling
       reSampling  = 0 if abs(reSampling)  < 5 else reSampling
-      print(max,w,subSampling, reSampling, 
+      print(few,w,subSampling, reSampling, 
             abs(reSampling) < abs(subSampling))
 
 __name__ == '__main__' and _counts()
