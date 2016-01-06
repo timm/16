@@ -16,8 +16,10 @@ def r3s(lst) : return map(r3,lst)
 def r4s(lst) : return map(r4,lst)
 def r5s(lst) : return map(r5,lst)
 
-def say(x): 
-  sys.stdout.write(str(x)); sys.stdout.flush()
+def say(*lst):
+  for x in lst:
+    sys.stdout.write(str(x))
+  sys.stdout.flush()
 
 def printm(matrix,sep=' | '):
   s = [[str(e) for e in row] for row in matrix]
@@ -75,4 +77,11 @@ def _lib():
   assert r3s([1.1111111,2.2222]) == [1.111,2.222]
   assert div(1,0) > 0
   
-__name__ == '__main__' and ok(_lib,_textplot)
+##################
+# start up stuff
+
+def main(name,*lst):
+  if name == '__main__':
+    ok(*lst)
+      
+main(__name__ ,_lib, _textplot)

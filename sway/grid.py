@@ -8,53 +8,105 @@ from space import *
 @setting
 def GRID(): return o(
  bins=16, # each grid has bins**2 cells
- tooMuch= 1.025, # regrowth grids when new "c" more than "bigger"
+ tooMuch= 1.000001 # regrowth grids when new "c" more than "bigger"
 )
 
 class Grid:
-  def __init__(i,inits=[], space=None):
-    i.reset()
+  def __init__(i,inits=[],space=None):
+    i.one, i.two = None, None
     i.space = space or Space()
-    i.east, i.west, i.c = None,None,None
+    i.worker = None
+    map(i.__add__,inits)
+  def __add__(i,x):
+    if not i.one: 
+      i.one =x 
+      return 0,0
+    if not i.two:
+      i.two = x
+      i.worker = Grid1(i.one,i.two,i.space)
+      return 0,0
+    if i.worker:
+      return i.worker + one
+    
+class Grid1:
+  def __init__(i,east,west, space):
+    i.reset()
+    i.space = Space()
     map(i.__add__, inits)
   def reset(i):
+    i.east, i.west = None,None
+    i.c      = None
     i.values = [] 
     i._pos   = {}
-    i.grid   = [[[] for _ in range(the.GRID.bins)]
-                    for _ in range(the.GRID.bins)]
-  def distances(one):
-    i.space.update(one)
+    i.cells   = [[[] for _ in range(the.GRID.bins)]
+                     for _ in range(the.GRID.bins)]
+  def distances(i,one):
+    i.space + one
     if i.c == None:
-      i.space.dist(i.east,i.west) 
-    a = i.space.dist(i.east,one),
+      i.c = i.space.dist(i.east,i.west) 
+    a = i.space.dist(i.east,one)
     b = i.space.dist(i.west,one)
-    return a,b,c
+    return a, b, i.c
   def grow(i,east,west):
-    b4,i.east, i.west = i.values[:],east,west
-    i.reset()
-    i.c = i.space.dist(i.east,i.west)
-    map(i.__add__,[i.east,i.west]+b4)
-  def __add__(i,one):
-    if not i.east: i.east = one; return 0,0
-    if not i.west: i.west = one; return 0,0
-    a,b,c = i.distances(one)
-    if  a*the.GRID.tooMuch > c:
-      i.grow(i.east,one)
-      return i + one
-    if b*the.GRID.tooMuch > c: 
-      i.grow(one,i.west)
-      return i + one
+    say("*",len(i.values))
+    b4 =  i.values[:]
+    i.reset() 
+    map(i.__add__,b4)
+  def __add__(i,one):    
     i.values += [one]
+    if len(i.values) < 3:
+      return 0,0
+    elif len(i.values) == 3:
+      i.east = i.values[0]
+      i.west = i.values[1]
+      i.add(i.east)
+      i.add(i.west)
+      return i.add( one)
+    else:
+      return i.add(one)
+  def add(i,one):
+    a,b,c = i.distances(one)
+    if c > 0:
+      if  a > c*the.GRID.tooMuch : 
+        i.grow(i.east,one)
+        return i + one
+      if b > c*the.GRID.tooMuch: 
+        i.grow(one,i.west)
+        return i + one
     x = div( a**2 + c**2 - b**2  , 2*c)
     x = a if x**2 > a**2 else x
     y = sqrt(a**2 - x**2)
     binx, biny = i.bin(x), i.bin(y)
-    i.grid[ binx ][ biny ] += one
+    i.cells[ binx ][ biny ] += one
     i._pos[id(one)] = o(x=x,y=y,binx=binx,
                         biny=biny,a=a,b=b)
-      return x,y
+    return x,y
   def bin(i,x):
     x = int(x/((i.c+0.0001)/the.GRID.bins))
     return max(0,min(the.GRID.bins - 1, x))
   def pos(i,x) :
     return i._pos[id(x)]
+    
+def _grid(items=100,arity=5):
+  def show(cell):
+    p = len(cell)
+    say(p," ")
+    q = int(100 * p/len(g.values))
+    return q if q else " "
+  reset()
+  g=Grid()
+  #for _ in xrange(items):
+   # one = [r3(r()/10) for _ in xrange(arity)]
+    #g + one
+  for _ in xrange(items):
+    one = [r3(r()*10) for _ in xrange(arity)]
+    g + one
+  print("") 
+  print(len(g.values))
+  m= map(lambda cells:  
+            map(lambda cell: show(cell), cells),
+         g.cells)
+  printm(m)
+  print(len(g.values))
+    
+main(__name__,_grid)

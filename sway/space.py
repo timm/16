@@ -73,6 +73,7 @@ class Space:
 
 def _space(arity=5, items=1000):
   reset() 
+  print(1)
   space=Space() 
   one = None
   all = []
@@ -91,5 +92,5 @@ def _space(arity=5, items=1000):
   print("furthest",three,d3)
   assert d2 < d3  
   
-__name__ == '__main__' and _space()
+main(__name__, _space)
   

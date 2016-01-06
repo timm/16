@@ -84,4 +84,4 @@ def _counts():
       print(few,w,subSampling, reSampling, 
             abs(reSampling) < abs(subSampling))
 
-__name__ == '__main__' and _counts()
+main(__name__, _counts)
