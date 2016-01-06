@@ -52,9 +52,9 @@ Every file tests itself; e.g.
 
 Runs test scripts in boot.py.
 
--  [ ] boot.py  
--  [ ] lib.py  
--  [ ] counts.py  
+-  [X] boot.py  
+-  [X] lib.py  
+-  [X] counts.py  
 -  [ ] space.py
 -  
 control.py  
