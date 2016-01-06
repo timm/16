@@ -55,7 +55,7 @@ Runs test scripts in boot.py.
 -  [X] boot.py  
 -  [X] lib.py  
 -  [X] counts.py  
--  [ ] space.py
+-  [X] space.py
 -  
 control.py  
 log.py  

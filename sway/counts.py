@@ -23,7 +23,9 @@ class Some:
     elif r() <= now/i.n:
       i.all[ int(r() * now) ]= x
 
-class Num:
+class Log: pass
+
+class Num(Log)
   def __init__(i,inits=[]):
     i.hi = i.lo = None
     i.mu = i.sd = i.m2 = 0  
@@ -54,14 +56,13 @@ class Num:
                   range=r([lst[int(m*x)] for x in the.COUNTS.qs]))
     return i._also
   
-class Nums:
-  def __init__(i,n,parts,inits=[]):
-    i.parts=parts
-    i.nums=[Num() for _ in xrange(n)]
+class Logs:
+  def __init__(i,logs=[],inits=[]):
+    i.logs = logs
     map(i.__add__,inits)
   def __add__(i,x):
-    for x,num in zip(i.parts(x),i.nums):
-      num + x 
+    for log in i.logs
+      log + x
 
 def _counts():   
   reset()

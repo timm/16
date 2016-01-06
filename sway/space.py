@@ -37,7 +37,7 @@ class Space:
     if a > b:
       return i.dist(ys,xs)
     k = (a,b)
-    if k in i.cache:
+    if k in i.cache: 
       return i.cache[k]
     else:
       i.cache[k] = d = i.dist1(xs,ys)
@@ -71,5 +71,25 @@ class Space:
   def closest(i,one,all):
     return i.furthest(one,all,better=lt,most=10**32)
 
-
-    
+def _space(arity=5, items=1000):
+  reset() 
+  space=Space() 
+  one = None
+  all = []
+  for _ in xrange(items):
+    one = [r3(r()) for _ in xrange(arity)]
+    space + one
+    all += [one]
+  print("Lo",space.lo)
+  print("Hi",space.hi)
+  assert sum(space.lo) < 0.01*arity
+  assert sum(space.hi) > 0.99*arity
+  two,d2   = space.closest(one,all)
+  three,d3 = space.furthest(one,all)
+  print("one",one)
+  print("closest",two,d2)
+  print("furthest",three,d3)
+  assert d2 < d3  
+  
+__name__ == '__main__' and _space()
+  

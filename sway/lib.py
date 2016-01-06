@@ -1,6 +1,7 @@
 # sway
 from __future__ import print_function, division
-import random,math, sys
+import random,math, numpy,sys
+import gnuplotlib
 sys.dont_write_bytecode = True
 
 from boot import *
@@ -17,6 +18,27 @@ def r5s(lst) : return map(r5,lst)
 
 def say(x): 
   sys.stdout.write(str(x)); sys.stdout.flush()
+
+def printm(matrix,sep=' | '):
+  s = [[str(e) for e in row] for row in matrix]
+  lens = [max(map(len, col)) for col in zip(*s)]
+  fmt = sep.join('{{:{}}}'.format(x) for x in lens)
+  for row in [fmt.format(*row) for row in s]:
+    print(row)
+    
+# https://github.com/dkogan/gnuplotlib
+
+data = numpy.asarray 
+def textplot(*l,**d):
+  gnuplotlib.plot(*l,unset='grid', 
+                    terminal='dumb 80 30',**d)
+ 
+def _textplot(): 
+  x    = data([r() for _ in xrange(100)])
+  textplot(x, x**0.33, 
+          xlabel="x= width",title="y= black splots",
+          yrange=[0,1.1],
+          cmds="set key top left")
 
 #### one-liners  
 
@@ -53,4 +75,4 @@ def _lib():
   assert r3s([1.1111111,2.2222]) == [1.111,2.222]
   assert div(1,0) > 0
   
-__name__ == '__main__' and ok(_lib)
+__name__ == '__main__' and ok(_lib,_textplot)

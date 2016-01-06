@@ -29,8 +29,8 @@ class Decision:
 
 An = A = Decision
 
-def decs(x): return x.decs
-def objs(x): return x.objs
+def decisions(x): return x.decs
+def objectives(x): return x.objs
 
 class Model:
     def __init__(i):
