@@ -18,9 +18,14 @@ class Some:
   def __add__(i,x):
     i.n += 1
     now = len(i.all)
-    if now < i.max:
-      i.all += [x]
-    elif r() <= now/i.n:
+    if now > i.max:    return i.afterFull(x)
+    if now < i.max:    return i.beforeFull(x)
+    return i.atFull(x)
+  def beforeFull(i,x): i.all += [x]
+  def atFull(i,x)    : return afterFull(i,x)
+  def afterFull(i,x):
+    now = len(i.all)
+    if r() <= now/i.n:
       i.all[ int(r() * now) ]= x
 
 class Log: pass

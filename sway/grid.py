@@ -11,22 +11,22 @@ def GRID(): return o(
  tooMuch= 1.000001 # regrowth grids when new "c" more than "bigger"
 )
 
-class Grid:
+class Grid(Some)
+  #XXX 
   def __init__(i,inits=[],space=None):
     i.one, i.two = None, None
     i.space = space or Space()
     i.worker = None
     map(i.__add__,inits)
-  def __add__(i,x):
+  def __add__(i,x,out=(0,0)):
     if not i.one: 
-      i.one =x 
-      return 0,0
-    if not i.two:
+      i.one = x  
+    elif not i.two:
       i.two = x
-      i.worker = Grid1(i.one,i.two,i.space)
-      return 0,0
-    if i.worker:
-      return i.worker + one
+      i.worker = Grid1(i.one,i.two,i.space) 
+    else i.worker:
+      out = i.worker + one
+    return out
     
 class Grid1:
   def __init__(i,east,west, space):
