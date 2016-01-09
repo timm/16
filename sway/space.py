@@ -17,13 +17,11 @@ class Space:
     i.value = value
     i.cache = {}
     i.lo, i.hi = None, None
-    i.updates(inits)
+    map(i.__add__,inits)
   def ready(i,one):
     if not i.lo:
       i.lo    = [ 10**32 for _ in i.value(one)]
       i.hi    = [-10**32 for _ in i.value(one)]
-  def updates(i,lst=[]):
-    map(i.__add__,lst)
   def __add__(i,one):
     i.ready(one)
     for n,(lo,hi,new) in enumerate(zip(i.lo, i.hi,
@@ -43,6 +41,7 @@ class Space:
       i.cache[k] = d = i.dist1(xs,ys)
       return d
   def dist1(i,xs,ys,d=0,n=0):
+    i.ready(xs)
     one = i.value(xs)
     two = i.value(ys)
     for n,(x,y) in enumerate(zip(one,two)):

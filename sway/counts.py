@@ -21,8 +21,10 @@ class Some:
     if now > i.max:    return i.afterFull(x)
     if now < i.max:    return i.beforeFull(x)
     return i.atFull(x)
-  def beforeFull(i,x): i.all += [x]
-  def atFull(i,x)    : return afterFull(i,x)
+  def beforeFull(i,x):
+    i.all += [x]
+  def atFull(i,x): 
+    return i.afterFull(x)
   def afterFull(i,x):
     now = len(i.all)
     if r() <= now/i.n:
@@ -30,7 +32,7 @@ class Some:
 
 class Log: pass
 
-class Num(Log)
+class Num(Log):
   def __init__(i,inits=[]):
     i.hi = i.lo = None
     i.mu = i.sd = i.m2 = 0  
@@ -66,7 +68,7 @@ class Logs:
     i.logs = logs
     map(i.__add__,inits)
   def __add__(i,x):
-    for log in i.logs
+    for log in i.logs:
       log + x
 
 def _counts():   
