@@ -15,13 +15,13 @@
 sway:
 
 + _verb_
-      +. move or cause to move slowly or rhythmically backward and forward or from side to side.
+     + move or cause to move slowly or rhythmically backward and forward or from side to side.
          "he swayed slightly on his feet".
          synonyms:	swing, shake, oscillate,
          undulate, move to and fro, move back and 
          forth More  
 + _noun_
-      +. rule; control. "the part of the continent under 
+    + rule; control. "the part of the continent under 
          Russia's sway".
          synonyms:	clout, influence, power, weight, authority, control
          "his opinions have a lot of sway"
