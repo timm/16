@@ -62,13 +62,14 @@ These values can be reset to their initial _defaults_ using:
 This call finds **all** sets and sets them back to their _defaults_
 (as well as resetting the random number seed to _"1"_). 
     
-## Tests
+## Status
 
-Every file tests itself; e.g. 
+Every file tests itself; e.g.  to run scripts in boot.py:
 
     python boot.py
 
-Runs test scripts in boot.py.
+The following files (that have check marks)
+currently are passing their tests:
 
 -  [X] boot.py  
 -  [X] lib.py  
@@ -76,7 +77,6 @@ Runs test scripts in boot.py.
 -  [X] space.py
 -  [x] grid.py
 -  [ ] mutate.py : generic retry loop
-
-control.py 
-model.py 
-models.py   
+-  [ ] control.py 
+-  [ ] model.py 
+-  [ ] models.py   
