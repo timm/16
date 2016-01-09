@@ -28,19 +28,7 @@ def printm(matrix,sep=' | '):
   for row in [fmt.format(*row) for row in s]:
     print(row)
     
-# https://github.com/dkogan/gnuplotlib
 
-data = numpy.asarray 
-def textplot(*l,**d):
-  gnuplotlib.plot(*l,unset='grid', 
-                    terminal='dumb 80 30',**d)
- 
-def _textplot(): 
-  x    = data([r() for _ in xrange(100)])
-  textplot(x, x**0.33, 
-          xlabel="x= width",title="y= black splots",
-          yrange=[0,1.1],
-          cmds="set key top left")
 
 #### one-liners  
 
@@ -77,6 +65,22 @@ def _lib():
   assert r3s([1.1111111,2.2222]) == [1.111,2.222]
   assert div(1,0) > 0
   
+####################
+# ascii graph stuff
+# https://github.com/dkogan/gnuplotlib
+
+data = numpy.asarray 
+def textplot(*l,**d):
+  gnuplotlib.plot(*l,unset='grid', 
+                    terminal='dumb 80 30',**d)
+ 
+def _textplot(): 
+  x    = data([r() for _ in xrange(100)])
+  textplot(x, x**0.33, 
+          xlabel="x= width",title="y= black splots",
+          yrange=[0,1.1],
+          cmds="set key top left")
+          
 ##################
 # start up stuff
 

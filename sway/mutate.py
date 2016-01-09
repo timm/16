@@ -4,91 +4,90 @@ import  sys
 sys.dont_write_bytecode = True 
 
 from lib import *
+from functools import wraps
 
 @setting
 def MUTATE(): return o(
-  p=0.33,
-  retries=100
+  sa       = o(p    = 0.33),
+  nudge    = o(push = 2),
+  de       = o(cr = 0.7, f=0.3),
+  retries  = 100,
+  restrain = lambda x,sp: bounded(x,sp)
 )
 
-def mutator(f):
-  def worker(old): 
-    retries=the.MUTATE.RETRIES
-    tmp= o(objs=None,
-         decs = f(old))
-  if ok:
-    assert retries > 0,'too hard to satisfy constraints in mutation'
-    if not ok(tmp):
-      return worler(one,
-                    log=log,p=p, value=value,
-                    evaluate=evaluate, ok=ok,
-                    retries=retries - 1)
-  return evaluate(tmp) if evaluate else tmp
+def bounded(lst,los,his):
+  def bounded1(x, y,z)
+    return y if y==z else y + ((x - y) % (z - y))
+  return [bounded1(x,lo,hi) for n,x in 
+          enumerate(lst, los, his)]
+
+def truncated(x,lo,hi):
+  return [min(x,max(x,lo),hi) for n,x in 
+          enumerate(lst,los,his)]
+
+def _restrain()
+  los  = [3,3,3,3]
+  his  = [7,7,7,7]
+  data = [2,3,7,8]
+  assert [6,3,7,4] == bounded( data,los,his)
+  assert [3,3,7,7] == truncated(data,los,his)
+
+def mutator(f): 
+  warn = "too hard to satisfy %s" % f.__name__
+  @wraps(f)
+  def worker(*l,
+             los      = None,
+             his      = None,
+             ok       = None,
+             evaluate = None, 
+             retries  = the.MUTATE.RETRIES):
+    dec1 = f(*l,los, his)
+    dec2 = the.MUTATE.restrain(dec1,los,his)
+    new  = o(objs=None,decs = dec2)
+    if ok:
+      assert retries > 0,warn
+      if not ok(new):
+        return worker(*l,
+                      los      = los,
+                      his      = his,
+                      ok       = ok,
+                      evaluate = evaluate,
+                      retries  = retries-1)
+    return evaluate(new) if evaluate else new
+  return worker
   
-def mutate(one,log=None,p=0.33, value=same,evaluate=None,ok=None,retries=100):
-  p = the.MUTATE.p
-  retries=the.MUTATE.RETRIES
-  tmp= o(objs=None,
-         decs = [mutate1(old,p,log.space.lo[n],log.space.hi[n])
-                   for n,old
-                   in enumerate(value(one))])
-  if ok:
-    assert retries > 0,'too hard to satisfy constraints in mutation'
-    if not ok(tmp):
-      return mutate(one,
-                    log=log,p=p, value=value,
-                    evaluate=evaluate, ok=ok,
-                    retries=retries - 1)
-  return evaluate(tmp) if evaluate else tmp
+@mutator
+def mutate(old,los,his):
+  p = the.MUTATE.sa.p
+  return [x if r() <= p else lo + (hi - lo)*r() 
+          for x,lo,hi 
+          in  zip(old.decs,los,his)]
 
-def mutate1(old,p,lo,hi):
-  x = (hi - lo)
-  y = old if p >= r() else lo + x*r()
-  return bound(y,lo,hi)
-
-def bound(x, lo, hi):
-  return lo if lo==hi else lo + ((x - lo) % (hi - lo))
-  
-
-def interpolate(all,ok=None,retries=20,evaluate=None):
-   one=any(all)
-   two=any(all)
-   tmp = o(objs = None,
-             decs = [x + r()*(y-x)
-                     for x,y in zip(one.decs,two.decs)])
-   if ok:
-     assert retries > 0, 'too hard to satisfy constraints'
-     if not ok(tmp):
-       return interpolate(all,ok=ok,retries=retries-1,evaluate=evaluate)
-   return evaluate(tmp) if evaluate else tmp
-
-def nudge(here,there,log=None,ok=None,retries=20,evaluate=None,push=4):
-   "nudge here towards there"
-   tmp = o(objs = None,
-             decs = [bound(here1 + r()*push*(there1-here1),log.space.lo[n],log.space.hi[n])
-                     for n,(here1,there1) in enumerate(zip(here.decs,there.decs))])
-   if ok:
-     assert retries > 0, 'too hard to satisfy constraints'
-     if not ok(tmp):
-       return nudge(here,there,log=None,push=push,ok=ok,retries=retries-1,evaluate=evaluate)
-   return evaluate(tmp) if evaluate else tmp
- 
-def smear(all,log=None,f=0.25,cr=0.5,ok=None,retries=20,evaluate=None):
+@mutator
+def interpolate(all,_,__):
+  return [x + r()*(y-z)
+          for x,y 
+          in  zip(any(all).decs,
+                  any(all).decs)]
+        
+@mutator
+def nudge(here,there,_,__):
+   return [ here1 + r()*push*(there1-here1)
+            for here1,there1
+            in  zip(here.decs, 
+                    there.decs) ]
+            
+@mutator
+def smear(all,_,__):
   aa, bb, cc = any(all), any(all), any(all)
-  tmp= o(objs=None,
-         decs = [smear1(a,b,c,f,cr,log.space.lo[n],log.space.hi[n])
-                   for n,(a,b,c)
-                   in enumerate(zip(aa.decs,
-                                    bb.decs,
-                                    cc.decs))])
-  if ok:
-    assert retries>0,'too hard to satisfy constraints'
-    if not ok(tmp):
-      return smear(all,log=log,f=f,cf=cf,ok=ok,
-                   retries=retries-1,
-                   evaluate=evaluate)
-  return evaluate(tmp) if evaluate else tmp
+  tmp=  [a + f*(b - c) if r()< cr else a
+         for a,b,c
+         in  zip(aa.decs,  
+                 bb.decs,  
+                 cc.decs)]
+  n = random.randint(0,len(aa))
+  tmp[n] = aa[n]
+  return tmp
 
-def smear1(a,b,c,f,cr,lo,hi):
-  return bound(a + f*(b - c) if r()< cr else a, lo, hi)
+main(__name__) and ok(_restrain)
 
