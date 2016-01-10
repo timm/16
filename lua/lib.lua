@@ -1,7 +1,9 @@
-fmt  = string.format
-floor= math.floor
-p    = function (x) return floor(0.5+ 100*x) end
-empty= function (t) return next(t) == nil end
+fmt   = string.format
+odd   = function (x) return x % 2 == 1 end
+even  = function (x) return not odd(x) end
+floor = math.floor
+p     = function (x) return floor(0.5+ 100*x) end
+empty = function (t) return next(t) == nil end
 
 function items (lst)
    local i,max = 0, #lst 
@@ -9,17 +11,21 @@ function items (lst)
     i = i + 1 
     if i <= max then  return lst[i] end end end 
 
-for x in items({1,30,33})
-  do print("z",x) end
-
 function rep(n,c) 
    c = c or " "
    local out = ""
    for i=1,n do out = out .. c end
    return out
 end
- 
-function o(data)print(oo(data)) end
+
+function trim(s) 
+  if s then
+    return s:gsub("^%s+", ""):gsub("%s+$", "")
+  else 
+    return s
+end end
+
+function o(data) print(oo(data)) end
 
 function oo(data, indent)  -- convert anything to a string
    if(indent == nil) then indent = 0 end 
@@ -43,6 +49,10 @@ function member(x,lst)
   for y in items(lst) do
     if x== y then return true end end
   return false
+end
+
+function eval(s):
+  return loadstring('return ' .. s)()
 end
 
 function rogue(x) 
@@ -81,3 +91,11 @@ function Object:new(o)
    self.__index = self
    return o
 end
+
+functions cmd(t):
+  out={}
+  for i in #t do
+    if i:match('
+
+if arg[1] == "--ok" then
+    for 

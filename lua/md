@@ -1,19 +1,8 @@
 #!/usr/bin/env lua
 
-function trim(s) 
-  if s then
-    return s:gsub("^%s+", ""):gsub("%s+$", "")
-  else 
-    return s
-end end
-
-function items (t)
-  local i,n = 0, #t 
-  return function ()
-    i = i + 1
-    if i <= n then return t[i] end
-end end 
-          
+require "lib"
+   
+function ako(       
 function paras () 
   io.input(arg[1] or nil) 
   return function ()
