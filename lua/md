@@ -13,27 +13,22 @@ function items (t)
     i = i + 1
     if i <= n then return t[i] end
 end end 
-
--- for item in items{1,2,3,4}  do print(item) end
-               
-function paras (src) 
-  if src then io.input(src) end
+          
+function paras () 
+  io.input(arg[1] or nil) 
   return function ()
-    local line, p = trim(io.read()), {}
-    while line do   
-      if    line == ""  
-      then  return p 
-      else  p[#p+1] = line
-      end 
-      if line == "" then p = {} end
-      line = trim(io.read())
+    local s, p = trim(io.read()), {}
+    while s do   
+      if s~="" then p[#p+1] = s end 
+      if s=="" then return p    end
+      if s=="" then p = {}      end
+      s = trim(io.read())
     end
     if #p > 0 then return p end
     return nil
-  end   
-end
+end end
  
-for para in paras(arg[1]) do
+for para in paras() do
   print("")
   print(table.concat(para," .... ")) 
 end 
