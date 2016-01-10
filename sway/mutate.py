@@ -69,42 +69,14 @@ def mutator(f):
     return evaluate(new) if evaluate else new
   return worker
   
+######################################################  
 @mutator
 def mutate(old,get,lower,upper):
   p = the.MUTATE.p 
   return [x if p < r() else lo + (up - lo)*r() 
           for x,lo,up 
           in  zip(get(old),lower,upper)]
-
-@mutator
-def interpolate(all,get,*_):
-  return [x + r()*(y-z)
-          for x,y 
-          in  zip(get(any(all)),
-                  get(any(all)))]
-        
-@mutator
-def nudge((here,there),get,*_):
-   return [ x + r()*push*(y - x)
-            for x,y
-            in  zip(get(here), 
-                    get(there)) ]
-            
-@mutator
-def smear(all,get,*_):
-  aa, bb, cc = any(all), any(all), any(all)
-  f = the.MUTATE.f
-  cr= the.MUTATE.cr
-  tmp=  [a + f*(b - c) if r() < cr else a
-         for a,b,c
-         in  zip(get(aa),
-                 get(bb),  
-                 get(decs))]
-  n = random.randint(0,len(aa))
-  tmp[n] = aa[n]
-  return tmp
-
-
+          
 def _some(most = 10 , arity =5):
   reset()
   lower = [0 for _ in xrange(arity)]
@@ -118,7 +90,7 @@ def _mutator1():
   MUTATE(p=0,retries=20)
   for one in all:
     two = mutate(one, lower=lower,upper=upper,put=same)
-    print(one == two)
+    assert one == two
  
 def _mutator2():   
   most,arity,lower,upper, all = _some()
@@ -127,24 +99,61 @@ def _mutator2():
   for one in all:
     two = mutate(one, lower=lower,upper=upper,put=same, ok=ok)
     assert bounded(one,lower,upper)
-    assert bounded(two,lower, upper)vi 
-    assert ok(one) or (not(ok(one)) and ok(two))   
-
-def _interpolate(most = 10 , arity =5):
-  most,arity,lower,upper, all = _some()
-  MUTATE(p=0,retries=20)
-  for one in all:
-    two = mutate(one, lower=lower,upper=upper,put=same)
-    print(one == two)
-  reset()
-  MUTATE(p=0.33,retries=20)
-  ok = lambda lst: sum(lst) < 0.75*arity
-  for one in all:
-    two = mutate(one, lower=lower,upper=upper,put=same, ok=ok)
-    assert bounded(one,lower,upper)
     assert bounded(two,lower, upper)
     assert ok(one) or (not(ok(one)) and ok(two))   
+
+######################################################  
+@mutator
+def interpolate(all,get,*_):
+  return [x + r()*(y-x)
+          for x,y 
+          in  zip(get(any(all)),
+                  get(any(all)))]
+
+def _interpolate():
+  most,arity,lower,upper, all = _some()
+  for _ in all:
+    new = interpolate(all, lower=lower,upper=upper,get=same)
+    bounded(new.decs, lower, upper)
+                   
+######################################################  
+@mutator
+def nudge((here,there),get,*_):
+   return [ x + r()*the.MUTATE.nudge*(y - x)
+            for x,y
+            in  zip(get(here), 
+                    get(there)) ]
+  
+def _nudge():
+  most,arity,lower,upper, all = _some()
+  for _ in all:
+    new = nudge((any(all),any(all)), lower=lower,upper=upper,get=same)
+    bounded(new.decs, lower, upper)
+    
+######################################################  
+@mutator
+def smear(all,get,*_):
+  aa, bb, cc = any(all), any(all), any(all)
+  f = the.MUTATE.f
+  cr= the.MUTATE.cr
+  tmp=  [a + f*(b - c) if r() < cr else a
+         for a,b,c
+         in  zip(get(aa),
+                 get(bb),  
+                 get(cc))]
+  n = random.randint(0,len(aa)-1)
+  tmp[n] = aa[n]
+  return tmp
+
+def _smear():
+  most,arity,lower,upper, all = _some()
+  for _ in all:
+    new = smear(all, lower=lower,upper=upper,get=same)
+    bounded(new.decs, lower, upper)
+
+######################################################  
+
     
 main(__name__,
-      _restrain,_mutator1,_mutator2)
+      _restrain,_mutator1,_mutator2,_interpolate,_nudge,_smear)
 
