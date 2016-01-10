@@ -13,23 +13,21 @@ def SPACE(): return o(
 # need a way to init from a list
 
 class Space:
-  def __init__(i,one=None,value=same,inits=[]):
+  def __init__(i,inits=[],value=same,):
     i.value = value
     i.cache = {}
-    i.lo, i.hi = None, None
+    i.lower, i.upper = None, None
     map(i.__add__,inits)
   def ready(i,one):
-    if not i.lo:
-      i.lo    = [ 10**32 for _ in i.value(one)]
-      i.hi    = [-10**32 for _ in i.value(one)]
+    if not i.lower:
+      i.lower = [ 10**32 for _ in i.value(one)]
+      i.upper = [-10**32 for _ in i.value(one)]
   def __add__(i,one):
     i.ready(one)
-    for n,(lo,hi,new) in enumerate(zip(i.lo, i.hi,
+    for n,(lo,up,new) in enumerate(zip(i.lower, i.upper,
                                        i.value(one))):
-      if new > hi:
-        i.hi[n] = new
-      if new < lo:
-        i.lo[n] = new
+      if new > up: i.upper[n] = new
+      if new < lo: i.lower[n] = new
   def dist(i,xs,ys):
     a, b = id(xs), id(ys)
     if a > b:
@@ -51,12 +49,12 @@ class Space:
       n += 1
     return sqrt(d) / sqrt(n)
   def norm(i,x,n):
-    if x < i.lo[n]: i.lo[n] = x
-    if x > i.hi[n]: i.hi[n] = x
+    if x < i.lower[n]: i.lower[n] = x
+    if x > i.upper[n]: i.upper[n] = x
     if the.SPACE.norm:
-      lo = i.lo[n]
-      hi = i.hi[n]
-      return div( (x- lo) , (hi - lo) )
+      lo = i.lower[n]
+      up = i.upper[n]
+      return div( (x- lo) , (up - lo) )
     else:
       return x
   def furthest(i,one,all,better=gt,most=0):
@@ -80,10 +78,10 @@ def _space(arity=5, items=1000):
     one = [r3(r()) for _ in xrange(arity)]
     space + one
     all += [one]
-  print("Lo",space.lo)
-  print("Hi",space.hi)
-  assert sum(space.lo) < 0.01*arity
-  assert sum(space.hi) > 0.99*arity
+  print("Lo",space.lower)
+  print("up",space.upper)
+  assert sum(space.lower) < 0.01*arity
+  assert sum(space.upper) > 0.99*arity
   two,d2   = space.closest(one,all)
   three,d3 = space.furthest(one,all)
   print("one",one)
