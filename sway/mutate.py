@@ -25,7 +25,7 @@ def truncated(x,lo,hi):
   return [min(x,max(x,lo),hi) for n,x in 
           enumerate(lst,los,his)]
 
-def _restrain()
+def _restrain():
   los  = [3,3,3,3]
   his  = [7,7,7,7]
   data = [2,3,7,8]
