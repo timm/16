@@ -1,0 +1,34 @@
+#!/usr/bin/env lua
+
+function trim(s) 
+  return s:gsub("^%s+", ""):gsub("%s+$", "") 
+end
+ 
+-- os.exit()               
+
+function paras (options)
+  local function iterator(state)
+    local line,p,blank = "",{},true
+    while state.line do 
+      if blank then p = {} end
+      line = trim(state.line)
+      blank = line == ""
+      state.line  = io.read()
+      if not blank then                  
+        p[#p+1] = line
+      else 
+        return p  
+      end 
+    end
+    if #p > 0 then return p end
+    return nil
+  end   
+  if options.src then io.input(options.src) end
+  local state = {line = io.read()}
+  return iterator, state
+end
+ 
+for para in paras{src=arg[1]} do
+  print("")
+  print(table.concat(para," .... ")) 
+end 
