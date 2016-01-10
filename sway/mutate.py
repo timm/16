@@ -17,6 +17,8 @@ def MUTATE(): return o(
   restrain = lambda x,lower,upper: bound(x,lower,upper)
 )
 
+
+##################################################
 def bounded(lst,lower,upper):
   for x,lo,up in zip(lst,lower,upper):
     if not lo <= x <= up:
@@ -43,6 +45,7 @@ def _restrain():
   assert [6,3,7,4] == bound( data,lower,upper)
   assert [3,3,7,7] == truncated(data,lower,upper)
 
+##################################################
 def mutator(f): 
   WARNING = ": too hard to satisfy %s" % f.__name__
   #@wraps
@@ -152,7 +155,6 @@ def _smear():
     bounded(new.decs, lower, upper)
 
 ######################################################  
-
     
 main(__name__,
       _restrain,_mutator1,_mutator2,_interpolate,_nudge,_smear)
