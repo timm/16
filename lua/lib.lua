@@ -98,10 +98,16 @@ OL   = BLOCK:new{level=0}
 P    = BLOCK:new()
 HEAD = BLOCK:new()
 
-function LI:accepts (s)
-  new,n = string.gsub(s[1],"^[(^%s)]+[\+\-](.*)$","%2")
-  if   n > 0 
-  then self.str = n
+pat = {item= "^([%s]+)([\+\-%d])([\.]?)(.*)$"}
+
+function moreBlocks(lines) 
+  local out,line,newList,_
+  line,_ = string.gsub(lines[1],pat.item,"$4")
+  for i in 2,#lines 
+    line,new = string.gsub(lines[1],pat.item,"$4")
+    if new == 0 then out = out .. '\n' .. line end
+    if new == 1 then return out end
+    if new == 1 then out = line   end 
   end
 end
     
