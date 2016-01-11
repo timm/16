@@ -168,10 +168,11 @@ def _tournament(repeats=16,items=512):
     all = [worker(m) for _ in xrange(items)]
     some = tournament(m,all,logObjs) 
     xs,ys=[],[]
-    for one in some:
+    for one in sorted(some,key=lambda z:z.objs):
         xs += [one.objs[0]]
         ys += [one.objs[1]]
-    textplot(data(xs), data(ys),
+    print(len(some))
+    textplot(data(xs), data(ys), 
           xlabel="x= obj1", 
           title="y= obj2 for %s" % f.__name__, 
           cmds="set key top left") 

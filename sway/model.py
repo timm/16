@@ -78,19 +78,19 @@ class Model:
       return loss(x,y) * bigEnough < loss(y,x) 
 
 def tournament(model,all,space,how='bdom'):
+  for x in  all:
+      x.alive = True
   changed = True
   while changed:
+    say("+")
     changed = False
-    for x in  all:
-      x.alive = True
     for x in all:
       if x.alive:
         for y in all:
           if y.alive:
-            if model.select(y,x,how=how,space=space):
-               x.alive = False 
+            if model.select(x,y,how=how,space=space):
+               y.alive = False 
                changed = True
-               say("+")
                break
   return [f for f in all if f.alive]
 
