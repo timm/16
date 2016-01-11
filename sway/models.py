@@ -6,6 +6,24 @@ sys.dont_write_bytecode = True
 from model import *
 from space import *
 
+class Kursawe(Model):
+  n = 3
+  a=2
+  b=3
+  def about(i):
+    def f1(x):
+      return  sum( -10 * ee ** ( -0.2 * sqrt(z**2 + x.decs[i+1]**2))
+                  for i,z in enumerate(x.decs[:-1]))
+    def f2(x):
+      a,b= Kursawe.a, Kursawe.b
+      return sum( abs(z)**a + 5 * math.sin(z)**b
+                  for z in x.decs)
+    def dec(x):
+      return An(x,lo= -5,hi=5)
+    i.decs = [dec(x) for x in range(Kursawe.n)]
+    i.objs = [Less("f1",maker=f1),
+              Less("f2",maker=f2)]
+              
 class ZDT1(Model):
   n=30
   def about(i):
@@ -13,8 +31,7 @@ class ZDT1(Model):
       return x.decs[0]
     def f2(x):
       g = 1 + 9 * sum(x for x in x.decs[1:] )/(ZDT1.n-1)
-      
-      return  g * abs(1 - sqrt(x.decs[0]*g))
+      return  g * abs(1 - sqrt(x.decs[0]/g))
     def dec(x):
       return An(x,lo=0,hi=1)
     i.decs = [dec(x) for x in range(ZDT1.n)]
@@ -100,34 +117,67 @@ class Viennet4(Model):
  
 ########### test cases
 
-def _models():
+def _models(repeats=32,items=32):
   def worker(m):
     x = m.eval(m.decide())
     logDecs + x
     logObjs + x
     return x
-  settings.reset(seed=1) 
+  reset() 
   for f in [Fonseca,Viennet4,ZDT1, DTLZ7_2_3,DTLZ7_4_5]:
     m = f()
-    logDecs = Space(value=decs)
-    logObjs = Space(value=objs)
-    all = [worker(m) for _ in xrange(1000)]
-    one = all[0]
-    far,d1 = logDecs.furthest(one,all)
-    near,d2= logDecs.closest(one,all)
-    assert d2 < d1
+    logDecs = Space(value=decisions)
+    logObjs = Space(value=objectives)
+    print("")
+    for _ in xrange(repeats):
+      say(".")
+     
+      all = [worker(m) for _ in xrange(items)]
+      one = all[0]
+      
+      far,d1 = logDecs.furthest(one,all)
+      near,d2= logDecs.closest(one,all)
+      assert d2 < d1
+      
+      far,d3 = logObjs.furthest(one,all)
+      near,d4= logObjs.closest(one,all)
+      assert d4 < d3
+  print("")
+      
     
 def _Viennet4():
-  settings.reset(seed=1) 
+  reset()
   m = Viennet4()
   x = m.eval(m.decide()) 
   assert {'objs' :  [5.101, -12.897, 17.829], 
           'decs' :  [-0.037, -0.404]} \
             == {'decs' : r3s(x.decs), 'objs': r3s(x.objs)}
-            
-#def _bdoms():
- ##pop = [m.eval(m.decide()) for _ in xrange(1000)]
-  #tournament(m,pop
+ 
+def _tournament(repeats=16,items=512):
+  def worker(m):
+    x = m.eval(m.decide())
+    logDecs + x
+    logObjs + x
+    return x
+  reset() 
+  models= [ZDT1,Fonseca,Kursawe]
+  for f in models:
+    m = f()
+    logDecs = Space(value=decisions)
+    logObjs = Space(value=objectives) 
+    all = [worker(m) for _ in xrange(items)]
+    some = tournament(m,all,logObjs) 
+    xs,ys=[],[]
+    for one in some:
+        xs += [one.objs[0]]
+        ys += [one.objs[1]]
+    textplot(data(xs), data(ys),
+          xlabel="x= obj1", 
+          title="y= obj2 for %s" % f.__name__, 
+          cmds="set key top left") 
+  print("")
+  
+ 
             
   
-__name__ == '__main__' and ok( _models, _Viennet4)
+main(__name__,_models, _Viennet4,_tournament)

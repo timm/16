@@ -27,8 +27,6 @@ def printm(matrix,sep=' | '):
   fmt = sep.join('{{:{}}}'.format(x) for x in lens)
   for row in [fmt.format(*row) for row in s]:
     print(row)
-    
-
 
 #### one-liners  
 

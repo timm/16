@@ -77,15 +77,22 @@ class Model:
         return sum(losses) / n
       return loss(x,y) * bigEnough < loss(y,x) 
 
-def tournament(model,frontier,space,how='bdom'):
-  for x in frontier:
-    x.alive = True
-  for x in frontier:
-    for y in frontier:
-      if y.alive:
-        if model.select(x,y,how=how,space=space):
-          y.alive = False
-  return [f for f in frontier if f.alive]
+def tournament(model,all,space,how='bdom'):
+  changed = True
+  while changed:
+    changed = False
+    for x in  all:
+      x.alive = True
+    for x in all:
+      if x.alive:
+        for y in all:
+          if y.alive:
+            if model.select(y,x,how=how,space=space):
+               x.alive = False 
+               changed = True
+               say("+")
+               break
+  return [f for f in all if f.alive]
 
 if __name__ == '__main__':
    print('# Note:\n# To test model.py, load models.py')
