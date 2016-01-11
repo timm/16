@@ -76,7 +76,7 @@ currently are passing their tests:
 -  [X] counts.py  
 -  [X] space.py
 -  [x] grid.py
--  [x] mutate.py : generic retry loop
--  [ ] control.py 
+-  [x] mutate.py  
 -  [ ] model.py 
--  [ ] models.py   
+-  [ ] models.py  # tournament 
+-  [ ] control.py 

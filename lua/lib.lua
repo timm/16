@@ -42,16 +42,14 @@ function oo(data, indent)  -- convert anything to a string
    end end
    return str
 end
-
-o({1,2,b={l=12,m=100}, a=3})
-
-function member(x,lst) 
+ 
+function member(x,lst)
   for y in items(lst) do
     if x== y then return true end end
   return false
 end
 
-function eval(s):
+function eval(s)
   return loadstring('return ' .. s)()
 end
 
@@ -92,10 +90,27 @@ function Object:new(o)
    return o
 end
 
-functions cmd(t):
-  out={}
-  for i in #t do
-    if i:match('
+BLOCK=Object:new{valid=false,str=''}
 
-if arg[1] == "--ok" then
-    for 
+UL   = BLOCK:new{level=0}
+LI   = BLOCK:new()
+OL   = BLOCK:new{level=0}
+P    = BLOCK:new()
+HEAD = BLOCK:new()
+
+function LI:accepts (s)
+  new,n = string.gsub(s[1],"^[(^%s)]+[\+\-](.*)$","%2")
+  if   n > 0 
+  then self.str = n
+  end
+end
+    
+x,y =string.gsub(
+    "--abc s",
+    "^(-[-]+)([^%s]+)%s(.*)$",
+    "[%2]"
+)
+
+print(x)
+print(y)
+print(tonumber("3.0 "))
