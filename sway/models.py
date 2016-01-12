@@ -153,7 +153,8 @@ def _Viennet4():
           'decs' :  [-0.037, -0.404]} \
             == {'decs' : r3s(x.decs), 'objs': r3s(x.objs)}
  
-def _tournament(repeats=16,items=512):
+ 
+def _tournament(repeats=16,items=128):
   def worker(m):
     x = m.eval(m.decide())
     logDecs + x
@@ -165,20 +166,26 @@ def _tournament(repeats=16,items=512):
     m = f()
     logDecs = Space(value=decisions)
     logObjs = Space(value=objectives) 
-    all = [worker(m) for _ in xrange(items)]
-    some = tournament(m,all,logObjs) 
-    xs,ys=[],[]
+    all  = [worker(m) for _ in xrange(items)]
+    xs1,ys1= _frontier(m,all,logObjs) 
+    xs2,ys2= _frontier(m,all,logObjs,how='cdom') 
+    print("Bdoms",len(xs1))
+    print("Cdoms",len(xs2))
+    
+    textplot(
+          (data(xs2), data(ys2), {'legend':'cdom'}),
+          (data(xs1), data(ys1), {'legend':'bdom'}),
+          xlabel="x= obj1", 
+          title="y= obj2 for %s" % f.__name__, 
+          cmds="set key bottom left") 
+  print("")
+  
+def _frontier(m,all,logObjs,how="bdom"):
+    some = tournament(m,all,logObjs,how=how) 
+    xs,ys= [],[]
     for one in sorted(some,key=lambda z:z.objs):
         xs += [one.objs[0]]
         ys += [one.objs[1]]
-    print(len(some))
-    textplot(data(xs), data(ys), 
-          xlabel="x= obj1", 
-          title="y= obj2 for %s" % f.__name__, 
-          cmds="set key top left") 
-  print("")
-  
- 
-            
+    return xs,ys
   
 main(__name__,_models, _Viennet4,_tournament)

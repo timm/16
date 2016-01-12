@@ -1,7 +1,7 @@
 # sway
 from __future__ import print_function, division
 import random,math, numpy,sys
-import gnuplotlib
+import gnuplotlib,os
 sys.dont_write_bytecode = True
 
 from boot import *
@@ -69,8 +69,19 @@ def _lib():
 
 data = numpy.asarray 
 def textplot(*l,**d):
+  assert len(l[0]) > 0, "no data found"
   gnuplotlib.plot(*l,unset='grid', 
                     terminal='dumb 80 30',**d)
+def pngplot(*l,**d):
+  out = os.environ["HOME"] + "/workspace/tmp/sway" + str(int(10000*r())) + ".pdf"
+  if os.path.exists(out):
+    os.remove(out)
+  gnuplotlib.plot(*l,
+     unset='grid', 
+     output=out,
+     terminal = 'pdf solid color font ",10" size 3.5in,3.5in',
+     **d)  
+  return out
  
 def _textplot(): 
   x    = data([r() for _ in xrange(100)])
@@ -85,5 +96,6 @@ def _textplot():
 def main(name,*lst):
   if name == '__main__':
     ok(*lst)
-      
+  
+ 
 main(__name__ ,_lib, _textplot)

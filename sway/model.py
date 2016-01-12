@@ -8,7 +8,8 @@ from lib import *
 @setting
 def MODEL(): return o(
   retries=100,
-  bigEnough=1.01
+  bigEnough=1.05,
+  cdomVerbose = True
 )
 
 class Objective:
@@ -75,24 +76,16 @@ class Model:
                    for xi, yi,meta
                    in zip(x,y,i.objs) ]
         return sum(losses) / n
-      return loss(x,y) * bigEnough < loss(y,x) 
+      return loss(x,y)  < loss(y,x) * the.MODEL.bigEnough
 
 def tournament(model,all,space,how='bdom'):
   for x in  all:
-      x.alive = True
-  changed = True
-  while changed:
-    say("+")
-    changed = False
-    for x in all:
-      if x.alive:
-        for y in all:
-          if y.alive:
-            if model.select(x,y,how=how,space=space):
-               y.alive = False 
-               changed = True
-               break
-  return [f for f in all if f.alive]
+      x.dominated = 0 
+  for x in all: 
+      for y in all: 
+        if model.select(x,y,how=how,space=space):
+          y.dominated += 1 
+  return [f for f in all if not f.dominated  ]
 
 if __name__ == '__main__':
    print('# Note:\n# To test model.py, load models.py')
