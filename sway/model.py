@@ -80,11 +80,12 @@ class Model:
 
 def tournament(model,all,space,how='bdom'):
   for x in  all:
-      x.dominated = 0 
-  for x in all: 
-      for y in all: 
+      x.dominated =False
+  for x in all:  
+    for y in all: 
+      if not y.dominated:
         if model.select(x,y,how=how,space=space):
-          y.dominated += 1 
+          y.dominated = True
   return [f for f in all if not f.dominated  ]
 
 if __name__ == '__main__':

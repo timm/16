@@ -154,7 +154,7 @@ def _Viennet4():
             == {'decs' : r3s(x.decs), 'objs': r3s(x.objs)}
  
  
-def _tournament(repeats=16,items=128):
+def _tournament(repeats=16,items=512):
   def worker(m):
     x = m.eval(m.decide())
     logDecs + x
