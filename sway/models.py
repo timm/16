@@ -164,11 +164,11 @@ def _tournament(repeats=16,items=512):
   models= [ZDT1,Fonseca,Kursawe]
   for f in models:
     m = f()
-    logDecs = Space(value=decisions)
-    logObjs = Space(value=objectives) 
+    spaceDecs = Space(value=decisions)
+    spaceObjs = Space(value=objectives) 
     all  = [worker(m) for _ in xrange(items)]
-    xs1,ys1= _frontier(m,all,logObjs) 
-    xs2,ys2= _frontier(m,all,logObjs,how='cdom') 
+    xs1,ys1= _frontier(m,all,spaceObjs) 
+    xs2,ys2= _frontier(m,all,spaceObjs,how='cdom') 
     print("Bdoms",len(xs1))
     print("Cdoms",len(xs2))
     
@@ -180,8 +180,8 @@ def _tournament(repeats=16,items=512):
           cmds="set key bottom left") 
   print("")
   
-def _frontier(m,all,logObjs,how="bdom"):
-    some = tournament(m,all,logObjs,how=how) 
+def _frontier(m,all,spaceObjs,how="bdom"):
+    some = tournament(m,all,spaceObjs,how=how) 
     xs,ys= [],[]
     for one in sorted(some,key=lambda z:z.objs):
         xs += [one.objs[0]]
