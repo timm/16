@@ -30,7 +30,7 @@ class Decision:
 
 An = A = Decision
 
-def decisions(x): return x.decs
+def decisions(x):  return x.decs
 def objectives(x): return x.objs
 
 class Model:
@@ -83,7 +83,7 @@ def tournament(model,all,space,how='bdom'):
       x.dominated =False
   for x in all:  
     for y in all: 
-      if not y.dominated:
+      if not y.dominated: 
         if model.select(x,y,how=how,space=space):
           y.dominated = True
   return [f for f in all if not f.dominated  ]

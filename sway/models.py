@@ -5,6 +5,7 @@ sys.dont_write_bytecode = True
 
 from model import *
 from space import *
+from grid import *
 
 class Kursawe(Model):
   n = 3
@@ -156,17 +157,24 @@ def _Viennet4():
  
 def _tournament(repeats=16,items=512):
   def worker(m):
-    x = m.eval(m.decide())
-    logDecs + x
-    logObjs + x
+    x = m.decide()
+    gridDecs + x
+    x= m.eval(x)
+    spaceObjs + x 
     return x
+  def show(cell):
+    n = len(cell) 
+    p =   int(100*n /items)
+    return p if p  else " "
   reset() 
   models= [ZDT1,Fonseca,Kursawe]
   for f in models:
     m = f()
+    print(f.__name__)
     spaceDecs = Space(value=decisions)
     spaceObjs = Space(value=objectives) 
-    all  = [worker(m) for _ in xrange(items)]
+    gridDecs  = Grid(spaceDecs)
+    all =  [worker(m)  for _ in xrange(items)] 
     xs1,ys1= _frontier(m,all,spaceObjs) 
     xs2,ys2= _frontier(m,all,spaceObjs,how='cdom') 
     print("Bdoms",len(xs1))
@@ -178,7 +186,14 @@ def _tournament(repeats=16,items=512):
           xlabel="x= obj1", 
           title="y= obj2 for %s" % f.__name__, 
           cmds="set key bottom left") 
-  print("")
+    m=0
+    for row in gridDecs.grid.cells:
+      for cell in row:
+        m += len(cell)
+    printm([ [ show(cell) for cell in row]   
+            for row  in gridDecs.grid.cells])
+    print("m",m)
+            
   
 def _frontier(m,all,spaceObjs,how="bdom"):
     some = tournament(m,all,spaceObjs,how=how) 

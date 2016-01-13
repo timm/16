@@ -13,7 +13,7 @@ def GRID(): return o(
 )
 
 class Grid(Some):
-  def __init__(i,init=[],space=None):
+  def __init__(i,space=None,init=[],):
     i.n,i.max,i.all, i.grid = 0,2,[], None
     i.space = space or Space()
     map(i.__add__,init)
@@ -25,7 +25,7 @@ class Grid(Some):
     
 class Grid1:
   def __init__(i,east,west,inits=[],space=None):
-    i.dist = (space or Space()).dist
+    i.space = space or Space()
     i.reset(east,west,inits)
     i + east
     i + west
@@ -39,6 +39,8 @@ class Grid1:
     i.cells   = [[[] for _ in range(the.GRID.bins)]
                      for _ in range(the.GRID.bins)] 
     map(i.__add__,inits)
+  def dist(i,x,y):
+    return i.space.dist(x,y)
   def __add__(i,one):
     a = i.dist(i.east,one)
     b = i.dist(i.west,one)
@@ -50,6 +52,7 @@ class Grid1:
       i.reset(one,i.west,i.values)
       return i + one
     i.values += [one]
+    i.space  +   one
     x = div( a**2 + c**2 - b**2  , 2*c)
     if x**2 > a**2:
       x = a 
