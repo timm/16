@@ -7,6 +7,44 @@ from model import *
 from space import *
 from grid import *
 
+def BASIC_5_2(): return BASIC(5,2)
+def BASIC_10_2(): return BASIC(10,2)
+def BASIC_20_2(): return BASIC(20,2) 
+def BASIC_40_2(): return BASIC(40,2) 
+
+class BASIC(Model):
+  def __init__(i,ndecs=5,nobjs=2):
+    i.ndecs, i.nobjs = ndecs,nobjs
+    Model.__init__(i)
+  def about(i):
+    def f(x):
+      return sum(x.decs)
+    def dec(x):
+      return An(x,lo=0,hi=1)
+    i.decs = [dec(x) for x in range(i.ndecs)]
+    i.objs = [Less("f%s" % j,
+                   maker=f)
+                   for j in range(i.nobjs)]
+                   
+def BIASED_5_2(): return BIASED(5,2)
+def BIASED_10_2(): return BIASED(10,2)
+def BIASED_20_2(): return BIASED(20,2) 
+def BIASED_40_2(): return BIASED(40,2) 
+
+class BIASED(Model):
+  def __init__(i,ndecs=5,nobjs=2):
+    i.ndecs, i.nobjs = ndecs,nobjs
+    Model.__init__(i)
+  def about(i):
+    def f(x):
+      return sum(x.decs)
+    def dec(x):
+      return An(x,lo=x**3,hi=x**4)
+    i.decs = [dec(x) for x in range(i.ndecs)]
+    i.objs = [Less("f%s" % j,
+                   maker=f)
+                   for j in range(i.nobjs)]                   
+                   
 class Kursawe(Model):
   n = 3
   a=2
@@ -124,15 +162,13 @@ def _models(repeats=32,items=32):
     logDecs + x
     logObjs + x
     return x
-  reset() 
   for f in [Fonseca,Viennet4,ZDT1, DTLZ7_2_3,DTLZ7_4_5]:
+    reset() 
     m = f()
     logDecs = Space(value=decisions)
     logObjs = Space(value=objectives)
     print("")
     for _ in xrange(repeats):
-      say(".")
-     
       all = [worker(m) for _ in xrange(items)]
       one = all[0]
       
@@ -155,45 +191,55 @@ def _Viennet4():
             == {'decs' : r3s(x.decs), 'objs': r3s(x.objs)}
  
  
-def _tournament(repeats=16,items=512):
-  def worker(m):
+def _rahul(items=512):
+  models= [BASIC,BASIC,
+           BASIC_10_2,BASIC_10_2,
+           BASIC_20_2,BASIC_20_2,
+           BASIC_40_2,BASIC_40_2,
+           BIASED,BIASED,
+           BIASED_10_2,BIASED_10_2,
+           BIASED_20_2,BIASED_20_2,
+           BIASED_40_2,BIASED_40_2
+           ] #ZDT1,Fonseca,Kursawe]
+  for f in models:
+    reset()
+    GRID(bins=16)
+    print(f.__name__)
+    rows= _gridding(f(),items)
+    print("\n")
+    printm([ [ _show(cell,items) for cell in row]  
+            for row  in rows])
+            
+def _gridding(m,items):
+    spaceDecs = Space(value=decisions)
+    spaceObjs = Space(value=objectives) 
+    gridDecs  = Grid(spaceDecs)
+    all =  [_worker(m,spaceDecs,gridDecs,spaceObjs)  
+            for _ in xrange(items)] 
+    #xs1,ys1= _frontier(m,all,spaceObjs) 
+    #xs2,ys2= _frontier(m,all,spaceObjs,how='cdom') 
+    ##print("Bdoms",len(xs1))
+    #print("Cdoms",len(xs2))
+    
+    #textplot(
+     #     (data(xs2), data(ys2), {'legend':'cdom'}),
+      #    (data(xs1), data(ys1), {'legend':'bdom'}),
+       ### cmds="set key bottom left") 
+    return gridDecs.grid.cells
+
+def _worker(m,spaceDecs,gridDecs,spaceObjs):
     x = m.decide()
+    spaceDecs + x
     gridDecs + x
     x= m.eval(x)
     spaceObjs + x 
     return x
-  def show(cell):
+def _show(cell,items):
     n = len(cell) 
     p =   int(100*n /items)
-    return p if p  else " "
-  reset() 
-  models= [ZDT1,Fonseca,Kursawe]
-  for f in models:
-    m = f()
-    print(f.__name__)
-    spaceDecs = Space(value=decisions)
-    spaceObjs = Space(value=objectives) 
-    gridDecs  = Grid(spaceDecs)
-    all =  [worker(m)  for _ in xrange(items)] 
-    xs1,ys1= _frontier(m,all,spaceObjs) 
-    xs2,ys2= _frontier(m,all,spaceObjs,how='cdom') 
-    print("Bdoms",len(xs1))
-    print("Cdoms",len(xs2))
-    
-    textplot(
-          (data(xs2), data(ys2), {'legend':'cdom'}),
-          (data(xs1), data(ys1), {'legend':'bdom'}),
-          xlabel="x= obj1", 
-          title="y= obj2 for %s" % f.__name__, 
-          cmds="set key bottom left") 
-    m=0
-    for row in gridDecs.grid.cells:
-      for cell in row:
-        m += len(cell)
-    printm([ [ show(cell) for cell in row]   
-            for row  in gridDecs.grid.cells])
-    print("m",m)
-            
+    if p >=  1: return p
+    if n > 0 : return "."
+    return " "
   
 def _frontier(m,all,spaceObjs,how="bdom"):
     some = tournament(m,all,spaceObjs,how=how) 
@@ -203,4 +249,5 @@ def _frontier(m,all,spaceObjs,how="bdom"):
         ys += [one.objs[1]]
     return xs,ys
   
-main(__name__,_models, _Viennet4,_tournament)
+main(__name__,_models, _Viennet4,
+             _tournament)

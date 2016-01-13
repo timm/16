@@ -9,7 +9,7 @@ from space import *
 @setting
 def GRID(): return o(
  bins=16, # each grid has bins**2 cells
- tooMuch= 1.01 # regrowth grids when new "c" more than "bigger"
+ tooMuch= 1.05 # regrowth grids when new "c" more than "bigger"
 )
 
 class Grid(Some):
@@ -52,7 +52,6 @@ class Grid1:
       i.reset(one,i.west,i.values)
       return i + one
     i.values += [one]
-    i.space  +   one
     x = div( a**2 + c**2 - b**2  , 2*c)
     if x**2 > a**2:
       x = a 

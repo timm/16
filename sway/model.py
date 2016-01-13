@@ -79,14 +79,15 @@ class Model:
       return loss(x,y)  < loss(y,x) * the.MODEL.bigEnough
 
 def tournament(model,all,space,how='bdom'):
+  dom={}
   for x in  all:
-      x.dominated =False
+      dom[id(x)]   =False
   for x in all:  
     for y in all: 
-      if not y.dominated: 
+      if not dom[id(y)]: 
         if model.select(x,y,how=how,space=space):
-          y.dominated = True
-  return [f for f in all if not f.dominated  ]
+          dom[id(y)] = True
+  return [f for f in all if not dom[id(f)]]
 
 if __name__ == '__main__':
    print('# Note:\n# To test model.py, load models.py')
