@@ -1,0 +1,14 @@
+function ab(x) { return x+1 }
+function abc(x) { return x-1 }
+
+function test() {
+	type["ab"]["abc"]
+	# :f(a,b,c)
+	__2(a,f,b,c)
+}
+function __2(x,f,b,c,  w) { w=Isa[x["__"]][f]; return &w(x,b,c) }
+function __3(x,f,b,c,  w) { w=Isa[x["__"]][f]; return &w(x,b,c) }
+function __4(x,f,b,c,  w) { w=Isa[x["__"]][f]; return &w(x,b,c) }
+function __5(x,f,b,c,  w) { w=Isa[x["__"]][f]; return &w(x,b,c) }
+
+BEGIN {test()}
