@@ -1,5 +1,6 @@
 find    = string.find
 add     = table.insert
+function same(x) return x end
 
 function explode(str,div)
     div = div or "\S+"
@@ -71,34 +72,28 @@ function goalp(x)   return find(x,txt["less"])   or
                            find(x,txt["more"])   or
                            find(x,txt["klass"])  end
 
-function cells() 
-  local use = nil
+function fields() 
+  -- kill white space, comments, ignored columns
+  -- coerce nums to nums, strings to string
+  local first,use,compile = true,{},{}
   local function worker(s)
-    local s   = s:gsub("%s+",""):gsub(txt["comment"],"")
-    local all = explode(s,txt["deliminter"])
-    if not use then
-      use = {}
+    local s        = s:gsub("%s+",""):gsub(txt["comment"],"")
+    local all      = explode(s,txt["deliminter"])
+    local cell,out = nil,{}
+    if first then
       for i = 1,#all do
-        if not ignorep(all[i]) then
-          add(use,col) 
+        cell       = all[i]
+        compile[i] = nump(cell) and tonumber or tostring
+        if not ignorep(cell) then
+          add(use,i)
     end end end
-    out={}
     for i = 1,#use do
-      add(out,all[use[i]])
+      cell = all[use[i]]
+      cell = first and cell or compile[i](cell)
+      add(out, cell)
+    first=false
     return out
   return worker
-end
-
-function count_to_ten()
-	local function seq(state, value)
-		if (value >= 10) then
-			return nil
-		else
-			local new_value = value + 1
-			return new_value
-		end
-	end
-	return seq, nil, 0
 end
 
 NumSym = Object:new(nums={}, syms={}}
