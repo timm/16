@@ -52,7 +52,7 @@ end
 txt = {
     whitespace = "[\n\r\t ]*", -- kill all whitespace
     comment    = "#.*",        -- kill all comments
-    delimiter  = ",",           -- seperate fields by 'delimiter'
+    sep        = ",",           -- seperate fields by 'delimiter'
     ignore     = "?",
     missing    = '?',
     klass      = "=",
@@ -72,28 +72,35 @@ function goalp(x)   return find(x,txt["less"])   or
                            find(x,txt["more"])   or
                            find(x,txt["klass"])  end
 
-function fields() 
+function rows(file) 
   -- kill white space, comments, ignored columns
   -- coerce nums to nums, strings to string
+  io.input(file)
+  local line=io.read()
   local first,use,compile = true,{},{}
-  local function worker(s)
-    local s        = s:gsub("%s+",""):gsub(txt["comment"],"")
-    local all      = explode(s,txt["deliminter"])
-    local cell,out = nil,{}
-    if first then
-      for i = 1,#all do
-        cell       = all[i]
-        compile[i] = nump(cell) and tonumber or tostring
-        if not ignorep(cell) then
-          add(use,i)
-    end end end
-    for i = 1,#use do
-      cell = all[use[i]]
-      cell = first and cell or compile[i](cell)
-      add(out, cell)
-    first=false
-    return out
-  return worker
+  return function()
+    while line do
+      line = line:gsub("%s+",""):gsub(txt["comment"],"")
+      if line ~= "" then
+        local cells = explode(line,txt["sep"])
+        local out = {}
+        if first then
+          for i = 1,#cells do
+            local cell = cells[i]
+            compile[i] = nump(cell) and tonumber or tostring
+            if not ignorep(cell) then
+              add(use,i)
+        end end end
+        for i = 1,#use do
+          local cell = cells[use[i]]
+          cell = first and cell or compile[i](cell)
+          add(out, cell)
+        first=false
+        return out
+      line = io.read()
+    end
+    return nil
+  end
 end
 
 NumSym = Object:new(nums={}, syms={}}
