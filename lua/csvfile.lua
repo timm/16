@@ -46,10 +46,10 @@ do
   end
 
   function line1(file)
-    io.input(file)
-    local line = pruneLine(io.read())
-    local pre  = ""
     return function()
+      io.input(file)
+      local line = pruneLine(io.read())
+      local pre  = ""
       while line ~= nil do
         if lastchar(line) == "," then
 	  pre = pre .. line
