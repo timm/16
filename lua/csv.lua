@@ -24,19 +24,19 @@ function Csv:has(txt,pat)
 
 function Csv:header(cells)
   local j = 0
-  for i,cell in ipairs(cells) do
-    if not self:has(cell,"ignorep") then
+  for i,x in ipairs(cells) do
+    if not self:has(x,"ignorep") then
       j = j + 1
-      self.using[j] = i
-      self.compilers[j] = self:has(cell, "nump")
+      self.using[j]     = i
+      self.compilers[j] = self:has(x, "nump") 
   end end end
 
 function Csv:row(cells)
   local out={}
   for _,j in ipairs(self.using)  do
-    local cell = cells[j]
-    if self.compilers[j] then cell = tonumber(cell) end
-    out[#out+1]= cell
+    local x = cells[j]
+    if self.compilers[j] then x = tonumber(x) end
+    out[#out+1]= x
   end
   assert(#out == #self.compilers, "line wrong size")
   return out

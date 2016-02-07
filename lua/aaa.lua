@@ -14,9 +14,38 @@ tricks that contains all their common tricks for the
 Share and enjoy!
 --]]
 
+-- Number stuff -----------------------
+
+r = math.random
+
+function rseed(seed)
+  math.randomseed(seed and seed or 1)
+end
+
+function round(x)
+  return math.floor(x + 0.5)
+end
+
+function rn(digits,x)
+  local shift = 10 ^ digits
+  return math.floor( x*shift + 0.5 ) / shift
+end
+
+function rns(digits,t)
+  local out = {}
+  for _,x in ipairs(t) do
+    add(out, rn(digits,x))
+  end
+  return out
+end
 
 -- Table stuff ------------------------
 add = table.insert
+
+function sort(t)
+  table.sort(t)
+  return t
+end
 
 function o(t,s)
   for i,x in ipairs(t) do print(s,i,"["..x.."]") end
@@ -65,8 +94,9 @@ end
 function implode(t, sep)
   sep = sep and sep or ","
   local str = ""
-  for x in items(t) do
-    str = str..x
+  for i,x in ipairs(t) do
+    sep1 = i == 1 and "" or sep
+    str = str..x.. sep
   end
   return str
 end
