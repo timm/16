@@ -1,21 +1,21 @@
 require "csv"
 
-Some = Object:new{max= 256,
-		 kept= {},
-		    n= 0}
-Log = Object:new{name= "",
-		 pass= "[\\?]",
-                 n   = 0,
-                 some= Some:new()}
-Sym = Log:new{counts = {},
-	        mode = nil,
-	        most = 0}
-Num = Log:new{    up = -1*10^32,
-	          lo = 10^32,
-	          mu = 0,
-                  m2 = 0,
-                  sd = 0}
-Logs = Object:new{has= {},some=Some:new{}}
+Some = Object:new{max = 256,
+		 kept = {},
+		    n = 0}
+Log = Object:new{name = "",
+		 pass = "[\\?]",
+                    n = 0,
+                 some = Some:new()}
+Sym = Log:new{counts  = {},
+	        mode  = nil,
+	        most  = 0}
+Num = Log:new{    up  = -1*10^32,
+	          lo  = 10^32,
+	          mu  = 0,
+                  m2  = 0,
+                  sd  = 0}
+Logs = Object:new{has = {},some=Some:new{}}
 
 
 -- Some --------------------------------
