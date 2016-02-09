@@ -42,6 +42,9 @@ end
 -- Table stuff ------------------------
 add = table.insert
 
+function first(t) return t[ 1] end
+function last(t)  return t[#t] end
+
 function sort(t)
   table.sort(t)
   return t
@@ -68,6 +71,8 @@ function member(x,t)
     if x== y then return true end end
   return false
 end
+
+
 
 -- String stuff --------------------
 function len(x)

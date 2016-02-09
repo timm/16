@@ -10,15 +10,24 @@ function _some()
 end
 
 function _syms()
-  local sym=Some:new{name="asdas",max=10}
+  local some=Some:new{name="asdas",max=10}
+  local sym=Sym:new{name="asdas"}
   rseed(1)
   local words=[[To be or not to be that is the question]] 
   for _,c in pairs(s2t(words)) do
-    sym:keep(c)
+    some:keep(c)
+    sym:add(c)
   end
-  for k,v in pairs(sym.kept) do 
+  for k,v in pairs(sym.counts) do 
     print(k,v)
   end
+  local num = Num:new{name="aaa"}
+  for _,n in pairs{1,2,3,4,5,6} do
+    num:add(n)
+  end 
+  print(num.mu,num.sd)
+  tmp = Num:new():adds{1,2,3,4,5,6}.sd*0.1
+  print(tmp)
 end
 
 _syms()

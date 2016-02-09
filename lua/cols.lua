@@ -25,20 +25,27 @@ function Some:keep(x)
     then add(self.kept,x) 
   elseif r()  < k / self.n 
     then self.kept[ round(r() * k) ] = x
-end end
+  end 
+  return self
+end
      
 -- Log  --------------------------------
 function Log:adds(t)
   for _,x in pairs(t) do
     self:add(x)
-end end
+  end 
+  return self
+end
 
 function Log:add(x)
-  if x ~= self.ignore then
-    i.n = i.n + 1
-    self:add1(x)
-    self.some:keep(x)
-end end
+  if x ~= nil then
+    if x ~= self.ignore then
+      self.n = self.n + 1
+      self:add1(x)
+      self.some:keep(x)
+    end end 
+  return self
+end 
  
 function Num:add1(x)
   local delta = x - self.mu
@@ -50,9 +57,8 @@ end end
 
 function Sym:add1(x)
   local old = self.counts[x]
-  old       = old == nil and 0 or old
-  local new = self.counts[x]
-  new       = new + 1
+  new = (old == nil and 0 or old) + 1
+  self.counts[x] = new
   if new > self.most then
     self.mode, self.most = x,new
 end end
