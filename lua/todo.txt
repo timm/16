@@ -1,0 +1,4 @@
+make a class F with variables x y (so y = F(x)) and spacex and spacey
+
+
+make a space class for distance and distance caches

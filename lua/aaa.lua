@@ -101,6 +101,16 @@ function implode(t, sep)
   return str
 end
 
+function s2t(str)
+  local out = {}
+  for i = 1,#str do
+    local c = string.sub(str,i,i) 
+    add(out, c)
+  end
+  return out
+end 
+  
+
 -- OO stuff --------------------
 Object={}
 
