@@ -72,7 +72,22 @@ function member(x,t)
   return false
 end
 
+function map(f, t)
+  local out = {}
+  for i,v in ipairs(t) do
+    out[i] = f(v)
+  end
+  return out
+end
 
+function sub(t, first, last)
+  last = last or #t
+  local out = {}
+  for i = first,last do
+    out[#out + 1] = t[i]
+  end
+  return out
+end
 
 -- String stuff --------------------
 function len(x)
