@@ -143,14 +143,34 @@ function Object:new(o)
    return o
 end
 
-function Object:copy(o)
-   o = o or {}
+function Object:copy()
+   local o = {}
    setmetatable(o,self)
    self.__index = self
    for x,y in pairs(self) do o[x] = y end
    return o
 end
-  
+
+function Object:s()
+  local out,sep="{",":"
+  for x,y in pairs(self) do 
+    if string.sub(x,1,1) ~= "_" then
+      out = out..sep..x.." "..y 
+      sep = " :"
+  end end  
+  return out .. '}'
+end
+
+_tostring =  _tostring or tostring
+function tostring(t)
+  if type(t) == "table" then 
+    status, stuff = pcall(function() return t:s() end) 
+    if status then 
+      return stuff 
+  end end 
+  return _tostring(t) 
+end
+
 -- Meta stuff -------------------------
 function same(x) return x end
 
