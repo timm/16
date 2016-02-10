@@ -129,18 +129,25 @@ function s2t(str)
   end
   return out
 end 
-  
 
 -- OO stuff --------------------
 Object={}
 
 function Object:new(o)
-   o = o or {}
-   setmetatable(o,self)
+   o = o or {} 
+   setmetatable(o,self)  
    self.__index = self
    return o
 end
 
+function Object:copy(o)
+   o = o or {}
+   setmetatable(o,self)
+   self.__index = self
+   for x,y in pairs(self) do o[x] = y end
+   return o
+end
+  
 -- Meta stuff -------------------------
 function same(x) return x end
 
