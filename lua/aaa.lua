@@ -45,8 +45,11 @@ add = table.insert
 function first(t) return t[ 1] end
 function last(t)  return t[#t] end
 
-function sort(t)
-  table.sort(t)
+function sort(t,f)
+  if f == nil then 
+    table.sort(t) 
+  else 
+    table.sort(t,f) end
   return t
 end
 
