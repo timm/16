@@ -26,10 +26,13 @@ function round(x)
   return math.floor(x + 0.5)
 end
 
+
 function rn(digits,x)
   local shift = 10 ^ digits
   return math.floor( x*shift + 0.5 ) / shift
 end
+
+function r3(x) return x end
 
 function rns(digits,t)
   local out = {}

@@ -3,7 +3,7 @@ require "cols"
 
 function _sdiv()
   local t={}
-  for _ = 1,100 do add(t,r()^3) end
+  for _ = 1,10^4 do add(t,r()^4) end
   local sp = Split:new{get=same}
   sp:div(t)
 end
