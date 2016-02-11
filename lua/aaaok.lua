@@ -1,11 +1,13 @@
 require "aaa"
 
-Fred=Object:new{a=1,b=2}
+Ab = Object:new{a=1,b=2}
+ 
+ 
 
-f= Fred:new()
-print(f.a)
-for k,v in ipairs(f) do
-  print(k,v)
-end 
+Aba = Ab:new{c=1,d=2}
 
-print(f.a,f)
+ 
+
+aba=Aba:new{aa=22,bb=3}
+
+print(1,{},aba,220)

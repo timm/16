@@ -54,6 +54,7 @@ function sort(t,f)
 end
 
 function o(t,s)
+  s = s or ">"
   for i,x in ipairs(t) do print(s,i,"["..x.."]") end
 end
 
@@ -151,23 +152,17 @@ function Object:copy()
    return o
 end
 
-function Object:s()
-  local out,sep="{",":"
-  for x,y in pairs(self) do 
-    if string.sub(x,1,1) ~= "_" then
-      out = out..sep..x.." "..y 
-      sep = " :"
-  end end  
-  return out .. '}'
-end
-
 _tostring =  _tostring or tostring
-function tostring(t)
+tostring = function (t)
   if type(t) == "table" then 
-    status, stuff = pcall(function() return t:s() end) 
-    if status then 
-      return stuff 
-  end end 
+    local out,sep="{",":"
+    for x,y in pairs(t) do
+      if string.sub(x,1,1) ~= "_" then
+        out = out..sep..x.." "..y 
+        sep = " :"
+    end end  
+    return  _tostring(out .. '}')
+  end 
   return _tostring(t) 
 end
 
