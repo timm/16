@@ -12,34 +12,34 @@ function Split:div(t,    all,out)
   self.small  = self.small  or all.sd*self.cohen
   self.enough = self.enough or all.n/self.sanity
   out= {} 
-  self:div1(t, all, out)
+  self:div1(t, #t, all, out)
   return out
 end
 
-function Split:div1(t, all, out,     cut,lo,hi)  
+function Split:div1(t, n, all, out,     cut,lo,hi)  
   local first, last = self.get(t[1]), self.get(t[#t])
   local range = {id=self.id, lo=first, up=last, n=#out,
                  has=t, score = all:copy()}
   local function split(l, r, score,    old,new)
-    if last - first < self.small then return nil end
-    for i,x in ipairs(t) do
-      new = self.get(x)
-      l:add(new)
-      r:sub(new)
-      if new ~= old then
-        if l.n >= self.enough then
-          if  r.n < self.enough then return nil end
-          if new - first >= self.small then
-            local  maybe = l.n/#t * l.sd + r.n/#t * r.sd
-              if maybe*self.trivial < score then
-                cut,score,lo,hi = i,maybe,l:copy(),r:copy()
-      end end end end
-      old = new
-  end end
+    if last - first >= self.small then  
+      for i,x in ipairs(t) do
+        new = self.get(x)
+        l:add(new)
+        r:sub(new)
+        if new ~= old then
+          if l.n >= self.enough then
+            if  r.n < self.enough then return nil end
+            if new - first >= self.small then
+              local maybe = l.n/n * l.sd + r.n/n * r.sd
+                if maybe*self.trivial < score then
+                  cut,score,lo,hi = i,maybe,l:copy(),r:copy()
+        end end end end
+        old = new
+  end end end
   split(Num:new(), all, all.sd) 
   if cut then -- divide the ranage
-    self:div1(sub(t,1,cut), lo, out)
-    self:div1(sub(t,cut+1), hi, out)
+    self:div1(sub(t,1,cut), n, lo, out)
+    self:div1(sub(t,cut+1), n, hi, out)
   else -- we've found a leaf range
     add(out,range)
 end end
