@@ -25,7 +25,11 @@ function _syms()
   for _,n in pairs{1,2,3,4,5,6} do
     num:add(n)
   end 
-  print(num.mu,num.sd)
+  print(num)
+  local num1=num:copy()
+  for i=1,1000 do num1:add(r()^3) end
+  print(num)
+  print(num1)
   tmp = Num:new():adds{1,2,3,4,5,6}.sd*0.1
   print(tmp)
 end
