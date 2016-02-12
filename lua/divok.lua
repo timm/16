@@ -12,3 +12,4 @@ function _sdiv()
 end end
 
 _sdiv()
+rogue()

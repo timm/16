@@ -30,7 +30,7 @@ function Split:div1(t, all, out,     cut,lo,hi)
         if l.n >= self.enough then
           if  r.n < self.enough then return nil end
           if new - first >= self.small then
-            maybe = l.n/#t * l.sd + r.n/#t * r.sd
+            local  maybe = l.n/#t * l.sd + r.n/#t * r.sd
               if maybe*self.trivial < score then
                 cut,score,lo,hi = i,maybe,l:copy(),r:copy()
       end end end end
