@@ -96,6 +96,19 @@ function sub(t, first, last)
   return out
 end
 
+function tstring(t) 
+    local out,sep="{",":"
+    for xx,yy in pairs(t) do
+      if type(yy) ~= 'function' then
+        if string.sub(xx,1,1) ~= "_" then
+            out = out..sep..xx.." "..yy 
+          sep = " :"
+    end end end  
+    return out..'}'
+end  
+
+function tprint(t) print(tstring(t)) end
+
 -- String stuff --------------------
 function len(x)
   return string.len(x==nil and "" or x) end
@@ -137,13 +150,19 @@ function s2t(str)
   return out
 end 
 
+
 -- OO stuff --------------------
 Object={}
+
+function Object:s()
+  return tstring(self)
+end
 
 function Object:new(o)
    o = o or {} 
    setmetatable(o,self)  
    self.__index = self
+   self.__tostring =  o.s
    return o
 end
 
@@ -155,19 +174,6 @@ function Object:copy()
    return o
 end
 
-_tostring =  _tostring or tostring
-tostring = function (t)
-  if type(t) == "table" then 
-    local out,sep="{",":"
-    for x,y in pairs(t) do
-      if string.sub(x,1,1) ~= "_" then
-        out = out..sep..x.." "..y 
-        sep = " :"
-    end end  
-    return  _tostring(out .. '}')
-  end 
-  return _tostring(t) 
-end
 
 -- Meta stuff -------------------------
 function same(x) return x end
