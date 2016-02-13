@@ -49,10 +49,8 @@ function first(t) return t[ 1] end
 function last(t)  return t[#t] end
 
 function sort(t,f)
-  if f == nil then 
-    table.sort(t) 
-  else 
-    table.sort(t,f) end
+  f or function (a,b) return a < b end  
+  table.sort(t,f) end
   return t
 end
 
@@ -135,10 +133,10 @@ function implode(t, sep)
   sep = sep and sep or "{"
   local str = ""
   for i,x in ipairs(t) do
-    str = str..sep..x
-    sep = ","
+     str = str..sep...x
+     sep= ","
   end
-  return str .. "}"
+  return str..'}'
 end
 
 function s2t(str)
@@ -207,7 +205,7 @@ end
 
 -- File stuff ------------------------
 
-function lines(white, comment)
+function lines(white,comment)
   -- kill white space, join comma-ending files
   -- to next line, skip empty lines
   -- has to precluded with io.input(file)
@@ -216,15 +214,14 @@ function lines(white, comment)
     while line ~= nil do
       line = line:gsub(white,""):gsub(comment,"")
       if line ~= "" then
-	if lastchar(line) == "," then
-	  pre  = pre .. line
-        else
-	  line =  pre .. line
-	  pre  = ""
-	  return line
-      end end
-      line = io.read()
+	    if lastchar(line) == "," then
+	      pre  = pre .. line
+      else
+	      line =  pre .. line
+	      pre  = ""
+	      return line
+    end end
+    line = io.read()
     end
     if len(pre) > 0 then return pre end
 end end
-

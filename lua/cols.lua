@@ -47,6 +47,14 @@ function Log:add(x)
   return self
 end 
  
+function Sym:add1(x)
+  local old = self.counts[x]
+  new = (old == nil and 0 or old) + 1
+  self.counts[x] = new
+  if new > self.most then
+    self.mode, self.most = x,new
+end end
+
 function Num:add1(x)
   local delta = x - self.mu
   self.mu     = self.mu + delta / self.n
@@ -62,14 +70,6 @@ function Num:sub(x)
   self.m2 = self.m2 - delta*(x - self.mu)
   if self.n > 1 then
     self.sd = (self.m2/(self.n - 1))^0.5  
-end end
-
-function Sym:add1(x)
-  local old = self.counts[x]
-  new = (old == nil and 0 or old) + 1
-  self.counts[x] = new
-  if new > self.most then
-    self.mode, self.most = x,new
 end end
 
 -- Logs --------------------------------
