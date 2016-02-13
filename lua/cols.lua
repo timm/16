@@ -4,7 +4,7 @@ Some = Object:new{max = 256,
 		             kept = {},
 		                n = 0}
 Log = Object:new{name = "",
-		             pass = "[\\?]",
+		  pass = "[\\?]",
                     n = 0,
                  some = Some:new()}
 Sym = Log:new{ counts = {},

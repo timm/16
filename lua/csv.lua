@@ -1,10 +1,10 @@
 require "aaa"
 
-Csv= Object:new{file      = "data.csv",
+Csv= Object:new{file     = "data.csv",
 	       using     = {},
 	       compilers = {},
 	       chars     = {
-    whitespace = "[\n\r\t ]*", -- kill all whitespace
+    whitespace = "[ \t\n]*", -- kill all whitespace
     comment    = "#.*",        -- kill all comments
     sep        = ",",          -- field seperators
     ignorep    = "[\\?]",
@@ -45,13 +45,14 @@ end
 function Csv:rows()
   io.input(self.file)
   return function()
-    for line in lines(self.file,
-		      self.chars["whitespace"],
+    for line in lines(self.chars["whitespace"],
 		      self.chars["comment"]
                      ) do
-      local cells = explode(line, self.chars["sep"]) 
+      local cells = explode(line, self.chars["sep"])
       if #self.using==0 then
 	self:header(cells)
       else
 	return self:row(cells)
 end end end end
+
+rogue()

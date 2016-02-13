@@ -132,13 +132,13 @@ function explode(inputstr, sep)
 end
 
 function implode(t, sep)
-  sep = sep and sep or ","
+  sep = sep and sep or "{"
   local str = ""
   for i,x in ipairs(t) do
-    sep1 = i == 1 and "" or sep
-    str = str..x.. sep
+    str = str..sep..x
+    sep = ","
   end
-  return str
+  return str .. "}"
 end
 
 function s2t(str)
@@ -207,7 +207,7 @@ end
 
 -- File stuff ------------------------
 
-function lines(white,comment)
+function lines(white, comment)
   -- kill white space, join comma-ending files
   -- to next line, skip empty lines
   -- has to precluded with io.input(file)
@@ -227,3 +227,4 @@ function lines(white,comment)
     end
     if len(pre) > 0 then return pre end
 end end
+

@@ -1,8 +1,10 @@
 require "csv"
 
-for row in Csv:new{file='data/weather.csv'}
-                :rows() do
+function _csv(f)
+  f= f or 'data/weather.csv'
+  for row in  Csv:new{file=f}:rows() do
     print("[" .. implode(row) .. "]")
-end
+end end
 
-rogue()
+-- _csv()
+_csv('data/maxwell.csv')

@@ -1,9 +1,9 @@
-require "batteries"
+require "aaa"
 
 Txt = {
     whitespace = "[\n\r\t ]*", -- kill all whitespace
     comment    = "#.*",        -- kill all comments
-    sep        = ",",           -- seperate fields by 'delimiter'
+    sep        = ",",          -- seperate fields by 'delimiter'
     ignorep    = "[\\?]",
     missing    = '[\\?]',
     klass      = "=",

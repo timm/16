@@ -1,8 +1,8 @@
 require "aaa"
 require "cols"
 
-Split=Object:new{enough=nil, get=last, cohen=0.2, sanity=16,
-                 small=nil, id=1, trivial=1.05}
+Split=Object:new{enough=nil, get=last, cohen=  0.2, sanity=16,
+                 small =nil, id= 1,    trivial=1.05}
 
 function Split:div(t,    all,out)
   t = sort(t, function(a,b) 
@@ -17,10 +17,10 @@ end
 
 function Split:div1(t,n,all,out) 
   local cut,lo,hi
-  local first, last = self.get(t[1]), self.get(t[#t])
-  local range = {id=self.id, lo=first, up=last, n=#out,
+  local start, stop = self.get(t[1]), self.get(t[#t])
+  local range = {id=self.id, lo=start, up=stop, n=#out,
                  has=t, score = all:copy()}
-  if last - first >= self.small then 
+  if stop - start >= self.small then 
     local l, score = Num:new(), all.sd
     local new, old
     for i,x in ipairs(t) do
@@ -30,7 +30,7 @@ function Split:div1(t,n,all,out)
       if new ~= old then
         if l.n >= self.enough then
           if  all.n < self.enough then goto rest end
-          if new - first >= self.small then
+          if new - start >= self.small then
             local maybe = l.n/n*l.sd + all.n/n*all.sd
             if maybe*self.trivial < score then
               cut, score = i, maybe
