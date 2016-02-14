@@ -62,11 +62,11 @@ function Num:add1(x)
   if self.n > 1 then
     self.sd = (self.m2/(self.n - 1))^0.5  
 end end 
-
+    
 function Num:sub(x)
   self.n = self.n - 1
   local delta = x - self.mu
-  self.mu = self.mu - delta / self.n
+  self.mu = self.mu - delta/self.n
   self.m2 = self.m2 - delta*(x - self.mu)
   if self.n > 1 then
     self.sd = (self.m2/(self.n - 1))^0.5  

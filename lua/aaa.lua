@@ -96,6 +96,13 @@ end
 
 function tprint(t) print(tstring(t)) end
 
+function reverse(t)
+  for i=1, math.floor(#t / 2) do
+    t[i], t[#t - i + 1] = t[#t - i + 1], t[i]
+  end
+  return t
+end
+
 -- String stuff --------------------
 function len(x)
   return string.len(x==nil and "" or x) end
@@ -128,16 +135,6 @@ function implode(t, sep)
   return str..'}'
 end
 
-function s2t(str)
-  local out = {}
-  for i = 1,#str do
-    local c = string.sub(str,i,i) 
-    add(out, c)
-  end
-  return out
-end 
-
-
 -- OO stuff --------------------
 Object={}
 
@@ -160,7 +157,6 @@ function Object:copy()
    for x,y in pairs(self) do o[x] = y end
    return o
 end
-
 
 -- Meta stuff -------------------------
 function same(x) return x end

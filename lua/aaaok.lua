@@ -15,7 +15,7 @@ function _maths()
   assert(round(3.6)==4           , "rounding error"  )
 end
 
-function _lists(t)
+function _lists(t,t1,sub23)
   t={10,20,30,40}
   assert(first(t) == 10,"first error")
   assert(last(t) == 40,"first error")
@@ -24,11 +24,46 @@ function _lists(t)
   assert(t[1]==1 and t[2]==2 
          and t[3]== 10 and t[4] == 20,
         "bad sort")  
-  
+  t1={}
+  for x in items{1,2,3,4,5} do
+    add(t1,x) end
+  assert(t1[1]==1,"one")
+  assert(t1[5]==5,"five")
+  assert(member(22,{11,22,33}),"! member")
+  local ten = function (x) return 10*x end
+  t1 = map(ten,{1,2,3,4})
+  assert(t1[1]==10,"! ten")
+  assert(t1[4]==40,"! fourty")
+  sub23 = sub({1,2,3,4,5,6,7},4,7)
+  assert(sub23[4] == 7, "! seven")
 end
 
-ok{_test1,_test2, _maths,_lists}
+function _string(t)
+  assert(len("") == 0,"empty string")
+  assert(len(nil) == 0,"empty string")
+  assert(len("timothy") == 7,"seven")
+  assert(found("tim","^t") == true, "tim")
+  assert(lastchar("timm") == "m","!m")
+  t= explode("aa,bb,cc,dd",",")
+  assert(t[1]=="aa","! aa")
+  assert(t[4]=="dd","! dd")
+  assert(implode(t)=="{aa,bb,cc,dd}")
+end
 
+function _lines(t)
+  io.input("data/weather.csv")
+  t={}
+  for line in lines(" *","#.*") do
+    add(t,len(line))
+  end
+  assert(last(t) == 19, "! 19")
+  t={}
+  for i = 1,25 do add(t,i) end
+  assert(implode(t) == implode(reverse(reverse(t))))
+end
+
+ok{_test1,_test2, _maths,
+  _lists,_string,_lines}
 
 os.exit()
 
