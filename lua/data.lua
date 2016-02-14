@@ -20,28 +20,30 @@ function Data:header(Nsv,n,x)
   h    = nump and Num:new{name=x} or Sym:new{name=x}
   h.pos = n
   add(self.headers, h)
-  print("s",#self.headers)
-  if Nsv:has(h, "more")  then add(self.more, h) end
-  if Nsv.has(h, "less")  then add(self.less, h) end	
-  if Nsv.has(h, "klass") then add(self.klass,h) end
-  if Nsv.has(h, "dep")   then add(self.dep,  h)
+  print("X",x)
+  if Nsv:has(x, "more")  then add(self.more, h) end
+  if Nsv.has(x, "less")  then add(self.less, h) end	
+  if Nsv.has(x, "klass") then add(self.klass,h) end
+  if Nsv.has(x, "dep")   then add(self.dep,  h)
                          else add(self.indep,h) end
   if nump
      then add(self.nums, h)
-     else add(self.syms. h)
-  end	
-end
+     else add(self.syms, h)
+end	end
 
 function Data:import(file)
   local Nsv = Nsv:new{file=file}
   for line in Nsv:rows() do
-    print(22,self.headers,#self.headers)
+    print(22,self.headers,#self.headers,line)
     if #self.headers == 0 then
       print(33)
       self.spec = line
       tprint(line,"lin")
       for n,x in ipairs(line) do
- 	self:header(Nsv,n,x) end
+        print(">>>>",n,x)
+       	self:header(Nsv,n,x) 
+       	print(n, #self.headers)
+      end
     else
       print(44)
       add(self.rows, self:row(line,{}))

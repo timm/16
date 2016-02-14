@@ -29,7 +29,7 @@ function Nsv:header(cells)
       j = j + 1
       self.using[j]     = i
       self.compilers[j] = self:has(x, "nump") 
-  end end end
+end end end
 
 function Nsv:row(cells)
   local out={}
@@ -46,13 +46,11 @@ function Nsv:rows()
   io.input(self.file)
   return function()
     for line in lines(self.chars["whitespace"],
-		      self.chars["comment"]
+		                  self.chars["comment"]
                      ) do
       local cells = explode(line, self.chars["sep"])
       if #self.using==0 then
-	self:header(cells)
+	      self:header(cells)
       else
-	return self:row(cells)
+	      return self:row(cells)
 end end end end
-
-rogue()
