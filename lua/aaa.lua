@@ -26,20 +26,11 @@ function round(x)
   return math.floor(x + 0.5)
 end
 
+function r3(x) return rn(x,3) end
 
-function rn(digits,x)
-  local shift = 10 ^ digits
-  return math.floor( x*shift + 0.5 ) / shift
-end
-
-function r3(x) return x end
-
-function rns(digits,t)
-  local out = {}
-  for _,x in ipairs(t) do
-    add(out, rn(digits,x))
-  end
-  return out
+function rn(what, precision)
+   return math.floor(what*math.pow(10,precision)+0.5) 
+          / math.pow(10,precision)
 end
 
 -- Table stuff ------------------------
@@ -47,10 +38,12 @@ add = table.insert
 
 function first(t) return t[ 1] end
 function last(t)  return t[#t] end
+function empty(t) return t == nil or #t ==0 end
 
 function sort(t,f)
-  f or function (a,b) return a < b end  
-  table.sort(t,f) end
+  local lt = function (a,b) return a < b end
+  f= f or lt
+  table.sort(t,f) 
   return t
 end
 
@@ -58,10 +51,6 @@ function o(t,s)
   s = s or ">"
   for i,x in ipairs(t) do print(s,i,"["..x.."]") end
 end
-
-function asTable(x)
-  return type(x) == "table" and x or {x}
-end 
 
 function items(t)
   local i,max=0,#t
@@ -133,7 +122,7 @@ function implode(t, sep)
   sep = sep and sep or "{"
   local str = ""
   for i,x in ipairs(t) do
-     str = str..sep...x
+     str = str..sep..x
      sep= ","
   end
   return str..'}'
@@ -188,15 +177,17 @@ function rogue(x)
 do
   local y,n = 0,0
   local function report() 
-    print(fmt(":pass %s :fail %s :percentPass %s%%",
-              y,n,p(y/(0.001+y+n))))
+    print(string.format(
+              ":pass %s :fail %s :percentPass %s%%",
+              y,n,math.floor(y/(0.001+y+n))))
     rogue() end
   local function test(s,x) 
-    print("# test:",s) 
+    print("# test:", s) 
+    y = y + 1
     local passed,err = pcall(x) 
-    if passed then y = y + 1 else
+    if not passed then   
        n = n + 1
-       print("Fails:",err) end end 
+       print("Failure: ".. err) end end 
   local function tests(t)
     for s,x in pairs(t) do test(s,x) end end 
   function ok(t) 

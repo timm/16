@@ -1,5 +1,5 @@
 Make = $(MAKE) --no-print-directory #
-
+ok=$(shell *ok.lua)
 
 typo:  ready 
 	@- git status
@@ -27,5 +27,8 @@ your:
 timm:
 	@git config --global user.name "Tim Menzies"
 	@git config --global user.email tim.menzies@gmail.com
+	
+ok:
+	$(foreach f,$(ok),lua $f;)
 
  
