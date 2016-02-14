@@ -1,0 +1,5 @@
+for f in *ok.lua; do
+  echo ""
+  echo "---| $f |-------------"
+  lua $f
+done
