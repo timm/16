@@ -3,7 +3,10 @@ require "nsv"
 function _nsv(f,tmp,i)
   i=0
   f= f or 'data/weather.csv'
-  for row in  Nsv:new{file=f}:rows() do 
+  n = Nsv:new()
+  n.file=f
+  tprint(n)
+  for row in  n:rows() do 
     tmp = row
   end
   local n = tmp[#tmp]

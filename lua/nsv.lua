@@ -19,7 +19,7 @@ Nsv= Object:new{file     = "data.Nsv",
     dep        = "[=<>]"
 }}
 
-function Nsv:has(txt,pat)
+function Nsv:has(txt,pat) 
   return found(txt, self.chars[pat]) end
 
 function Nsv:header(cells)
@@ -51,6 +51,7 @@ function Nsv:rows()
       local cells = explode(line, self.chars["sep"])
       if #self.using==0 then
 	      self:header(cells)
+	      return cells
       else
 	      return self:row(cells)
 end end end end
