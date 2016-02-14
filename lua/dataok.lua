@@ -5,5 +5,4 @@ function _data(f)
   Data:new():import(f) 
 end
 
--- _csv()
 _data('data/maxwell.csv')

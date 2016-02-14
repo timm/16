@@ -1,4 +1,4 @@
-require "csv"
+require "nsv"
 
 Some = Object:new{max = 256,
 		             kept = {},
@@ -74,7 +74,7 @@ end end
 
 -- Logs --------------------------------
 function Logs:header(t)
-  c = Csv:new()
+  c = nsv:new()
   for _,one in ipairs(t) do
     what = c:has(x,"nump") and Num or Sym
     add(self.has, what{name=what})

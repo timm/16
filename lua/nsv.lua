@@ -1,6 +1,6 @@
 require "aaa"
 
-Csv= Object:new{file     = "data.csv",
+Nsv= Object:new{file     = "data.Nsv",
 	       using     = {},
 	       compilers = {},
 	       chars     = {
@@ -19,10 +19,10 @@ Csv= Object:new{file     = "data.csv",
     dep        = "[=<>]"
 }}
 
-function Csv:has(txt,pat)
+function Nsv:has(txt,pat)
   return found(txt, self.chars[pat]) end
 
-function Csv:header(cells)
+function Nsv:header(cells)
   local j = 0
   for i,x in ipairs(cells) do
     if not self:has(x,"ignorep") then
@@ -31,7 +31,7 @@ function Csv:header(cells)
       self.compilers[j] = self:has(x, "nump") 
   end end end
 
-function Csv:row(cells)
+function Nsv:row(cells)
   local out={}
   for _,j in ipairs(self.using)  do
     local x = cells[j]
@@ -42,7 +42,7 @@ function Csv:row(cells)
   return out
 end
     
-function Csv:rows()
+function Nsv:rows()
   io.input(self.file)
   return function()
     for line in lines(self.chars["whitespace"],

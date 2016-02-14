@@ -1,4 +1,4 @@
-require "csv"
+require "nsv"
 require "cols"
 
 Data=Object:new{
@@ -15,16 +15,16 @@ function Data:row(line,tmp)
   return tmp
 end
 
-function Data:header(csv,n,x)
-  nump = csv:has(x,"nump")
+function Data:header(Nsv,n,x)
+  nump = Nsv:has(x,"nump")
   h    = nump and Num:new{name=x} or Sym:new{name=x}
   h.pos = n
   add(self.headers, h)
   print("s",#self.headers)
-  if csv:has(h, "more")  then add(self.more, h) end
-  if csv.has(h, "less")  then add(self.less, h) end	
-  if csv.has(h, "klass") then add(self.klass,h) end
-  if csv.has(h, "dep")   then add(self.dep,  h)
+  if Nsv:has(h, "more")  then add(self.more, h) end
+  if Nsv.has(h, "less")  then add(self.less, h) end	
+  if Nsv.has(h, "klass") then add(self.klass,h) end
+  if Nsv.has(h, "dep")   then add(self.dep,  h)
                          else add(self.indep,h) end
   if nump
      then add(self.nums, h)
@@ -33,15 +33,15 @@ function Data:header(csv,n,x)
 end
 
 function Data:import(file)
-  local csv = Csv:new{file=file}
-  for line in csv:rows() do
+  local Nsv = Nsv:new{file=file}
+  for line in Nsv:rows() do
     print(22,self.headers,#self.headers)
     if #self.headers == 0 then
       print(33)
       self.spec = line
       tprint(line,"lin")
       for n,x in ipairs(line) do
- 	self:header(csv,n,x) end
+ 	self:header(Nsv,n,x) end
     else
       print(44)
       add(self.rows, self:row(line,{}))
