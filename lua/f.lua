@@ -25,8 +25,8 @@ function Fun:header(nsv,n,x)
   if nsv:has(x, "klass") then add(self.klass, h) end
   if nsv:has(x, "dep")   then add(self.y,     h)
                          else add(self.x,     h) end
-  if nump == true        then add(self.nums, h)
-                         else add(self.syms, h)
+  if nump == true        then add(self.nums,  h)
+                         else add(self.syms,  h)
 end	end
 
 function Fun:import(file) 
