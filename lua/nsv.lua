@@ -1,9 +1,9 @@
 require "aaa"
 
-Nsv= Object:new{file     = "data.Nsv",
-	       using     = {},
-	       compilers = {},
-	       chars     = {
+Nsv= Object:new{file = "data.csv",
+	       using       = {},
+	       compilers   = {},
+	       chars       = {
     whitespace = "[ \t\n]*", -- kill all whitespace
     comment    = "#.*",        -- kill all comments
     sep        = ",",          -- field seperators

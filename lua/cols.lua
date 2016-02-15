@@ -44,7 +44,7 @@ function Log:add(x)
       self:add1(x)
       self.some:keep(x)
     end end 
-  return self
+  return x
 end 
  
 function Sym:add1(x)
