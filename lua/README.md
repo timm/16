@@ -35,8 +35,8 @@ To use:
 
 To test:
 
-All my `x.lua` files have an associated `xok.lua` file  containing
-tests for `x.lua`. To run those tests, after unzipping or checking out, run:
++ All my `x.lua` files have an associated `xok.lua` file  containing
+  tests for `x.lua`. To run those tests, after unzipping or checking out, run:
 
     bash oks
     
@@ -171,7 +171,7 @@ Note that, in the above:
 This `some` variable is useful for maintaining a small sample
 of a much larger space. Given a cache of fixed size (e.g. `k=256` items)
 then once the cache is filled, the `n`-the item is kept in the 
-cache att probablity `k/n`:
+cache at probablity `k/n`:
 
 ```lua
 function Some:keep(x)

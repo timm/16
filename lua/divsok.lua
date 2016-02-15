@@ -11,6 +11,8 @@ function _divs(n,s,d)
   d= Fun:new()
   d:import('data/maxwell.csv')
   print(#d.nums)
+  for _,num in ipairs(d.nums) do
+    print(d.nu,s.
 end
 
 _divs()
