@@ -13,7 +13,9 @@ a approximation to the function
 
     y = Fun(x)
     
-whey `y` can be a single or multiple goals.
+whey `y` can be a single or multiple goals. The general tactic
+will be to approximate complex functions via few  
+dimensions, divided into a small number of ranges.  
 
 ## Why Fun? 
 
@@ -127,7 +129,7 @@ blocks addition of any non-null values.  As to the specifics
 of adding different types of items, note that `Log:add` calls
 an `:add1` function that is specialized in `Sym` and `Num`:
 
-```
+```lua
 function Log:add(x)
   if x ~= nil then
     if x ~= self.ignore then
@@ -164,6 +166,22 @@ Note that, in the above:
   the `up`per and `lo`wer values ever seen in that column.
 + When items are `:add`ed to `Sym` headers, the frequency counts of those
   items are incremcentall updated.
-+ All additions are `:kept` in the `some` variable.
++ All additions are `:kept` in the `some` variable. 
 
-`Some` is a cache storing a sub-sample of all `:add`ed items. 
+This `some` variable is useful for maintaining a small sample
+of a much larger space. Given a cache of fixed size (e.g. `k=256` items)
+then once the cache is filled, the `n`-the item is kept in the 
+cache att probablity `k/n`:
+
+```lua
+function Some:keep(x)
+  self.n  = self.n + 1
+  local k = #self.kept
+  if k < self.max 
+    then add(self.kept,x) 
+  elseif r()  < k / self.n 
+    then self.kept[ round(r() * k) ] = x
+  end 
+  return self
+end
+```
