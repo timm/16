@@ -18,7 +18,7 @@ Or not. This is work in progress. Watch this space.
 To use:
 
 1. Install Lua. Install LuaJit (if you want faster code). 
-2. In  a fresh directory, download [fun.zip](fun.zip).
+2. In  a fresh directory, download [fun.zip](fun.zip). 
 
 To test:
 
@@ -45,10 +45,13 @@ Lua is a "batteries not included" language. To see the "batteries"
 I added, which includes a small OO extension to Lua, read [aaa.lua](aaa.lua).
 
 
-In the following description anything starting with `U`pper case is
-a class and anyting starting with `l`ower case is a slot. 
-Lua data objects are defined in `code` font while anything about
-files or particular data items are shown in _italic_ font.
+In the following description:
+
++ Anything starting with `U`pper case is  a class; 
++ Anyting starting with `l`ower case is a slot; 
++ Lua data objects are defined in `code` font ;
++ Lua methods start with a colon charatecter; e.g. `:example`;
++ Anything about files or particular data items are shown in _italic_ font.
 
 
 ### Goal 
@@ -107,8 +110,10 @@ the relevant header. This means that as a side effect of lading in the
 rows, that the headers update their knowledge of each column.
 
 
-`Num` and `Sym` are sub-classes of `Log` whose the generic `:add` function
-blocks addition of any non-null values:
+`Num` and `Sym` are sub-classes of `Log` whose   `:add` function
+blocks addition of any non-null values.  As to the specifics
+of adding different types of items, note that `Log:add` calls
+an `:add1` function that is specialized in `Sym` and `Num`:
 
 ```
 function Log:add(x)
@@ -147,3 +152,6 @@ Note that, in the above:
   the `up`per and `lo`wer values ever seen in that column.
 + When items are `:add`ed to `Sym` headers, the frequency counts of those
   items are incremcentall updated.
++ All additions are `:kept` in the `some` variable.
+
+`Some` is a cache storing a sub-sample of all `:add`ed items. 
