@@ -38,8 +38,10 @@ To test:
 + All my `x.lua` files have an associated `xok.lua` file  containing
   tests for `x.lua`. To run those tests, after unzipping or checking out, run:
 
-    bash oks
-    
+```
+bash oks
+```
+
 which loads all the `*ok.lua` files in the current directory. That code should
 **NOT** output the word _Failure_, except for the   tests  that
 test if the test system is working. So please ignore the following lines:
