@@ -21,12 +21,10 @@ Logs = Object:new{has = {},some=Some:new{}}
 function Some:keep(x)
   self.n  = self.n + 1
   local k = #self.kept
-  if k < self.max 
-    then add(self.kept,x) 
-  elseif r()  < k / self.n 
-    then self.kept[ round(r() * k) ] = x
+  if     k < self.max     then add(self.kept,x) 
+  elseif r() < k / self.n then self.kept[round(r()*k)]= x
   end 
-  return self
+  return x
 end
      
 -- Log  --------------------------------
