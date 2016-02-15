@@ -14,7 +14,14 @@ commit:  ready
 update:; @- git pull origin master
 status:; @- git status
 
-ready: gitting 
+ready: gitting  zips
+
+zips0: 
+	cd lua; rm fun.zip; zip fun.zip README.md
+  
+zips:
+	@- zip -ur lua/fun.zip  lua -x *.git* -x *.zip* -x _\* -x lua/_*/\* -x \#*
+	
 
 gitting:
 	@git config --global credential.helper cache
