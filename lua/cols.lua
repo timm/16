@@ -56,6 +56,8 @@ function Sym:add1(x)
 end end
 
 function Num:add1(x)
+  if x > self.up then self.up = x end
+  if x < self.lo then self.lo = x end
   local delta = x - self.mu
   self.mu     = self.mu + delta / self.n
   self.m2     = self.m2 + delta * (x - self.mu)

@@ -20,14 +20,10 @@ To use:
 1. Install Lua. Install LuaJit (if you want faster code). 
 2. In  a fresh directory, download [fun.zip](fun.zip).
 
-To contribute:
+To test:
 
-1. Check out this repo in Github. Do the usual things. Code contribs gladly accepted!
-
-## Testing
-
-All my `x.lua` files have an associated `xok.lua` file which contains
-tests for `x.lua`. To run thise tests, after unzipping or checking out, run:
+All my `x.lua` files have an associated `xok.lua` file  containing
+tests for `x.lua`. To run those tests, after unzipping or checking out, run:
 
     bash oks
     
@@ -39,7 +35,6 @@ test if the test system is working. So please ignore the following lines:
 Failure: aaaok.lua:5: oh dear 
 Failure: aaaok.lua:10: oh dear,again 
 ```
-      
       
 ## Documentation
   
@@ -95,11 +90,60 @@ then _outlook,windy_ are `Sym`bols while _temperature_ is `Num`ber.
 Also, _play_ is a `klass` (which is also a `Sym`bol).  Other magic
 characters are defined in the top of the _nsv.lua_ file.
 
-    klass      = "=",
-    less       = "<",
-    more       = ">",
-    floatp     = "[\\$]",
-    intp       = ":",
-    goalp      = "[><=]",
-    nump       = "[:\\$><]",
-    dep        = "[=<>]"
+    klass      = "=",        # for symbolic klasses, used for classification
+    less       = "<",        # for numeric goal to be minimized
+    more       = ">",        # for numeric goal to be maximized
+    floatp     = "[\\$]",    # for numeric columns
+    intp       = ":",        # for numeric columns
+    goalp      = "[><=]",    # for any goal
+    nump       = "[:\\$><]", # for any numeric
+    dep        = "[=<>]"     # for any goal
+
+Missing in the above is a prefix for `Sym`bol since this code assumes that
+if you are not `nump` then you are a `Sym`bol.
+
+When examples is read into a `Fun`ction, each item is `:add`ed to
+the relevant header. This means that as a side effect of lading in the
+rows, that the headers update their knowledge of each column.
+
+
+`Num` and `Sym` are sub-classes of `Log` whose the generic `:add` function
+blocks addition of any non-null values:
+
+```
+function Log:add(x)
+  if x ~= nil then
+    if x ~= self.ignore then
+      self.n = self.n + 1
+      self:add1(x)
+      self.some:keep(x)
+    end end 
+  return x
+end 
+ 
+function Sym:add1(x)
+  local old = self.counts[x]
+  new = (old == nil and 0 or old) + 1
+  self.counts[x] = new
+  if new > self.most then
+    self.mode, self.most = x,new
+end end
+
+function Num:add1(x)
+  if x > self.up then self.up = x end
+  if x < self.lo then self.lo = x end
+  local delta = x - self.mu
+  self.mu     = self.mu + delta / self.n
+  self.m2     = self.m2 + delta * (x - self.mu)
+  if self.n > 1 then
+    self.sd = (self.m2/(self.n - 1))^0.5  
+end end 
+```
+
+Note that, in the above:
+
++ When items are `:add`ed to `Num` headers, the mean and standard deviation
+  of those numbers is incrementally updated (as is our knowledge of
+  the `up`per and `lo`wer values ever seen in that column.
++ When items are `:add`ed to `Sym` headers, the frequency counts of those
+  items are incremcentall updated.
