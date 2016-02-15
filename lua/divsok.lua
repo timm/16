@@ -12,7 +12,7 @@ function _divs(n,s,d)
   d:import('data/maxwell.csv')
   print(#d.nums)
   for _,num in ipairs(d.nums) do
-    print(d.nu,s.
+    print(num.pos,num.name,r3(num.mu)) end
 end
 
 _divs()

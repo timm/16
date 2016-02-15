@@ -79,6 +79,8 @@ a approximation to the function
 where `x,y` can be multiple `Col`umns (so these functions input mulitiple inputs
 and generate mulitple outputs.
 
+#### Columns
+
 All columns are either:
 
 + `Num`bers: things that can be added, multiplied, etc
