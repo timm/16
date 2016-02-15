@@ -8,7 +8,7 @@ This code documents common data mining processing patterns
 In the following description anything starting with `U`pper case is
 a class and anyting starting with `l`ower case is a slot. 
 Lua data objects are defined in `code` font while anything about
-files or particular data items are shown in `italic` font.
+files or particular data items are shown in _italic_ font.
 
 ## Details
 
