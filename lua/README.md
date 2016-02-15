@@ -32,7 +32,7 @@ tests for `x.lua`. To run thise tests, after unzipping or checking out, run:
     bash oks
     
 which loads all the `*ok.lua` files in the current directory. That code should
-**NOT** output the word _Failure_, except for the   tests  
+**NOT** output the word _Failure_, except for the   tests  that
 test if the test system is working. So please ignore the following lines:
 
 ```
