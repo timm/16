@@ -7,6 +7,7 @@ Fun=Object:new{
   spec   = {}, more   = {}, less   = {},
   klass  = {}, nums   = {}, syms   = {}
 }
+Row=Object:new{x={},y=nil}
 
 function Fun:row(line,tmp)
   for j,head in ipairs(self.headers) do
