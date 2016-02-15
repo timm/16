@@ -1,3 +1,6 @@
+<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/11/RGBCube_b.svg/2000px-RGBCube_b.svg.png" 
+width=400 align=right>
+
 # Fun with Lua
 
 This general goal of this code 
