@@ -1,4 +1,4 @@
-require "f"
+require "fun"
 
 function _fun(f)
   f= f or 'data/maxwell.csv'
