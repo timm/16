@@ -1,8 +1,16 @@
 # Fun with Lua
 
-This code documents common data mining processing patterns
+This general goal of this code 
+is to document common data mining processing patterns
 (see elsewhere for the excellent 
 [functional programming in Lua library](http://rtsisyk.github.io/luafun/)).
+
+The more specific goal of `Fun` is to learn, from examples,
+a approximation to the function
+
+    y = Fun(x)
+    
+whey `y` can be a single or multiple goals.
 
 ## Why Fun? 
 
@@ -54,9 +62,10 @@ In the following description:
 + Anything about files or particular data items are shown in _italic_ font.
 
 
-### Goal 
+### Details 
 
-The goal of `Fun` is to generate a non-parametric version of
+As mentioned above, the goal of `Fun` is to learn, from examples,
+a approximation to the function
 
     y = Fun(x)
     
