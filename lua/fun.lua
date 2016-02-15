@@ -9,26 +9,30 @@ Fun=Object:new{
 }
 Row=Object:new{x={},y=nil}
 
-function Fun:row(line,tmp)
-  for j,head in ipairs(self.headers) do
-    add(tmp,head:add(line[j])) 
-  end 
-  return tmp
+function Fun:row(t,row)
+  row=Row:new()
+  for j,h in ipairs(self.x) do add(row.x,h:add(t[j])) end
+  for j,h in ipairs(self.y) do add(row.y,h:add(t[j])) end
+  return row
 end
 
 function Fun:header(nsv,n,x)  
   nump  = nsv:has(x,"nump")
-  h     = nump and Num:new{name=x} or Sym:new{name=x}
-  h.pos = n
+  h     = nump and Num:new{name=x} or Sym:new{name=x} 
   add(self.headers, h) 
   if nsv:has(x, "more")  then add(self.more,  h) end
   if nsv:has(x, "less")  then add(self.less,  h) end
   if nsv:has(x, "klass") then add(self.klass, h) end
-  if nsv:has(x, "dep")   then add(self.y,     h)
-                         else add(self.x,     h) end
   if nump == true        then add(self.nums,  h)
-                         else add(self.syms,  h)
-end	end
+                         else add(self.syms,  h) end
+  if nsv:has(x, "dep") then 
+    add(self.y,h)
+    h.pos = {self.y, #self.y}
+  else 
+    add(self.x,h) 
+    h.pos = {self.x, #self.x}
+  end 
+end
 
 function Fun:import(file) 
   local nsv = Nsv:new{file=file} 

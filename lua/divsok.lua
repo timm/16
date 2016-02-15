@@ -8,10 +8,13 @@ function _divs(n,s,d)
   s = Split:new{get=same,maxBins=4}
   for i,range in pairs(s:div(n)) do
     print(i,range.lo,range.up) end
-  d= Fun:new()
-  d:import('data/maxwell.csv')
-  print(#d.nums)
-  for _,num in ipairs(d.nums) do
+  f= Fun:new()
+  f:import('data/maxwell.csv')
+  print(#f.nums)
+  for _,num in ipairs(f.nums) do
+    get=function (row) return row.x[num.pos] end
+    s=Split:new{get=get}:div(f.rows)
+    
     print(num.pos,num.name,r3(num.mu)) end
 end
 
