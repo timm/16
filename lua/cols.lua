@@ -1,4 +1,4 @@
-require "csv"
+require "nsv"
 
 Some = Object:new{max = 256,
 		             kept = {},
@@ -21,12 +21,10 @@ Logs = Object:new{has = {},some=Some:new{}}
 function Some:keep(x)
   self.n  = self.n + 1
   local k = #self.kept
-  if k < self.max 
-    then add(self.kept,x) 
-  elseif r()  < k / self.n 
-    then self.kept[ round(r() * k) ] = x
+  if     k < self.max     then add(self.kept,x) 
+  elseif r() < k / self.n then self.kept[round(r()*k)]= x
   end 
-  return self
+  return x
 end
      
 -- Log  --------------------------------
@@ -44,26 +42,9 @@ function Log:add(x)
       self:add1(x)
       self.some:keep(x)
     end end 
-  return self
+  return x
 end 
  
-function Num:add1(x)
-  local delta = x - self.mu
-  self.mu     = self.mu + delta / self.n
-  self.m2     = self.m2 + delta * (x - self.mu)
-  if self.n > 1 then
-    self.sd = (self.m2/(self.n - 1))^0.5  
-end end 
-
-function Num:sub(x)
-  self.n = self.n - 1
-  local delta = x - self.mu
-  self.mu = self.mu - delta / self.n
-  self.m2 = self.m2 - delta*(x - self.mu)
-  if self.n > 1 then
-    self.sd = (self.m2/(self.n - 1))^0.5  
-end end
-
 function Sym:add1(x)
   local old = self.counts[x]
   new = (old == nil and 0 or old) + 1
@@ -72,9 +53,28 @@ function Sym:add1(x)
     self.mode, self.most = x,new
 end end
 
+function Num:add1(x)
+  if x > self.up then self.up = x end
+  if x < self.lo then self.lo = x end
+  local delta = x - self.mu
+  self.mu     = self.mu + delta / self.n
+  self.m2     = self.m2 + delta * (x - self.mu)
+  if self.n > 1 then
+    self.sd = (self.m2/(self.n - 1))^0.5  
+end end 
+    
+function Num:sub(x)
+  self.n = self.n - 1
+  local delta = x - self.mu
+  self.mu = self.mu - delta/self.n
+  self.m2 = self.m2 - delta*(x - self.mu)
+  if self.n > 1 then
+    self.sd = (self.m2/(self.n - 1))^0.5  
+end end
+
 -- Logs --------------------------------
 function Logs:header(t)
-  c = Csv:new()
+  c = nsv:new()
   for _,one in ipairs(t) do
     what = c:has(x,"nump") and Num or Sym
     add(self.has, what{name=what})

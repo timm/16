@@ -26,11 +26,20 @@ function round(x)
   return math.floor(x + 0.5)
 end
 
-function r3(x) return rn(x,3) end
 
-function rn(what, precision)
-   return math.floor(what*math.pow(10,precision)+0.5) 
-          / math.pow(10,precision)
+function rn(digits,x)
+  local shift = 10 ^ digits
+  return math.floor( x*shift + 0.5 ) / shift
+end
+
+function r3(x) return x end
+
+function rns(digits,t)
+  local out = {}
+  for _,x in ipairs(t) do
+    add(out, rn(digits,x))
+  end
+  return out
 end
 
 -- Table stuff ------------------------
@@ -38,12 +47,10 @@ add = table.insert
 
 function first(t) return t[ 1] end
 function last(t)  return t[#t] end
-function empty(t) return t == nil or #t ==0 end
 
 function sort(t,f)
-  local lt = function (a,b) return a < b end
-  f= f or lt
-  table.sort(t,f) 
+  f or function (a,b) return a < b end  
+  table.sort(t,f) end
   return t
 end
 
@@ -51,6 +58,10 @@ function o(t,s)
   s = s or ">"
   for i,x in ipairs(t) do print(s,i,"["..x.."]") end
 end
+
+function asTable(x)
+  return type(x) == "table" and x or {x}
+end 
 
 function items(t)
   local i,max=0,#t
@@ -96,13 +107,6 @@ end
 
 function tprint(t) print(tstring(t)) end
 
-function reverse(t)
-  for i=1, math.floor(#t / 2) do
-    t[i], t[#t - i + 1] = t[#t - i + 1], t[i]
-  end
-  return t
-end
-
 -- String stuff --------------------
 function len(x)
   return string.len(x==nil and "" or x) end
@@ -126,14 +130,24 @@ function explode(inputstr, sep)
 end
 
 function implode(t, sep)
-  sep = sep and sep or "{"
+  sep = sep and sep or ","
   local str = ""
   for i,x in ipairs(t) do
-     str = str..sep..x
-     sep= ","
+    sep1 = i == 1 and "" or sep
+    str = str..x.. sep
   end
-  return str..'}'
+  return str
 end
+
+function s2t(str)
+  local out = {}
+  for i = 1,#str do
+    local c = string.sub(str,i,i) 
+    add(out, c)
+  end
+  return out
+end 
+
 
 -- OO stuff --------------------
 Object={}
@@ -158,6 +172,7 @@ function Object:copy()
    return o
 end
 
+
 -- Meta stuff -------------------------
 function same(x) return x end
 
@@ -173,17 +188,15 @@ function rogue(x)
 do
   local y,n = 0,0
   local function report() 
-    print(string.format(
-              ":pass %s :fail %s :percentPass %s%%",
-              y,n,math.floor(y/(0.001+y+n))))
+    print(fmt(":pass %s :fail %s :percentPass %s%%",
+              y,n,p(y/(0.001+y+n))))
     rogue() end
   local function test(s,x) 
-    print("# test:", s) 
-    y = y + 1
+    print("# test:",s) 
     local passed,err = pcall(x) 
-    if not passed then   
+    if passed then y = y + 1 else
        n = n + 1
-       print("Failure: ".. err) end end 
+       print("Fails:",err) end end 
   local function tests(t)
     for s,x in pairs(t) do test(s,x) end end 
   function ok(t) 
@@ -201,14 +214,14 @@ function lines(white,comment)
     while line ~= nil do
       line = line:gsub(white,""):gsub(comment,"")
       if line ~= "" then
-	    if lastchar(line) == "," then
-	      pre  = pre .. line
-      else
-	      line =  pre .. line
-	      pre  = ""
-	      return line
-    end end
-    line = io.read()
+	if lastchar(line) == "," then
+	  pre  = pre .. line
+        else
+	  line =  pre .. line
+	  pre  = ""
+	  return line
+      end end
+      line = io.read()
     end
     if len(pre) > 0 then return pre end
 end end
