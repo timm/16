@@ -1,0 +1,1 @@
+AWKPATH='/Users/timm/tmp/tawk' gawk --dump-variables='/Users/timm/tmp/tawk/awkvars.out' --profile='/Users/timm/tmp/tawk/awkprof.out' 
