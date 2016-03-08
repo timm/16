@@ -1,0 +1,11 @@
+if little data, use coarrse grain class
+
+the confusion matrix is your friend. beweare the fully diagonal
+
+thou shall not click. remember the makefile  (maven)
+
+trees are more readable than bayes, regression
+
+c4.5 c5 cart randomForest (<== not for B)
+
+regression...not so much for small data sets

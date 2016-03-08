@@ -1,0 +1,57 @@
+=== Run information ===
+
+Evaluator:    weka.attributeSelection.CfsSubsetEval 
+Search:       weka.attributeSelection.BestFirst -D 1 -N 5
+Relation:     heuristic-values-abc-weka.filters.unsupervised.attribute.Remove-R22-weka.filters.unsupervised.attribute.Remove-R1
+Instances:    23
+Attributes:   21
+              Total
+              ln(Total)
+              LOC
+              ln(LOC)
+              Declaration
+              ln(Dec)
+              Usage
+              ln(Use)
+              Recency
+              ln(Recency)
+              Decl Recency
+              ln(decl recency)
+              Usage Recency
+              ln(usage recency)
+              Basic Recency
+              ln(basic recency)
+              Intermediate Recency
+              ln(int recency)
+              Advanced Recency
+              ln(adv recency)
+              class
+Evaluation mode:    4-fold cross-validation
+
+
+
+=== Attribute selection 4 fold cross-validation (stratified), seed: 1 ===
+
+number of folds (%)  attribute
+           0(  0 %)     1 Total
+           0(  0 %)     2 ln(Total)
+           3( 75 %)     3 LOC
+           0(  0 %)     4 ln(LOC)
+           1( 25 %)     5 Declaration
+           0(  0 %)     6 ln(Dec)
+           0(  0 %)     7 Usage
+           0(  0 %)     8 ln(Use)
+           0(  0 %)     9 Recency
+           0(  0 %)    10 ln(Recency)
+           2( 50 %)    11 Decl Recency
+           0(  0 %)    12 ln(decl recency)
+           0(  0 %)    13 Usage Recency
+           0(  0 %)    14 ln(usage recency)
+           0(  0 %)    15 Basic Recency
+           0(  0 %)    16 ln(basic recency)
+           0(  0 %)    17 Intermediate Recency
+           0(  0 %)    18 ln(int recency)
+           0(  0 %)    19 Advanced Recency
+           0(  0 %)    20 ln(adv recency)
+
+

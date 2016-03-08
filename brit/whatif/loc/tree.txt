@@ -1,0 +1,58 @@
+=== Run information ===
+
+Scheme:       weka.classifiers.trees.J48 -C 0.25 -M 2
+Relation:     heuristic-values-abc-weka.filters.unsupervised.attribute.Remove-R1-weka.filters.unsupervised.attribute.Remove-R1-2,4-10,12-21
+Instances:    23
+Attributes:   3
+              LOC
+              Decl Recency
+              class
+Test mode:    3-fold cross-validation
+
+=== Classifier model (full training set) ===
+
+J48 pruned tree
+------------------
+
+Decl Recency <= 132
+|   LOC <= 18929
+|   |   Decl Recency <= 0: begin (2.0)
+|   |   Decl Recency > 0: middle (10.0/1.0)
+|   LOC > 18929: begin (4.0/1.0)
+Decl Recency > 132: advanced (7.0)
+
+Number of Leaves  : 	4
+
+Size of the tree : 	7
+
+
+Time taken to build model: 0.03 seconds
+
+=== Stratified cross-validation ===
+=== Summary ===
+
+Correctly Classified Instances          18               78.2609 %
+Incorrectly Classified Instances         5               21.7391 %
+Kappa statistic                          0.6742
+Mean absolute error                      0.1401
+Root mean squared error                  0.3417
+Relative absolute error                 31.8252 %
+Root relative squared error             72.8197 %
+Total Number of Instances               23     
+
+=== Detailed Accuracy By Class ===
+
+               TP Rate   FP Rate   Precision   Recall  F-Measure   ROC Area  Class
+                 0.833     0.176      0.625     0.833     0.714      0.863    begin
+                 0.667     0.143      0.75      0.667     0.706      0.837    middle
+                 0.875     0          1         0.875     0.933      0.933    advanced
+Weighted Avg.    0.783     0.102      0.804     0.783     0.787      0.877
+
+=== Confusion Matrix ===
+
+ a b c   <-- classified as
+ 5 1 0 | a = begin
+ 3 6 0 | b = middle
+ 0 1 7 | c = advanced
+
+
