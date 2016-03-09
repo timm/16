@@ -17,8 +17,8 @@ auk : $(Auk)/auk.mk
 	echo "AWKPATH='$(Tmp)' gawk --dump-variables='$(Tmp)/awkvars.out' --profile='$(Tmp)/awkprof.out' " > $@
 	chmod +x $@
 
-$(Tmp)/prep.sed : $(Auk)/h2sed.awk headers.txt
-	cat headers.txt | gawk  -f $(Auk)/h2sed.awk  > $@
+$(Tmp)/prep.sed : $(Auk)/h2sed.awk $(Awks)
+	cat $(Awks) | grep '^#_ ' | gawk  -f $(Auk)/h2sed.awk  > $@
 
 $(Tmp)/%.awk : %.awk $(Tmp)/prep.sed
 	sed -f $(Tmp)/prep.sed $< > $@
