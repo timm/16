@@ -1,3 +1,8 @@
+_Some
+max
+kept
+n
+
 _Num
 mu
 m2
@@ -19,3 +24,12 @@ more
 less
 klass
 
+_Split
+enough     = nil
+get        = last
+cohen      = 0.2
+maxBins    = 16
+minBinSize = 4
+small      = nil
+id         = 1
+trivial    = 1.05
