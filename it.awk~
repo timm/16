@@ -1,0 +1,6 @@
+function aa(     s) {
+    while (love(s)) 
+      print i++
+}
+
+BEGIN{ 
