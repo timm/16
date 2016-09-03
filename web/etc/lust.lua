@@ -4,6 +4,12 @@ about    = require "about"
 ----------------------------------------
 function render(txt) return lustache:render(txt,about) end
 
+function title(str)    
+    for s in str:gmatch"[^\n]+" do
+      if string.sub(s,1,2) == "# " then
+        return string.sub(s,3)
+end end end
+
 function slurp(file)
     local f = io.open(file, "rb")
     local content = f:read("*all")
@@ -12,12 +18,14 @@ function slurp(file)
 end	    
 ----------------------------------------
 news = require "news"
-about["news"]   = news
-about["briefs"] = {{item = news[1].item},
+about.news   = news
+about.briefs = {{item = news[1].item},
                    {item = news[2].item},
                    {item = news[3].item}}
 -----------------------------------------
-about["main"] = arg[1] and slurp(arg[1]) or f:read("*all")
+about.main = arg[1] and slurp(arg[1]) or f:read("*all")
+
+about.title = title(about.main)
 
 print(
   render(

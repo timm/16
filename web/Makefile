@@ -2,7 +2,9 @@ mds=$(shell ls *.md)
 
 all: $(mds:.md=.html)
 
-%.html : %.md etc/template.html etc/style.css
+title=gawk 'gsub(/^#+ /,"") { print $0; exit}'#
+
+%.html : %.md #etc/template.html etc/about.html
 	@echo "$< ==> $@"
 	@cd etc; luajit lust.lua ../$< > ../$@
 	@git  add $@
