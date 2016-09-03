@@ -1,7 +1,6 @@
 lustache = require "lustache"
 markdown = require "markdown"
-new      = require "news"
-
+about    = require "about"
 
 function readAll(file)
     local f = io.open(file, "rb")
@@ -15,24 +14,14 @@ function show(about,txt)
 end			    
 
 ----------------------------------------
-about = {
-  author="Tim Menzies",
-  site="My great webpage",
-  page= {},
-  markup = function (text,render)
-             return markdown(render(text))
-           end,
-  news = new,
-  css = {
-    {url= "fonts.googleapis.com/css?family=Lato:400,700"},
-    {url="local.css"}
-  }
-}
-
-print(about.news[1].when)
+news= require "news"
+about["news"]   = news
+about["briefs"] = {{item = news[1].item},
+                   {item = news[2].item},
+                   {item = news[3].item}}
 about["main"] = arg[1] and readAll(arg[1]) or f:read("*all")
 
-txt1= lustache:render(readAll("template.html"),about)
+txt1= lustache:render(readAll("../etc/template.html"),about)
 txt2= lustache:render(txt1, about)
 
-print(txt2)
+print(txt1)

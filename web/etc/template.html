@@ -15,9 +15,11 @@
   <body>
     {{#markup}}{{main}}{{/markup}}
     <hr>
-    {{#news}}
-      **{{item.when}}**: {{item.what}} [more...]({{item.more}})
+    {{#briefs}}
+       **{{item.when}}**:
+       {{item.what}}
+       [more...](http://{{{item.more}}})
     
-    {{/news}}
+    {{/briefs}}
   </body>
 </html>
