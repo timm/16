@@ -7,3 +7,6 @@ all: $(mds:.md=.html)
 	@cd etc; luajit lust.lua ../$< > ../$@
 	@git  add $@
 
+tidy:
+	tidy -q -m --indent-spaces 4 -indent \
+           etc/template.html

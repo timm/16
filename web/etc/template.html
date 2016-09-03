@@ -1,25 +1,31 @@
-<!doctype html>
+<!DOCTYPE html>
 
 <html lang="en">
-  <head>
+<head>
+    <meta name="generator" content=
+    "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
     <meta charset="utf-8">
     <meta name="description" content="{{site}}">
     <meta name="author" content="{[author}}">
-    <tile>{{site}}{{#page}}: {{name}}{{/page}}</title>
-    <style>
+
+    <title>{{site}}{{#page}}: {{name}}{{/page}}</title>
+    <style type="text/css">
       {{#css}}
-      <link src='http://{{url}}' rel='stylesheet' type='text/css'>  
+         <link src='http://{{url}}' rel='stylesheet' type='text/css'>  
       {{/css}}
     </style>
-  </head>  
-  <body>
-    {{#markup}}{{main}}{{/markup}}
-    <hr>
-    {{#briefs}}
-       **{{item.when}}**:
-       {{item.what}}
-       [more...](http://{{{item.more}}})
+</head>
+<!-- ----------------------------------------------------------------- -->
+<body>
+{{#markup}}
+{{main}}
+____
+{{#briefs}}
+**{{item.when}}**:
+{{item.what}}
+[more...](http://{{{item.more}}})
     
-    {{/briefs}}
-  </body>
+{{/briefs}}
+{{/markup}}
+</body>
 </html>
