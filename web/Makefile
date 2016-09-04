@@ -6,7 +6,7 @@ title=gawk 'gsub(/^#+ /,"") { print $0; exit}'#
 
 %.html : %.md #etc/template.html etc/about.html
 	@echo "$< ==> $@"
-	@cd etc; luajit lust.lua ../$< > ../$@
+	@cd etc; /usr/local/bin/lua lust.lua ../$< > ../$@
 	@git  add $@
 
 tidy:

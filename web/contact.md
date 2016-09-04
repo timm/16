@@ -1,5 +1,5 @@
 
-<img src="img/contactme.jpg" align=right width=250> 
+<img src="img/contactme.jpg" align=right width=200> 
 # Contact
 
 **Email:**    

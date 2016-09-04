@@ -1,18 +1,15 @@
 
 
 
+<table  class=paddingBetweenCols>
 
 
-
-<table class=paddingBetweenCols  width=480  align=center >
-
-
-<tr><td width=150>
-<h3> My research </h3>
-</td><td width=150>
-<h3> Info for students</h3>
-</td><td width=150>
-<h3>Info for industry</h3>
+<tr><td>
+<h3> My research: </h3>
+</td><td>
+<h3> For students:</h3>
+</td><td>
+<h3>For industry:</h3>
 </td></tr>
 
 <tr><td>
@@ -28,11 +25,10 @@
 I explore SE, data mining, AI, search-based SE, open access science.
 
 </td><td valign=top>
-I need motivated graduate students to explore applied AI.
+I need motivated graduate students to explore AI+SE.<br>
  Is that you?
 
 </td><td valign=top>
-I'm an  experienced research manager.
 Ask me how to innovate. On time. On budget.
 </td></tr>
 <tr><td>
@@ -49,7 +45,13 @@ Ask me how to innovate. On time. On budget.
 <li> <a href="http://ai4se.net">My lab</a>
 <li> <a href="application.html">How to apply?</a>
 </ul>
-</td><td>
+</td><td valign=top>
+<ul>
 
+<li><a href="pdf/Best_Practice_SE_text_mining.pdf">Lab management</a>
+<li><a href="https://www.sbir.gov/sbirsearch/detail/4945">STTRs</a>
+<li><a href="https://www.sbir.gov/sbirsearch/detail/104343">SBIRs</a>
+<li><a href="http://www.slideshare.net/timmenzies/172529main-ken-andtimsoftwareassuranceresearchatwestvirginia?qid=4ddfaa48-dea3-4397-800b-74170c2722da&v=&b=&from_search=4">Proposal review</a>
+</ul>
 </td></tr>
 </table>

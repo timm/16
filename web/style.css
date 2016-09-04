@@ -52,7 +52,7 @@ header p { margin-bottom: 5px;
            margin-top:0px; }
 header h1 { margin-top: 0px; margin-bottom: 0px;
             color: #fff; background: #534576;}
-header    { margin-top:10px;margin-bottom:10px;}
+header    { margin-top:10px;margin-bottom:0px;}
 dt        {  margin: 1px; font-face: bold; background: pink;}
 .right h1 {  padding-top:0px    }
 .left  h1 {  padding-top:0px    }
@@ -62,8 +62,9 @@ dt        {  margin: 1px; font-face: bold; background: pink;}
 
 .paddingBetweenCols  td
 {
+    border-right: 1px dotted #534576;
     width: 130px;
-    padding:0 10px 0 10px;
+    padding:0 0px 0 20px;
 }
 
 .wrapper {
@@ -77,12 +78,12 @@ dt        {  margin: 1px; font-face: bold; background: pink;}
     margin-top:10px;
     margin-bottom:10px;   
 }
-p#class1 {
+p#class0 {
     padding: 5px;
-    background-color: #FFCC00;
+    background-color: #E6E4E4;
     margin: 0px;
 }
-p#class0 {
+p#class1 {
     padding: 5px;
     margin: 0px;
 }
@@ -92,21 +93,24 @@ div#core {
   margin-bottom: 5px;
 }
 section#left {
-  width: 110px;
+    
   float: left;
-  margin: 0px;
-  margin-top: 0px;
+  width: 470px;
+  
   margin-right: 10px;
-  xborder-right: thin dotted #534576;
-  margin-top: 40px;
 }
 section#right {
     
+  width: 120px;
   float: left;
-  width: 480px; 
+  margin: 0px;
+  margin-top: 0px;
+  xmargin-top: 40px;
 }
+
 footer {
-   border-top: thin dotted #534576;
+    margin-top: 15px;
+    border-top: thin dotted #534576;
 }
   
 /* clearfix */
