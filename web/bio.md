@@ -1,15 +1,14 @@
 
 #  Curriculum Vitae
 
-[Full details, 28 pages](pdf/MenziesCF.pdf)
-
+[Full details, 28 pages](pdf/MenziesCF.pdf). TL;DR? Then...
 
 # Some stats:
 
 **Funding**
 
 + $8M in [research funding](https://docs.google.com/spreadsheets/d/1Y5YrD3WkZlee7LLXLN5m9vvMPL2qBU-vruHpRr77dqg/edit#gid=676744746make%20-)
-+ Funding from  NSF, NIJ, DoD, NASA, USDA, LEXIS NEXIS, GRAMMATECH
++ Funding from  NSF, NIJ, DoD, NASA, NARA, USDA, LEXIS NEXIS, GRAMMATECH
 
 **Grad students:**
 
@@ -25,7 +24,7 @@
 + **co-General chair:** ICMSE'16
 + **co-PC-chair:** SSBSE'17, ICSE NEIR'15, ASE'12
 + **PCs:**  ICSE'18, EASE'17, ASE'16, ISSRE'16, SSBSE'16, BIGDSE'16, PROMISE'16
-+ **PCs, before:** ICSE, ASE, FSE, ISSRE, HASE, SSBSE, EASE, MSR, RAISE
++ **PCs, before:** ICSE, ASE, FSE, ISSRE, HASE, SSBSE, EASE, MSR, RAISE, etc, etc
 
 **Papers:**
 
