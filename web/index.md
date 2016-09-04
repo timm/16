@@ -16,6 +16,7 @@
 </td></tr>
 
 <tr><td>
+
 <img width=100 src="img/research2.png">
 </td><td>
 <img width=100 src="img/students.png">

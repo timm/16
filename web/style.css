@@ -167,7 +167,34 @@ nav ul li a:hover {
 	padding-top:0px;
 	float: right;
 }
-ul {
-    
+ul {  
   padding-left: 15px;
+}
+
+/* unvisited link */
+a:link {
+    color: #534576;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+/* visited link */
+a:visited {
+    color: #534576;
+        font-weight: bold;
+    text-decoration: none;
+}
+
+/* mouse over link */
+a:hover {
+    color: #534576;
+        font-weight: bold;
+    text-decoration: underline;
+}
+
+/* selected link */
+a:active {
+    color: #534576;
+    font-weight: bold;
+    text-decoration: underline;
 }
