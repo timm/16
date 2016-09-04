@@ -1,5 +1,6 @@
 <img src="img/timm.png" width=100 align=right>
-# CV
+
+#  Curriculum Vitae
 
 [Full details, 28 pages](pdf/MenziesCF.pdf)
 
@@ -32,24 +33,27 @@
 
 # Short bio
 
-
 Tim Menzies (Ph.D., UNSW, 1995) is a full Professor in CS at North Carolina
-State University where he teaches software engineering and automated software
-engineering. His research relates to synergies between human and artificial
-intelligence, with particular application to data mining for software
-engineering.
+State University where he teaches software engineering, automated software
+engineering, and foundations of software science. He is the directory of the
+[RAISE lab](http://ai4se.net/) (real world AI for SE).  that explores SE, data
+mining, AI, search-based SE, and open access science.
 
-He is the author of over 250 referred publications.
-In his career, he has been a lead researcher on projects
-for NSF, NIJ, DoD, NASA, USDA, as well as joint research work with private
-companies.
+He is the author of over 250 referred publications and editor of three recent
+books summarized the state of the art in software analytics.  In his career, he
+has been a lead researcher on projects for NSF, NIJ, DoD, NASA, USDA, as well as
+joint research work with private companies. For 2002 to 2004, he was the
+software engineering research chair at NASA's software Independent Verification
+and Validation Facility.
 
 Prof. Menzies is the co-founder of the PROMISE conference series devoted to
 reproducible experiments in software engineering
-([http://openscience.us/repo](http://openscience.us/repo)). He is an associate editor of IEEE Transactions on
-Software Engineering, Empirical Software Engineering, the Automated Software
-Engineering Journal the Big Data Journal, Information Software Technology,
-and the Software Quality Journal. In 2015, he served as
-co-chair for the ICSE'15 NIER track. In 2016, he serves as co-general chair of
-ICMSE'16. For more, see his vita ([http://goo.gl/8eNhYM](http://goo.gl/8eNhYM)) or his list of
-publications [https://goo.gl/qNQAIq](https://goo.gl/qNQAIq)) or his home page [http://menzies.us](http://menzies.us).
+([http://openscience.us/repo](http://openscience.us/repo)). He is an associate
+editor of IEEE Transactions on Software Engineering, Empirical Software
+Engineering, the Automated Software Engineering Journal the Big Data Journal,
+Information Software Technology, and the Software Quality Journal. In 2015, he
+served as co-chair for the ICSE'15 NIER track. In 2016, he serves as co-general
+chair of ICMSE'16. For more, see his vita
+([http://goo.gl/8eNhYM](http://goo.gl/8eNhYM)) or his list of publications
+[https://goo.gl/qNQAIq](https://goo.gl/qNQAIq)) or his home page
+[http://menzies.us](http://menzies.us).

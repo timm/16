@@ -62,7 +62,8 @@ dt        {  margin: 1px; font-face: bold; background: pink;}
 
 .paddingBetweenCols  td
 {
-    padding:0 15px 0 15px;
+    width: 130px;
+    padding:0 10px 0 10px;
 }
 
 .wrapper {
@@ -96,11 +97,13 @@ section#left {
   margin: 0px;
   margin-top: 0px;
   margin-right: 10px;
-  border-right: thin dotted #534576;
+  xborder-right: thin dotted #534576;
+  margin-top: 40px;
 }
 section#right {
+    
   float: left;
-  width: 460px; 
+  width: 480px; 
 }
 footer {
    border-top: thin dotted #534576;

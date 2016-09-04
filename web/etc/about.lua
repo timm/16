@@ -1,6 +1,6 @@
 return {
   author="Tim Menzies",
-  site="My great webpage",
+  site="Tim Menzies",
   page= {},
   markup = function (text,render)
              return markdown(render(text))
@@ -13,7 +13,7 @@ return {
     {url="local.css"}
   },
   home="menzies.us",
-  mantra="ex-nurse, taxi-driver, journalist, rocketman (hey, it all made some sense at the time)",
+  mantra="ex-nurse, taxi-driver, journalist, rocketman (hey, it all made sense at the time)",
   footer =[[
  ,-_|\    And I somehow fancy that I'd like to change with Clancy,             
 /     \   Like to take a turn at droving where the seasons come and go,        
