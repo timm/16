@@ -8,7 +8,7 @@
     <meta name="description" content="{{site}}">
     <meta name="author" content="{[author}}">
 
-    <title>{{site}}{{#titke}}: {{title}}{{/title}}</title>
+    <title>{{site}}{{#title}}: {{title}}{{/title}}</title>
     <link href='style.css' rel='stylesheet' type='text/css'>  
 
      <link rel="icon" href="img/favicon.png" type="image/png" />
@@ -19,42 +19,39 @@
 <div class="wrapper">
       <header>
             
-        <p class="alignleft">&nbsp;home | contact</p><p class="alignright">cv | lab | news&nbsp;</p><br clear=all>
+        <p class="alignleft">&nbsp;<a href="http://{{home}}">home</a> |
+                                      <a href="contact.html">contact</a> |
+                                      <a href="bio.html">cv</a></p><p
+                                      class="alignright">cv |
+                                      lab |
+                                      news&nbsp;</p><br clear=all>
             <h1>&nbsp; 
               <p class="alignleft">&nbsp;Tim Menzies</p><p class="alignright">prof.se.ai.ncsu&nbsp;</p></h1>
-            <p align=center><em>ex-nurse, taxi-driver, journalist, rocketman (it made sense at the time)</em></p>
+            <p align=center><em>{{mantra}}</em></p>
         </header>
        <div id="core" class="clearfix">
-            <section id="left">
-                    <a rel="external" href="#">Home</a><br>
-                    <a rel="external" href="#">About us</a><br>
-                    <a rel="external" href="#">Contacts</a><br>
-		    <img src="img/timm.png"><br>
-            </section>             
-            <section id="right">
-{{#markup}}
-<img align=right width=150 src="img/59363213.jpg">
-{{main}}
-____
+         <section id="left">
+             <p><b> News</b></p>
+           <small>
+           
 {{#briefs}}
-**{{item.when}}**:
+<p id="class{{item.n}}"><b>{{item.when}}</b>:
 {{item.what}}
-[more...](http://{{{item.more}}})
+<a href="http://{{{item.more}}}">[more...]</a></p>
 	    
 {{/briefs}}
-{{/markup}}
+</small>
+            </section>             
+         <section id="right">
+
+          
+    
+{{{main}}}
             </section>
         </div>
  	<footer>
              <center>
-             <p>Some copyright and legal notices here. Maybe use the © symbol a bit.</p>
-             <small>
-            <hr>
-            <pre>
- ,-_|\    And I somehow fancy that I'd like to change with Clancy,             
-/     \   Like to take a turn at droving where the seasons come and go,        
-\_,-._*   While he faced the round eternal of grant writings and the journals -
-     v    But I doubt he'd like the coding, Clancy, of "The Overflow".         </pre> 
+            <pre>{{footer}}</pre> 
       
           </center>
         </footer>	

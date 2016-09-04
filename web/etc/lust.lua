@@ -23,10 +23,10 @@ about.briefs = {{item = news[1].item},
                    {item = news[2].item},
                    {item = news[3].item}}
 -----------------------------------------
-about.main = arg[1] and slurp(arg[1]) or f:read("*all")
+raw = arg[1] and slurp(arg[1]) or f:read("*all")
 
-about.title = title(about.main)
+about.title = title(raw)
 
-print(
-  render(
-    render(slurp("../etc/template.html"))))
+about.main = markdown(raw)
+
+print(render(render(slurp("../etc/template.html"))))

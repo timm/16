@@ -46,44 +46,65 @@
   src: local('Lato Black'), local('Lato-Black'), url(http://fonts.gstatic.com/s/lato/v11/lEjOv129Q3iN1tuqWOeRBgLUuEpTyoUstqEm5AMlJo4.woff2) format('woff2');
   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2212, U+2215, U+E0FF, U+EFFD, U+F000;
 }
-body {  font-family:Lato,sans-serif; background: #FFF;}
-header p { margin-bottom: 0px; margin-top:5px; }
+body {  font-size: small;
+        font-family:Lato,sans-serif; background: #FFF;}
+header p { margin-bottom: 5px;
+           margin-top:0px; }
 header h1 { margin-top: 0px; margin-bottom: 0px;
             color: #fff; background: #534576;}
-header { margin-top:10px;margin-bottom:20px;}
+header    { margin-top:10px;margin-bottom:10px;}
+dt        {  margin: 1px; font-face: bold; background: pink;}
+.right h1 {  padding-top:0px    }
+.left  h1 {  padding-top:0px    }
+
+
+
+
+.paddingBetweenCols  td
+{
+    padding:0 15px 0 15px;
+}
+
 .wrapper {
     width: 600px;
-    xheight: 500px;
-
     position: absolute;
     top:0;
     bottom: auto;
     left: 0;
     right: 0;
-
     margin: auto;
-         margin-top:10px;
-         margin-bottom:10px;
-       
-       }
+    margin-top:10px;
+    margin-bottom:10px;   
 }
-
-
+p#class1 {
+    padding: 5px;
+    background-color: #FFCC00;
+    margin: 0px;
+}
+p#class0 {
+    padding: 5px;
+    margin: 0px;
+}
 div#core {
   display: block;
   clear: both;
-  xmargin-bottom: 20px;
+  margin-bottom: 5px;
 }
 section#left {
-  width: 100px;
+  width: 110px;
   float: left;
-  margin: 0 10px;
+  margin: 0px;
+  margin-top: 0px;
+  margin-right: 10px;
+  border-right: thin dotted #534576;
 }
 section#right {
   float: left;
-  width: 470px;
+  width: 460px; 
 }
- 
+footer {
+   border-top: thin dotted #534576;
+}
   
 /* clearfix */
 .clearfix:after {
@@ -142,4 +163,8 @@ nav ul li a:hover {
 	margin-top:0px;
 	padding-top:0px;
 	float: right;
+}
+ul {
+    
+  padding-left: 15px;
 }
