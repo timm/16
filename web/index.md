@@ -59,15 +59,20 @@ Ask me how to innovate. <br>On time.<br> On budget.
 </table>
 
 <hr>
+
+
+
 Current projects:
 
-- Methods for open science
-- Data sharing and privacy;
-- Text mining: active learning, crowd-sourcing;
-- Multi-objective optimization;
-- Foundation of software science: the textbook;
-- Learning how to make learners smarter (hyperparameter optimization);
-- Transfer learning: bellwethers, heterogeneous data;
-- From prediction to planning;
-- Repeatability studies: effort estimation; phase delay.
+- <a href="http://openscience.us/repo">Methods for open science</a>
+- <a href="http://tiny.cc/factorg">Case studies in industrial data mining</a>
+- <a href="http://menzies.us/pdf/15lace2.pdf">Data sharing and privacy</a>
+-  <a href="https://docs.google.com/presentation/d/145_yPZnx65Z-TOW3_Y9HcLqbEm39QZD1oZMksI8FqW4/edit#slide=id.gc6f980f91_0_29">Text mining: active learning, crowd-sourcing</a>
+- <a href="http://www.slideshare.net/timmenzies/gale-geometric-active-learning-for-searchbased-software-engineering">Multi-objective optimization</a>
+- <a href="http://tiny.cc/fss16">Foundation of software science: the textbook</a>
+- <a href="https://raw.githubusercontent.com/timm/timm.github.io/master/pdf/16tunelearner.pdf">Learning how to make learners smarter (hyperparameter optimization)</a>
+- Transfer learning: <a href="http://dl.acm.org/citation.cfm?id=2970339">bellwethers</a>, heterogeneous data
+- From prediction to planning
+- <a href="http://arxiv.org/pdf/1609.00489">Effort estimation</a>
+- Belief and proof in software engineering.
 
