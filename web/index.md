@@ -1,6 +1,7 @@
 
 
 
+
 <table  class=paddingBetweenCols>
 
 
@@ -56,3 +57,17 @@ Ask me how to innovate. <br>On time.<br> On budget.
 </ul>
 </td></tr>
 </table>
+
+<hr>
+Current projects:
+
+- Methods for open science
+- Data sharing and privacy;
+- Text mining: active learning, crowd-sourcing;
+- Multi-objective optimization;
+- Foundation of software science: the textbook;
+- Learning how to make learners smarter (hyperparameter optimization);
+- Transfer learning: bellwethers, heterogeneous data;
+- From prediction to planning;
+- Repeatability studies: effort estimation; phase delay.
+
