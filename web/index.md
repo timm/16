@@ -39,6 +39,7 @@ Ask me how to innovate. <br>On time.<br> On budget.
 <li> <a href="https://docs.google.com/spreadsheets/d/1oWGEfEdt4aXZ_chBLTzw2RkKhGTKIKReetkcb8Zo2F4">Students</a></li>
 <li> <a href="https://docs.google.com/spreadsheets/d/1Y5YrD3WkZlee7LLXLN5m9vvMPL2qBU-vruHpRr77dqg/edit#gid=676744746">Funding</a></li>
 <li> <a href="http://openscience.us/repo">Data, on-line</a></li>
+<li> <a href="books.html">My books</a></li>
 </ul>
 </td><td valign=top>
 <ul>
@@ -64,15 +65,18 @@ Ask me how to innovate. <br>On time.<br> On budget.
 
 Current projects:
 
-- <a href="http://openscience.us/repo">Methods for open science</a>
-- <a href="http://tiny.cc/factorg">Case studies in industrial data mining</a>
-- <a href="http://menzies.us/pdf/15lace2.pdf">Data sharing and privacy</a>
--  <a href="https://docs.google.com/presentation/d/145_yPZnx65Z-TOW3_Y9HcLqbEm39QZD1oZMksI8FqW4/edit#slide=id.gc6f980f91_0_29">Text mining: active learning, crowd-sourcing</a>
-- <a href="http://www.slideshare.net/timmenzies/gale-geometric-active-learning-for-searchbased-software-engineering">Multi-objective optimization</a>
-- <a href="http://tiny.cc/fss16">Foundation of software science: the textbook</a>
-- <a href="https://raw.githubusercontent.com/timm/timm.github.io/master/pdf/16tunelearner.pdf">Learning how to make learners smarter (hyperparameter optimization)</a>
-- Transfer learning: <a href="http://dl.acm.org/citation.cfm?id=2970339">bellwethers</a>, heterogeneous data
-- From prediction to planning
-- <a href="http://arxiv.org/pdf/1609.00489">Effort estimation</a>
-- Belief and proof in software engineering.
+- Documenting what was:
+     - <a href="http://openscience.us/repo">Methods for open science</a>
+     - <a href="books.html">Textbooks on software science</a>
+     - Belief and proof in software engineering.
+- Building what's next:
+     - <a href="http://tiny.cc/factorg">Case studies in industrial data mining</a>
+     - <a href="http://menzies.us/pdf/15lace2.pdf">Data sharing and privacy</a>
+     -  <a href="https://docs.google.com/presentation/d/145_yPZnx65Z-TOW3_Y9HcLqbEm39QZD1oZMksI8FqW4/edit#slide=id.gc6f980f91_0_29">Text mining: active learning, crowd-sourcing</a>
+     - <a href="http://www.slideshare.net/timmenzies/gale-geometric-active-learning-for-searchbased-software-engineering">Multi-objective optimization</a>
+     - <a href="https://raw.githubusercontent.com/timm/timm.github.io/master/pdf/16tunelearner.pdf">Learning how to make learners smarter (hyperparameter optimization)</a>
+     - Transfer learning: <a href="http://dl.acm.org/citation.cfm?id=2970339">bellwethers</a>, heterogeneous data
+     - From prediction to planning
+     - <a href="http://arxiv.org/pdf/1609.00489">Effort estimation</a>
+
 
