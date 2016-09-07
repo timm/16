@@ -19,9 +19,17 @@ end
 ----------------------------------------
 news = require "news"
 about.news   = news
-about.briefs = {{item = news[1].item},
-                   {item = news[2].item},
-                   {item = news[3].item}}
+about.briefs =    {
+  {item = news[1].item},
+  {item = news[2].item},
+  {item = news[3].item},
+    {item = news[4].item},
+  {item = news[5].item},
+  {item = news[6].item},
+    {item = news[7].item},
+  {item = news[8].item},
+  {item = news[9].item}
+}
 -----------------------------------------
 raw = arg[1] and slurp(arg[1]) or f:read("*all")
 
