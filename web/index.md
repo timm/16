@@ -61,22 +61,42 @@ Ask me how to innovate. <br>On time.<br> On budget.
 
 <hr>
 
+Funding from:
+
+<img height=56 src="https://media.glassdoor.com/sqls/263980/grammatech-squarelogo.png"><img
+height=56 src="https://65.media.tumblr.com/avatar_fd969ad68e5a_128.png"><img
+height=56 src="img/ln.png"><img
+height=56 src="https://pbs.twimg.com/profile_images/67630775/button_meatball_normal.png"><img
+height=56 src="http://www.nij.gov/PublishingImages/nij-logo-sak-page.jpg"><img
+height=56 src="https://www.unavco.org/lib/images/Footer-NSF-logo.png"><img
+height=56 src="http://www.fs.fed.us/enterprise/images/usdalogo.png">
 
 
-Current projects:
+
+
+Prior projects:
+
+- SE research chair at NASA's software IV&V facility.
+- Code comprehension with Grammatech
+- National Archives
+
+
+Currently:
 
 - Documenting what was:
-     - <a href="http://openscience.us/repo">Methods for open science</a>
-     - <a href="books.html">Textbooks on software science</a>
-     - Belief and proof in software engineering.
+       - <a href="http://openscience.us/repo">Methods for open science</a>
+       - <a href="books.html">Textbooks on software science</a>
+       - Belief and proof in software engineering.
+
 - Building what's next:
-     - <a href="http://tiny.cc/factorg">Case studies in industrial data mining</a>
-     - <a href="http://menzies.us/pdf/15lace2.pdf">Data sharing and privacy</a>
-     -  <a href="https://docs.google.com/presentation/d/145_yPZnx65Z-TOW3_Y9HcLqbEm39QZD1oZMksI8FqW4/edit#slide=id.gc6f980f91_0_29">Text mining: active learning, crowd-sourcing</a>
-     - <a href="http://www.slideshare.net/timmenzies/gale-geometric-active-learning-for-searchbased-software-engineering">Multi-objective optimization</a>
-     - <a href="https://raw.githubusercontent.com/timm/timm.github.io/master/pdf/16tunelearner.pdf">Learning how to make learners smarter (hyperparameter optimization)</a>
-     - Transfer learning: <a href="http://dl.acm.org/citation.cfm?id=2970339">bellwethers</a>, heterogeneous data
-     - From prediction to planning
-     - <a href="http://arxiv.org/pdf/1609.00489">Effort estimation</a>
+       - <a href="http://tiny.cc/factorg">Case studies in industrial data mining</a>
+       - <a href="http://menzies.us/pdf/15lace2.pdf">Data sharing and privacy</a>
+       -  <a href="https://docs.google.com/presentation/d/145_yPZnx65Z-TOW3_Y9HcLqbEm39QZD1oZMksI8FqW4/edit#slide=id.gc6f980f91_0_29">Text mining: active learning, crowd-sourcing</a>
+       - <a href="http://www.slideshare.net/timmenzies/gale-geometric-active-learning-for-searchbased-software-engineering">Multi-objective optimization</a>
+       - <a href="https://raw.githubusercontent.com/timm/timm.github.io/master/pdf/16tunelearner.pdf">Learning how to make learners smarter (hyperparameter optimization)</a>
+       - Transfer learning: <a href="http://dl.acm.org/citation.cfm?id=2970339">bellwethers</a>, heterogeneous data
+       - From prediction to planning
+       - <a href="http://arxiv.org/pdf/1609.00489">Effort estimation</a>
+
 
 

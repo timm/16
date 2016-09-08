@@ -37,8 +37,6 @@
  href="https://www.amazon.com/Art-Science-Analyzing-Software-Data/dp/0124115195"><img width=150 src="img/asdbookCover.png"></a>&nbsp;<a
  href="https://www.amazon.com/Perspectives-Data-Science-Software-Engineering/dp/0128042060"><img width=150 src="img/perspectivesBook.jpg"></a>
 
-
-
 # Short bio
 
 Tim Menzies (Ph.D., UNSW, 1995) is a full Professor in CS at North Carolina
