@@ -21,8 +21,9 @@ news = require "news"
 about.news   = news
 briefs = {}
 
-klass=0
-for i=1,7 do
+klass=1
+for i=1,10 do
+  if i > #news then break end
   klass = 1 - klass
   tmp   = news[i].item
   tmp.n = klass

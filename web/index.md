@@ -1,38 +1,25 @@
+<center>
 
+<a href="img/bigtim.jpg"><img src="img/bigtim.jpg" width=470></a>
 
-
+</center>
 
 <table  class=paddingBetweenCols>
 
 
 <tr><td>
-<h3> My research: </h3>
+<h2> Research </h2>
 </td><td>
-<h3> For students:</h3>
+<h2> Students</h2>
 </td><td>
-<h3>For industry:</h3>
-</td></tr>
-
-<tr><td>
-
-<img width=100 src="img/research2.png">
-</td><td>
-<img width=100 src="img/students.png">
-</td><td>
-<img width=100 src="img/industry.png">
+<h2>Industry</h2>
 </td></tr>
 
 <tr><td valign=top>
+
+<img width=100 height=100 src="img/research2.png">
+<br>
 I explore SE, data mining, AI, search-based SE, open access science.
-
-</td><td valign=top>
-I need motivated and talented graduate  students for AI+SE.<br>
- Is that you?
-
-</td><td valign=top>
-Ask me how to innovate. <br>On time.<br> On budget. 
-</td></tr>
-<tr><td valign=top>
 <ul>
 <li> <a href="goals.html">Research goals</a></li>
 <li> <a href="https://scholar.google.com/citations?user=7htTUTgmLtUC&hl=en&oi=ao">Papers</a></li>
@@ -41,7 +28,12 @@ Ask me how to innovate. <br>On time.<br> On budget.
 <li> <a href="http://openscience.us/repo">Data, on-line</a></li>
 <li> <a href="books.html">My books</a></li>
 </ul>
+
 </td><td valign=top>
+<img width=100 height=100 src="img/students.png">
+<br>I need talented grad students for AI+SE. 
+ Is that you?
+
 <ul>
 <li> <a href="https://www.youtube.com/watch?v=LRoI-Rw4GBY">Why NC State?</a>
 <li> <a href="http://ai4se.net/projects">My projects</a>
@@ -49,27 +41,30 @@ Ask me how to innovate. <br>On time.<br> On budget.
 <li> <a href="application.html">How to apply?</a>
 </ul>
 </td><td valign=top>
-<p>Case studies:</p>
+<img width=100 src="img/industry.png">
+<br>Ask me how to innovate. <br>On time.<br> On budget.
+<p>Case studies:
 <ul>
 <li><a href="https://www.sbir.gov/sbirsearch/detail/4945">Grammatech</a></li>
-<li>Lexis Nexis: <a href="http://www.slideshare.net/slideshow/embed_code/key/f8etbZ448ukfOs">1</a>, <a href="pdf/Best_Practice_SE_text_mining.pdf">2<a> </li>
+<li>LexisNexis:<a href="http://www.slideshare.net/slideshow/embed_code/key/f8etbZ448ukfOs">1</a>,<a href="pdf/Best_Practice_SE_text_mining.pdf">2<a> </li>
 <li><a href="http://www.slideshare.net/timmenzies/172529main-ken-andtimsoftwareassuranceresearchatwestvirginia?qid=4ddfaa48-dea3-4397-800b-74170c2722da&v=&b=&from_search=4">NASA</a></li>
 <li><a href="https://github.com/timm/16/blob/master/matt.pdf">IBM</a></li>
-</ul>
+</ul></p>
 </td></tr>
+
 </table>
 
 <hr>
 
-Funding from:
+My funding includes:
 
 <img height=56 src="https://media.glassdoor.com/sqls/263980/grammatech-squarelogo.png"><img
+height=60   src="https://pbs.twimg.com/profile_images/471652076645126144/Lds3l2C3_normal.jpeg"><img
 height=56 src="https://65.media.tumblr.com/avatar_fd969ad68e5a_128.png"><img
 height=56 src="img/ln.png"><img
 height=56 src="https://pbs.twimg.com/profile_images/67630775/button_meatball_normal.png"><img
 height=56 src="http://www.nij.gov/PublishingImages/nij-logo-sak-page.jpg"><img
-height=56 src="https://www.unavco.org/lib/images/Footer-NSF-logo.png"><img
-height=56 src="http://www.fs.fed.us/enterprise/images/usdalogo.png">
+height=56 src="https://www.unavco.org/lib/images/Footer-NSF-logo.png">
 
 
 

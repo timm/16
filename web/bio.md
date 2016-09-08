@@ -1,4 +1,6 @@
 
+<img src="img/timm.png" align=right>
+
 #  Curriculum Vitae
 
 [Full details, 28 pages](pdf/MenziesCF.pdf). TL;DR? Then...
