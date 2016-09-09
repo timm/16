@@ -19,9 +19,18 @@ end
 ----------------------------------------
 news = require "news"
 about.news   = news
-about.briefs = {{item = news[1].item},
-                   {item = news[2].item},
-                   {item = news[3].item}}
+briefs = {}
+
+klass=1
+for i=1,10 do
+  if i > #news then break end
+  klass = 1 - klass
+  tmp   = news[i].item
+  tmp.n = klass
+  briefs[#briefs + 1] = {item = tmp}
+end
+
+about.briefs = briefs
 -----------------------------------------
 raw = arg[1] and slurp(arg[1]) or f:read("*all")
 

@@ -1,3 +1,5 @@
+
+
 /* latin-ext */
 @font-face {
   font-family: 'Lato';
@@ -64,9 +66,9 @@ dt        {  margin: 1px; font-face: bold; background: pink;}
 {
     padding-left: 0px;
     margin-left: 0px;
-    border-right: 1px dotted #534576;
-    width: 150px;
-    padding:0 0px 0 10px;
+    xborder-right: 1px dotted #534576;
+    width: 125px;
+    padding:0 60px 0 0px;
 }
 
 .wrapper {
@@ -112,7 +114,7 @@ section#right {
 
 footer {
     margin-top: 15px;
-    border-top: thin dotted #534576;
+    xborder-top: thin dotted #534576;
 }
   
 /* clearfix */
