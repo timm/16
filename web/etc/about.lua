@@ -15,8 +15,8 @@ return {
   home="menzies.us",
   mantra="ex-nurse, taxi-driver, journalist, rocketman (hey, it all made sense at the time)",
   footer =[[
- ,-_|\    And I somehow fancy that I'd like to change with Clancy,             
-/     \   Like to take a turn at droving where the seasons come and go,        
-\_,-._*   While he faced the round eternal of grant writings and the journals -
-     v    But I doubt he'd like the coding, Clancy, of "The Overflow".         ]]
+ ,-_|\    "And I somehow fancy that I'd like to change with Clancy,             
+/     \    Like to take a turn at droving where the seasons come and go,        
+\_,-._*    While he faced the round eternal of grant writings and the journals -
+     v     But I doubt he'd like the coding, Clancy, of 'The Overflow'."        ]]
 }

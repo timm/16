@@ -58,13 +58,15 @@ dt        {  margin: 1px; font-face: bold; background: pink;}
 .left  h1 {  padding-top:0px    }
 
 
-
+                      
 
 .paddingBetweenCols  td
 {
+    padding-left: 0px;
+    margin-left: 0px;
     border-right: 1px dotted #534576;
-    width: 130px;
-    padding:0 0px 0 20px;
+    width: 150px;
+    padding:0 0px 0 10px;
 }
 
 .wrapper {
