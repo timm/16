@@ -1,5 +1,5 @@
 Make = $(MAKE) --no-print-directory #
-ok=$(shell *ok.lua)
+ok=$(shell *ok.py)
 
 typo:  ready 
 	@- git status
@@ -18,10 +18,10 @@ ready: gitting  zips
 
 zips0: 
 	cd lua; rm fun.zip; zip fun.zip README.md
-  
+
 zips:
 	@- zip -ur lua/fun.zip  lua -x *.git* -x *.zip* -x _\* -x lua/_*/\* -x \#*
-	
+
 
 gitting:
 	@git config --global credential.helper cache
@@ -34,8 +34,8 @@ your:
 timm:
 	@git config --global user.name "Tim Menzies"
 	@git config --global user.email tim.menzies@gmail.com
-	
-ok:
-	$(foreach f,$(ok),lua $f;)
 
- 
+ok:
+	$(foreach f,$(ok),python  $f;)
+
+
