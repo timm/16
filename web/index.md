@@ -56,7 +56,7 @@ I explore SE, data mining, AI, search-based SE, open access science.
 
 <hr>
 
-My funding includes:
+Career funding= $8M including support from:
 
 <img height=56 src="https://media.glassdoor.com/sqls/263980/grammatech-squarelogo.png"><img
 height=60   src="https://pbs.twimg.com/profile_images/471652076645126144/Lds3l2C3_normal.jpeg"><img

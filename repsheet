@@ -1,0 +1,56 @@
+#!/usr/bin/env bash
+
+# repsheet :simple text report generator from spreadsheets.
+# (c) Tim Menzies, BSD license (2 paragraph version), 2016
+
+# Requires: awk, fmt
+# Tested on linux and mac. As to windows: let me know how that goes.
+# Tested using Google sheets, has problems with Excel. Anyone?
+
+# Usage:
+#  [1] Write a spreadsheet where line1 are some headers
+#  [2] Name it something; e.g. myreport1
+#  [3] Do not use tabs in the spreadsheet.
+#  [4] The right-hand side column header should be 'Notes'
+#      (case does not matter). Repsheet ignores all columns
+#      after this column.
+#  [5] Write one report per row, under the headers. If a cell
+#      needs a long comment, add it as e.g. [1] in the notes
+#      column.
+#  [6] Save the sheet, tab-seperated format. Excel will generate
+#      XXX.txt and Google Sheets will generate 'XXX.tsv'. Remember
+#      that magic extension. 
+#  [7] Execute
+#
+#             bash repsheet 'XXX*YYY'
+#
+#      where XXX is the report name (e.g. myreport1) 
+#      and YYY is the magic extension (e.g. tsv).
+#  [8] Look for the file XXX*YYY.out. Paste text from there into
+#      emails. Report done!
+
+Want=${1:-'fss16ess*tsv'}
+Width=${2:-60}
+
+F="`ls -t $Want | head -1`"
+echo $F
+cat "$F" |
+tr '\r' '\n' |
+awk 'BEGIN  { FS="\t"; IGNORECASE = 1} 
+     NR==1  { notes = NF
+              for(i=1;i<=NF;i++) {
+	            if ( $i ~ /^[ \t]*notes[ \t]*$/ ) 
+                       notes = i
+	            head[i]=$i; 
+	       }
+               print "notes=", notes
+              }
+     NR > 1 { 
+              gsub(/\[[0-9]/,"\n\n  &",$notes)
+              print("\n____________________________")
+	      for(i=1;i<=notes;i++) 
+		  print "\n" head[i],": " $i
+	     }
+' |
+fmt -$Width > "$F.out"
+echo "For output, see \"$F.out\""
