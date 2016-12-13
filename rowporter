@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 
-# repsheet :simple text report generator from spreadsheets.
+# rowporter :simple text report generator from tab-seperated tables
 # (c) Tim Menzies, BSD license (2 paragraph version), 2016
 
-# Requires: awk, fmt
+# Requires: bash, awk, fmt, tr
 # Tested on linux and mac. As to windows: let me know how that goes.
 # Tested using Google sheets, has problems with Excel. Anyone?
 
@@ -22,7 +22,7 @@
 #      that magic extension. 
 #  [7] Execute
 #
-#             bash repsheet 'XXX*YYY'
+#             bash rowporter 'XXX*YYY'
 #
 #      where XXX is the report name (e.g. myreport1) 
 #      and YYY is the magic extension (e.g. tsv).
