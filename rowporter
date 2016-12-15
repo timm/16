@@ -29,26 +29,27 @@
 #  [8] Look for the file XXX*YYY.out. Paste text from there into
 #      emails. Report done!
 
-Want=${1:-'fss16ess*tsv'}
+set -x
+
+F=${1:-'fss16ess*tsv'}
 Width=${2:-60}
 
-F="`ls -t $Want | head -1`"
 cat "$F" |
-tr '\r' '\n' |
 awk 'BEGIN  { FS="\t"; IGNORECASE = 1} 
      NR==1  { notes = NF
               for(i=1;i<=NF;i++) {
-	            if ( $i ~ /^[ \t]*notes[ \t]*$/ ) 
+	            if ( $i ~ /notes/ ) 
                        notes = i
 	            head[i]=$i; 
-              }}
+              }; next}
      NR > 1 { 
               gsub(/\[[0-9]/,"\n\n  &",$notes)
+              gsub(/\^\* /,"\n\n  &",$notes)
               print("\n____________________________")
 	      for(i=1;i<=notes;i++) {
                   txt = $i ~/^[ \t]*$/ ? "Y" : $i
 		  print "\n" head[i],": " txt
-	     }}
+	     }; next}
 ' |
 fmt -$Width > "$F.out"
-echo "For output, see \"$F.out\""
+less "$F.out"
