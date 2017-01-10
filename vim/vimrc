@@ -20,8 +20,9 @@ Plugin 'scrooloose/syntastic'
 Plugin 'jnurmine/Zenburn'
 Plugin 'altercation/vim-colors-solarized'
 Plugin 'kien/ctrlp.vim'
-Plugin 'Lokaltog/powerline', {'rtp': 'powerline/bindings/vim/'}
-
+"Plugin 'Lokaltog/powerline', {'rtp': 'powerline/bindings/vim/'}
+Plugin 'bling/vim-airline'
+Plugin 'vim-airline/vim-airline-themes'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -78,14 +79,14 @@ highlight BadWhitespace ctermbg=red guibg=red
 set encoding=utf-8
 
 let python_highlight_all=1
-"syntax on
+syntax on
 
 if has('gui_running')
     set background=dark
     colorscheme solarized
 else
-    "colorscheme zenburn
-    colorscheme slate
+    colorscheme zenburn
+    "colorscheme slate
 endif
 if has('win32')
     set guifont=Consolas:h12   " Win32.
@@ -95,7 +96,6 @@ else
     set guifont=Monospace\ 12  " Linux.
 endif
 
-
 call togglebg#map("<F5>")
 
 set nu
@@ -103,10 +103,14 @@ set nu
 " Always show statusline
 set laststatus=2
 
-" Use 256 colours (Use this setting only if your terminal supports 256
+ " Use 256 colours (Use this setting only if your terminal supports 256
 " colours)
 set t_Co=256
 
 set clipboard=unnamed
 
 set spell spelllang=en_us
+let g:airline_theme='simple'
+set nospell
+
+
